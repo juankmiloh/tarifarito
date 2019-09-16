@@ -1,0 +1,35 @@
+-webkit-linear-gradient(top, rgba(216,225,231,1) 35%, rgba(216,225,231,1) 36%, rgba(233,238,242,1) 75%, rgba(242,246,248,1) 98%, rgba(181,198,208,1) 99%, rgba(224,239,249,1) 100%);
+
+*crear: (usuarios)
+    usuarios permitidos en el inicio de sesion ->
+        src\utils\validate.js
+    tokens de autenticacion y asociar usuarios con token (asignar: rol | introduction | avatar(revisar como cargar imagen desde local) | name) ->
+        mock\user.js
+    adicionar roles de usuario para renderizarlos en la vista --> src\views\permission\role.vue ->
+        mock\role\index.js
+    rutas de vistas y/o permitir asociar vistas a los roles de usuario ->
+        src\router\index.js
+    
+    request.js    
+
+*cambiar:
+    logo -> 
+        src/layout/components/sidebar/Logo.vue
+    texto logo -> 
+        src/layout/components/sidebar/Logo.vue
+    opciones panel lateral derecho ->
+        src/settings.js
+    tablero inicial (dashboard) roles ->
+        src\views\dashboard\editor\index.vue
+    login ->
+        src\views\login\index.vue
+    opciones menu desplegable de usuario (perfil, imagen de usuario, salir) ->
+        src\layout\components\Navbar.vue
+    visualizacion de dashboard principal segun el rol que inicia sesión) ->
+        src\views\dashboard\index.vue
+    
+*asociar:
+    rutas de vistas a un nombre especifico que permita redireccionar facil a una vista ->
+        /mock/role/route.js
+
+    
