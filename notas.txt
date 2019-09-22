@@ -31,5 +31,3 @@
 *asociar:
     rutas de vistas a un nombre especifico que permita redireccionar facil a una vista ->
         /mock/role/route.js
-
-    

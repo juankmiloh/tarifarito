@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <span>/tolerancia/nivel-tolerancia</span>
 
     <el-row>
       <el-col :span="8" style="border: 0px solid red;">

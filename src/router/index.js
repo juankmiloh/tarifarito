@@ -211,12 +211,24 @@ export const asyncRoutes = [
   },
   // vistas gestor de datos
   {
+    path: '/tolerancia',
+    component: Layout,
+    children: [
+      {
+        path: 'nivel-tolerancia',
+        component: () => import('@/views/roles'),
+        name: 'nivel-tolerancia',
+        meta: { title: 'Nivel de Tolerancia', icon: 'size', noCache: true, roles: ['admin', 'gestor'] }
+      }
+    ]
+  },
+  {
     path: '/indices',
     component: Layout,
     children: [
       {
         path: 'indices-dane',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'indices-dane',
         meta: { title: 'Índices DANE', icon: 'chart', noCache: true, roles: ['admin', 'gestor'] }
       }
@@ -272,26 +284,26 @@ export const asyncRoutes = [
     children: [
       {
         path: 'costo-unitario',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'costo-unitario',
         meta: { title: 'Costo Unitario', icon: 'example', noCache: true, roles: ['admin', 'revisor'] }
       },
       {
         path: 'componentes',
-        component: () => import('@/views/error-page/404'), // Parent router-view
+        component: () => import('@/views/roles'), // Parent router-view
         name: 'componentes',
         meta: { title: 'Componentes', icon: 'nested', roles: ['admin', 'revisor'] },
         redirect: '/',
         children: [
           {
             path: 'd097',
-            component: () => import('@/views/error-page/404'),
+            component: () => import('@/views/roles'),
             name: 'd097',
             meta: { title: 'D - CREG 097', icon: 'clipboard', roles: ['admin', 'revisor'] }
           },
           {
             path: 'd015',
-            component: () => import('@/views/error-page/404'),
+            component: () => import('@/views/roles'),
             name: 'd015',
             meta: { title: 'D - CREG 015', icon: 'clipboard', roles: ['admin', 'revisor'] }
           }
@@ -388,7 +400,7 @@ export const asyncRoutes = [
   //       component: () => import('@/views/example/edit'),
   //       name: 'EditArticle',
   //       meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-  //       hidden: true
+  //       hidden: false
   //     },
   //     {
   //       path: 'list',
