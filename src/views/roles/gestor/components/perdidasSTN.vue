@@ -1,23 +1,23 @@
 <template>
   <div class="components-container">
-    <el-row>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
-        <aside>
-          <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
-        </aside>
-      </el-col>
-			<el-col :span="24" style="border: 0px solid red; text-align: center;">          
-        <aside>
-          <span style="font-size: 120%;"><b>{{ name }}</b></span>
-        </aside>
-      </el-col>
+	<el-row>
+	  <el-col :span="24" style="border: 0px solid red; text-align: center;">
+		<aside>
+		  <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
+		</aside>
+	  </el-col>
+			<el-col :span="24" style="border: 0px solid red; text-align: center;">
+		<aside>
+		  <span style="font-size: 120%;"><b>{{ name }}</b></span>
+		</aside>
+	  </el-col>
 
 			<el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span><b>PERDIDAS REFERIDAS AL STN</b></span>
-        </div>
-        <div style="margin-bottom:40px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center;">
+		<div slot="header" class="clearfix">
+		  <span><b>PÉRDIDAS REFERIDAS AL STN</b></span>
+		</div>
+		<div style="margin-bottom:40px;">
+		  <el-col :span="24" style="border: 0px solid red; text-align: center;">
 						<el-select v-model="value1" clearable placeholder="ID Mercado">
 							<el-option
 								v-for="item in optionsEmpresa"
@@ -25,13 +25,13 @@
 								:label="item.label"
 								:value="item.value">
 							</el-option>
-						</el-select>			
+						</el-select>
 					</el-col>
-        </div>
-      </el-card>
+		</div>
+	  </el-card>
 
 			<el-card class="box-card" style="margin-top:20px;">
-        <div style="margin-bottom:240px;">
+		<div style="margin-bottom:240px;">
 
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
@@ -46,7 +46,7 @@
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
 								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
-							</el-col>			
+							</el-col>
 						</el-row>
 					</el-col>
 
@@ -63,7 +63,7 @@
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
 								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
-							</el-col>			
+							</el-col>
 						</el-row>
 					</el-col>
 
@@ -80,7 +80,7 @@
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
 								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
-							</el-col>			
+							</el-col>
 						</el-row>
 					</el-col>
 
@@ -97,7 +97,7 @@
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
 								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
-							</el-col>			
+							</el-col>
 						</el-row>
 					</el-col>
 
@@ -114,22 +114,22 @@
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
 								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
-							</el-col>			
+							</el-col>
 						</el-row>
 					</el-col>
 
-        </div>
-      </el-card>
+		</div>
+	  </el-card>
 
 			<el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
 				<el-button type="success" icon="el-icon-check" :loading="false" round>Cargar</el-button>
 			</el-col>
-    </el-row>
+	</el-row>
 
-    <!-- you can add element-ui's tooltip -->
-    <el-tooltip placement="top" content="subir">
-      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
-    </el-tooltip>
+	<!-- you can add element-ui's tooltip -->
+	<el-tooltip placement="top" content="subir">
+	  <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+	</el-tooltip>
   </div>
 </template>
 
@@ -198,20 +198,18 @@
 				input5: ''
 			}
 		},
-    computed: {
-      ...mapGetters([
-        'name',
-        'roles'
-      ])
-    },
+	computed: {
+	  ...mapGetters([
+		'name',
+		'roles'
+	  ])
+	},
 		created() {
-      
+
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.components-container{
-		// background-color: #f0f2f5;
-	}
+	
 </style>

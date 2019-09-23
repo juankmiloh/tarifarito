@@ -2,27 +2,27 @@
   <div class="login-container">
 
     <el-row>
-      <el-col :span="8" style="border: 0px solid red;">
+      <el-col :span="8" style="border: 0px solid red; ">
         <el-row>
           <el-col :span="24" style="border: 0px solid;">
             <div class="grid-logoTarifarito">
-              <img :src="logTarifarito" alt="Tarifarito" style="width: 220 px; height: 250px;">
-            </div>      
-          </el-col>
-          <el-col :span="24" style="border: 0px solid;">
-            <div class="grid-textTarifarito">
-              <span style="font-size: 214%; position: relative; left: 5.5px; top: 1px;">T</span><span style="border-top: 2.9px solid; font-size: 149%; position: relative; top: 0.5px;"><b>ARIFARITO</b></span>
+              <img :src="logTarifarito" alt="Tarifarito" class="imgLogtarifarito">
             </div>
           </el-col>
-        </el-row>          
+          <el-col :span="24" style="border: 0px solid;">
+            <div class="grid-textoTarifarito">
+              <span class="letraT">T</span><span class="otrasLetras"><b>ARIFARITO</b></span>
+            </div>
+          </el-col>
+        </el-row>
       </el-col>
 
-      <el-col :span="16" style="border: 0px solid;">
+      <el-col :span="16" style="border: 0px solid; z-index: 1;">
 
         <el-row>
           <el-col :span="24" style="border: 0px solid;">
             <div class="grid-logoSuper">
-              <img :src="logSuper" alt="Superservicios" style="width: 250 px; height: 150px; margin: auto; display: block !important;">
+              <img :src="logSuper" alt="Superservicios" class="logoSuper">
               <div class="grid-textSuper">
                 <span style="font-size: 250%;"><b>Superservicios</b></span><br>
                 <span style="font-size: 130%;">Superintendencia de Servicios</span><br>
@@ -53,7 +53,7 @@
                 />
               </el-form-item>
 
-              <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
+              <el-tooltip v-model="capsTooltip" content="Mayúscula" placement="right" manual>
                 <el-form-item prop="password">
                   <span class="svg-container">
                     <svg-icon icon-class="password" />
@@ -92,23 +92,46 @@
 </template>
 
 <style>
+  .imgLogtarifarito{
+    position: relative;
+    height: 250px;
+    z-index: 100;
+  }
+
+  .grid-textoTarifarito{
+    /* border-top: 2.5px solid; */
+    text-align: center;    
+    padding-left: 65%;
+    margin-top: -1%;
+    z-index: -1;
+  }
+
+  .grid-textoTarifarito .letraT{
+    font-size: 284%;
+    position: relative;
+    left: -12px;
+    top: -16px;
+  }
+
+  .grid-textoTarifarito .otrasLetras{
+    border-top: 3.7px solid;
+    font-size: 200%;
+    position: relative;
+    left: -22px;
+    top: -16.5px;
+  }
+  
   .grid-logoTarifarito {
     border: 0px solid;
     text-align: center;
     padding-top: 43%;
     padding-left: 60%;
+    z-index: 100;
     /* width: 100%; */
     /* height: 95vh; */
     /* display:flex; */
     /* align-items: center; */
     /* margin-left: 30%; */
-  }
-
-  .grid-textTarifarito{
-    /* border-top: 2.5px solid; */
-    text-align: center;    
-    padding-left: 65%;
-    margin-top: -1%;
   }
 
   .grid-textSuper{
@@ -118,6 +141,12 @@
   .grid-logoSuper{
     padding-top: 5%;
     margin-right: 15%;
+  }
+
+  .logoSuper{
+    height: 150px;
+    margin: auto;
+    display: block !important;
   }
 
   .grid-form{

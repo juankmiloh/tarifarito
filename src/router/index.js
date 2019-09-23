@@ -286,7 +286,7 @@ export const asyncRoutes = [
         path: 'perdidas-stn',
         component: () => import('@/views/roles'),
         name: 'perdidas-stn',
-        meta: { title: 'Perdidas STN', icon: 'example', noCache: true, roles: ['gestor'] }
+        meta: { title: 'Pérdidas STN', icon: 'example', noCache: true, roles: ['gestor'] }
       }
     ]
   },

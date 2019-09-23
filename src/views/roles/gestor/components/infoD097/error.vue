@@ -192,7 +192,5 @@
 </script>
 
 <style lang="scss" scoped>
-	.components-container{
-		// background-color: #f0f2f5;
-	}
+	
 </style>

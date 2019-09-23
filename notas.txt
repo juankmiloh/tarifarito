@@ -12,7 +12,7 @@
     
     request.js    
 
-*cambiar:
+*cambiar | modificar:
     logo -> 
         src/layout/components/sidebar/Logo.vue
     texto logo -> 
@@ -27,6 +27,8 @@
         src\layout\components\Navbar.vue
     visualizacion de dashboard principal segun el rol que inicia sesión) ->
         src\views\dashboard\index.vue
+    el texto del 'menu desplegable' de las pestañas abiertas recientemente
+        src\layout\components\TagsView\index.vue
     
 *asociar:
     rutas de vistas a un nombre especifico que permita redireccionar facil a una vista ->
