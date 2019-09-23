@@ -44,11 +44,11 @@
 									placeholder="IPC"
 									prefix-icon="el-icon-edit"
 									v-model="input1"
-									style="width: 48.5%;">
+									style="width: 16em;">
 								</el-input>
 							</el-col>
 							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 48.5%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
@@ -61,11 +61,11 @@
 									placeholder="IPP"
 									prefix-icon="el-icon-edit"
 									v-model="input2"
-									style="width: 48.5%;">
+									style="width: 16em;">
 								</el-input>
 							</el-col>
 							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 48.5%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>

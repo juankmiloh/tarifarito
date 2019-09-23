@@ -242,7 +242,7 @@ export const asyncRoutes = [
         path: 'Info-comercial',
         component: () => import('@/views/roles'),
         name: 'Info-comercial',
-        meta: { title: 'Información Comercial', icon: 'clipboard', noCache: true, roles: ['gestor'] }
+        meta: { title: 'Información Comercial', icon: 'clipboard', noCache: false, roles: ['gestor'] }
       }
     ]
   },

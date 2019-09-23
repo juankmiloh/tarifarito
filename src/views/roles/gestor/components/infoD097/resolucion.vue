@@ -44,16 +44,19 @@
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
 							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-tooltip class="item" effect="dark" content="Cargo Nivel de Tensión 1 por inversión." placement="left">							
+									<i class="el-icon-info" style="color: #304156;"></i>
+								</el-tooltip>
 								<el-input
 									type="number"
-									placeholder="TENSIÓN 1 | INVERSIÓN"
+									placeholder="CDI"
 									prefix-icon="el-icon-edit"
 									v-model="input1"
-									style="width: 50%;">
+									style="width: 21em;">
 								</el-input>
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
@@ -61,16 +64,19 @@
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
 							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-tooltip class="item" effect="dark" content="Cargo Nivel de Tensión 1 por mantenimiento." placement="left">							
+									<i class="el-icon-info" style="color: #304156;"></i>
+								</el-tooltip>
 								<el-input
 									type="number"
-									placeholder="TENSIÓN 1 | MANTENIMIENTO"
+									placeholder="CDM"
 									prefix-icon="el-icon-edit"
 									v-model="input2"
-									style="width: 50%;">
+									style="width: 21em;">
 								</el-input>
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
@@ -78,16 +84,19 @@
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
 							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-tooltip class="item" effect="dark" content="Cargo Nivel de Tensión 2." placement="left">							
+									<i class="el-icon-info" style="color: #304156;"></i>
+								</el-tooltip>
 								<el-input
 									type="number"
-									placeholder="TENSIÓN 2"
+									placeholder="CD2"
 									prefix-icon="el-icon-edit"
 									v-model="input3"
-									style="width: 50%;">
+									style="width: 21em;">
 								</el-input>
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
@@ -95,16 +104,19 @@
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
 							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-tooltip class="item" effect="dark" content="Cargo Nivel de Tensión 3." placement="left">							
+									<i class="el-icon-info" style="color: #304156;"></i>
+								</el-tooltip>
 								<el-input
 									type="number"
-									placeholder="TENSIÓN 3"
+									placeholder="CD3"
 									prefix-icon="el-icon-edit"
 									v-model="input4"
-									style="width: 50%;">
+									style="width: 21em;">
 								</el-input>
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+								<el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
@@ -202,7 +214,5 @@
 </script>
 
 <style lang="scss" scoped>
-	.components-container{
-		// background-color: #f0f2f5;
-	}
+
 </style>
