@@ -50,9 +50,10 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      if (roles.includes('admin')) {
+      // if (roles.includes('admin')) {
+      if (roles.includes('')) { // se define que rol quiere ver todas las vistas
         accessedRoutes = asyncRoutes || []
-      } else {
+      } else { // solo se permiten ver las vistas definidas al rol
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
       commit('SET_ROUTES', accessedRoutes)

@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div>
     <component :is="currentRole" />
   </div>
 </template>
@@ -10,7 +10,7 @@
 	import viewRevisor from './revisor'
 
 	export default {
-		name: 'Dashboard',
+		name: 'menuRoles',
 		components: { viewGestor, viewRevisor },
 		data() {
 			return {
@@ -24,12 +24,11 @@
 			])
 		},
 		created() {
+			// console.log(this.roles)
 			if (this.roles.includes('gestor')) {
-				// console.log(this.roles)
 				this.currentRole = 'viewGestor'
 			}
 			if (this.roles.includes('revisor')) {
-				// console.log(this.roles)
 				this.currentRole = 'viewRevisor'
 			}
 		}

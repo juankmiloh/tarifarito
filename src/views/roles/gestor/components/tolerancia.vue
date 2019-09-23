@@ -1,391 +1,150 @@
 <template>
-  <div class="login-container">
-    <span>/tolerancia/nivel-tolerancia</span>
-
+  <div class="components-container">
     <el-row>
-      <el-col :span="8" style="border: 0px solid red;">
-        <el-row>
-          <el-col :span="24" style="border: 0px solid;">
-            <div class="grid-logoTarifarito">
-              <img :src="logTarifarito" alt="Tarifarito" style="width: 220 px; height: 250px;">
-            </div>      
-          </el-col>
-          <el-col :span="24" style="border: 0px solid;">
-            <div class="grid-textTarifarito">
-              <span style="font-size: 214%; position: relative; left: 5.5px; top: 1px;">T</span><span style="border-top: 2.9px solid; font-size: 149%; position: relative; top: 0.5px;"><b>ARIFARITO</b></span>
-            </div>
-          </el-col>
-        </el-row>          
+      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+        <aside>
+          <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
+        </aside>
+      </el-col>
+			<el-col :span="24" style="border: 0px solid red; text-align: center;">          
+        <aside>
+          <span style="font-size: 120%;"><b>{{ name }}</b></span>
+        </aside>
       </el-col>
 
-      <el-col :span="16" style="border: 0px solid;">
+			<el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <span><b>NIVEL DE TOLERANCIA</b></span>
+        </div>
+        <div style="margin-bottom:50px;">
+          <el-col :span="24" style="border: 0px solid red; text-align: center;">
+						<el-select v-model="value1" clearable placeholder="Año">
+							<el-option
+								v-for="item in optionsAno"
+								:key="item.value"
+								:label="item.label"
+								:value="item.value">
+							</el-option>
+						</el-select>
+						<el-select v-model="value2" clearable placeholder="Mes">
+							<el-option
+								v-for="item in optionsMes"
+								:key="item.value"
+								:label="item.label"
+								:value="item.value">
+							</el-option>
+						</el-select>
+						<el-input-number v-model="num" :precision="2" @change="handleChange" :step="0.1" :min="0" :max="10" placeholder="Tolerancia"></el-input-number>
+						<el-button type="primary" icon="el-icon-refresh">Modificar</el-button>
+					</el-col>
+        </div>
+      </el-card>
 
-        <el-row>
-          <el-col :span="24" style="border: 0px solid;">
-            <div class="grid-logoSuper">
-              <img :src="logSuper" alt="Superservicios" style="width: 250 px; height: 150px; margin: auto; display: block !important;">
-              <div class="grid-textSuper">
-                <span style="font-size: 250%;"><b>Superservicios</b></span><br>
-                <span style="font-size: 130%;">Superintendencia de Servicios</span><br>
-                <span style="font-size: 130%;">Públicos Domiciliarios</span>
-              </div>  
-            </div>
-          </el-col>
-        </el-row>
-
-        <el-row> <!-- form -->
-          <el-col :span="24" style="border: 0px solid;">
-            <div class="grid-form">
-              <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
-
-              <el-form-item prop="username">
-                <span class="svg-container">
-                  <svg-icon icon-class="user" />
-                </span>
-                <el-input
-                  class="input_user"
-                  ref="username"
-                  v-model="loginForm.username"
-                  placeholder="Usuario"
-                  name="username"
-                  type="text"
-                  tabindex="1"
-                  autocomplete="on"
-                />
-              </el-form-item>
-
-              <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-                <el-form-item prop="password">
-                  <span class="svg-container">
-                    <svg-icon icon-class="password" />
-                  </span>
-                  <el-input
-                    :key="passwordType"
-                    ref="password"
-                    v-model="loginForm.password"
-                    :type="passwordType"
-                    placeholder="Contraseña"
-                    name="password"
-                    tabindex="2"
-                    autocomplete="on"
-                    @keyup.native="checkCapslock"
-                    @blur="capsTooltip = false"
-                    @keyup.enter.native="handleLogin"
-                  />
-                  <span class="show-pwd" @click="showPwd">
-                    <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                  </span>
-                </el-form-item>
-              </el-tooltip>
-
-              <div style="text-align: right;">
-                <el-button :loading="loading" class="btnLogin" @click.native.prevent="handleLogin">Ingresar</el-button>
-              </div>
-
-            </el-form>
-            </div>
-          </el-col>
-        </el-row>
-
-      </el-col>
+			<el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
+				<!-- <el-button icon="el-icon-check" style="background-color: #42b983">Cargar</el-button> -->
+				<el-button type="success" icon="el-icon-check" :loading="false" round>Cargar</el-button>
+			</el-col>
     </el-row>
+
+    <!-- you can add element-ui's tooltip -->
+    <el-tooltip placement="top" content="subir">
+      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+    </el-tooltip>
   </div>
 </template>
 
-<style>
-  .grid-logoTarifarito {
-    border: 0px solid;
-    text-align: center;
-    padding-top: 43%;
-    padding-left: 60%;
-    /* width: 100%; */
-    /* height: 95vh; */
-    /* display:flex; */
-    /* align-items: center; */
-    /* margin-left: 30%; */
-  }
-
-  .grid-textTarifarito{
-    /* border-top: 2.5px solid; */
-    text-align: center;    
-    padding-left: 65%;
-    margin-top: -1%;
-  }
-
-  .grid-textSuper{
-    text-align: center;
-  }
-
-  .grid-logoSuper{
-    padding-top: 5%;
-    margin-right: 15%;
-  }
-
-  .grid-form{
-    padding-top: 3%;
-    margin-right: 15%;
-  }
-
-  .btnLogin{
-    width:100%;
-    margin-bottom:30px;
-    background:#353880;
-    color:white;
-  }
-
-  .btnLogin:hover{
-    background:#4b4d95;
-    color:white;
-  }
-
-  .btnLogin:focus {
-    background: #353880;
-    color:white;
-  }
-</style>
-
 <script>
-  import { validUsername } from '@/utils/validate'
-  import logSuper from '@/assets/superservicios1.png'
-  import logTarifarito from '@/assets/logo_buho.png'
+	import { mapGetters } from 'vuex'
+	import BackToTop from '@/components/BackToTop'
 
   export default {
-    name: 'Login',
-    data() {
-      const validateUsername = (rule, value, callback) => {
-        if (!validUsername(value)) {
-          callback(new Error('Por favor ingrese un usuario válido'))
-        } else {
-          callback()
-        }
-      }
-      const validatePassword = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error('La contraseña no puede ser menor a seis caracteres'))
-        } else {
-          callback()
-        }
-      }
-      return {
-        logSuper: logSuper,
-        logTarifarito: logTarifarito,
-        loginForm: {
-          username: '',
-          password: ''
-          // password: '111111'
-        },
-        loginRules: {
-          username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-        },
-        passwordType: 'password',
-        capsTooltip: false,
-        loading: false,
-        showDialog: false,
-        redirect: undefined,
-        otherQuery: {}
-      }
-    },
-    watch: {
-      $route: {
-        handler: function(route) {
-          const query = route.query
-          if (query) {
-            this.redirect = query.redirect
-            this.otherQuery = this.getOtherQuery(query)
-          }
-        },
-        immediate: true
-      }
-    },
-    created() {
-      // window.addEventListener('storage', this.afterQRScan)
-    },
-    mounted() {
-      if (this.loginForm.username === '') {
-        this.$refs.username.focus()
-      } else if (this.loginForm.password === '') {
-        this.$refs.password.focus()
-      }
-    },
-    destroyed() {
-      // window.removeEventListener('storage', this.afterQRScan)
+		name: 'viewTolerancia',
+		components: { BackToTop },
+		data() {
+			return {
+				myBackToTopStyle: {
+					right: '50px',
+					bottom: '50px',
+					width: '40px',
+					height: '40px',
+					'border-radius': '4px',
+					'line-height': '45px',
+					background: '#e7eaf1'
+				},
+				optionsAno: [{
+					value: '2016',
+					label: '2016'
+				}, {
+					value: '2017',
+					label: '2017'
+				}, {
+					value: '2018',
+					label: '2018'
+				}, {
+					value: '2019',
+					label: '2019'
+				}],
+				optionsMes: [{
+					value: '1',
+					label: 'Enero'
+				}, {
+					value: '2',
+					label: 'Febrero'
+				}, {
+					value: '3',
+					label: 'Marzo'
+				}, {
+					value: '4',
+					label: 'Abril'
+				}, {
+					value: '5',
+					label: 'Mayo'
+				}, {
+					value: '6',
+					label: 'Junio'
+				}, {
+					value: '7',
+					label: 'Julio'
+				}, {
+					value: '8',
+					label: 'Agosto'
+				}, {
+					value: '9',
+					label: 'Septiembre'
+				}, {
+					value: '10',
+					label: 'Octubre'
+				}, {
+					value: '11',
+					label: 'Noviembre'
+				}, {
+					value: '12',
+					label: 'Diciembre'
+				}],
+				value1: '',
+				value2: '',
+				num: ''
+			}
+		},
+    computed: {
+      ...mapGetters([
+        'name',
+        'roles'
+      ])
     },
     methods: {
-      checkCapslock({ shiftKey, key } = {}) {
-        if (key && key.length === 1) {
-          if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-            this.capsTooltip = true
-          } else {
-            this.capsTooltip = false
-          }
-        }
-        if (key === 'CapsLock' && this.capsTooltip === true) {
-          this.capsTooltip = false
-        }
-      },
-      showPwd() {
-        if (this.passwordType === 'password') {
-          this.passwordType = ''
-        } else {
-          this.passwordType = 'password'
-        }
-        this.$nextTick(() => {
-          this.$refs.password.focus()
-        })
-      },
-      handleLogin() {
-        this.$refs.loginForm.validate(valid => {
-          if (valid) {
-            this.loading = true
-            this.$store.dispatch('user/login', this.loginForm)
-              .then(() => {
-                this.$router.push({ path: this.redirect || '/' })
-                this.loading = false
-              })
-              .catch(() => {
-                this.loading = false
-              })
-          } else {
-            console.log('error submit!!')
-            return false
-          }
-        })
-      },
-      getOtherQuery(query) {
-        return Object.keys(query).reduce((acc, cur) => {
-          if (cur !== 'redirect') {
-            acc[cur] = query[cur]
-          }
-          return acc
-        }, {})
+      handleChange(value) {
+        console.log(value);
       }
-    }
-  }
+    },
+		created() {
+      
+		}
+	}
 </script>
 
-<style lang="scss">
-
-  $bg:#c4cbd0;
-  $light_gray:black; //color texto del input
-  $cursor: black; //color del cursor
-
-  @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container .el-input input {
-      color: $cursor;
-    }
-  }
-
-  /* reset element-ui css */
-  .login-container {
-    .el-input {
-      display: inline-block;
-      height: 47px;
-      width: 85%;
-
-      input {
-        background: transparent;
-        border: 0px;
-        -webkit-appearance: none;
-        border-radius: 0px;
-        padding: 12px 5px 12px 15px;
-        color: $light_gray;
-        height: 47px;
-        caret-color: $cursor;
-
-        &:-webkit-autofill {
-          box-shadow: 0 0 0px 1000px $bg inset !important; //color del cuadro de autocompletar
-          -webkit-text-fill-color: $cursor !important;
-        }
-      }
-
-      input::placeholder {
-        color: #787f84;
-      }
-    }
-
-    .el-form-item {
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.1); //color de fondo del input
-      border-radius: 5px;
-      color: #454545;
-    }
-  }
-</style>
-
 <style lang="scss" scoped>
-  $bg: linear-gradient(to bottom, rgba(242,246,248,1) 0%, rgba(242,246,248,1) 27%, rgba(216,225,231,1) 51%, rgba(181,198,208,1) 99%, rgba(181,198,208,1) 100%);
-  $dark_gray: black; // color iconos inputs
-  $light_gray:#eee;
-
-  .login-container {
-    min-height: 100%;
-    width: 100%;
-    // background-color: $bg;
-    background: $bg;
-    overflow: hidden;
-
-    .login-form {
-      position: relative;
-      width: 520px;
-      max-width: 100%;
-      // padding: 160px 35px 0;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .tips {
-      font-size: 14px;
-      color: #fff;
-      margin-bottom: 10px;
-
-      span {
-        &:first-of-type {
-          margin-right: 16px;
-        }
-      }
-    }
-
-    .svg-container {
-      padding: 6px 5px 6px 15px;
-      color: $dark_gray;
-      vertical-align: middle;
-      width: 30px;
-      display: inline-block;
-    }
-
-    .title-container {
-      position: relative;
-
-      .title {
-        font-size: 26px;
-        color: $light_gray;
-        margin: 0px auto 40px auto;
-        text-align: center;
-        font-weight: bold;
-      }
-    }
-
-    .show-pwd {
-      position: absolute;
-      right: 10px;
-      top: 7px;
-      font-size: 16px;
-      color: $dark_gray;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .thirdparty-button {
-      position: absolute;
-      right: 0;
-      bottom: 6px;
-    }
-
-    @media only screen and (max-width: 470px) {
-      .thirdparty-button {
-        display: none;
-      }
-    }
-  }
+	.placeholder-container div {
+		margin: 10px;
+	}
 </style>

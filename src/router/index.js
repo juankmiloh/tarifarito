@@ -218,7 +218,7 @@ export const asyncRoutes = [
         path: 'nivel-tolerancia',
         component: () => import('@/views/roles'),
         name: 'nivel-tolerancia',
-        meta: { title: 'Nivel de Tolerancia', icon: 'size', noCache: true, roles: ['admin', 'gestor'] }
+        meta: { title: 'Nivel de Tolerancia', icon: 'size', noCache: true, roles: ['gestor'] }
       }
     ]
   },
@@ -230,7 +230,7 @@ export const asyncRoutes = [
         path: 'indices-dane',
         component: () => import('@/views/roles'),
         name: 'indices-dane',
-        meta: { title: 'Índices DANE', icon: 'chart', noCache: true, roles: ['admin', 'gestor'] }
+        meta: { title: 'Índices DANE', icon: 'chart', noCache: true, roles: ['gestor'] }
       }
     ]
   },
@@ -240,72 +240,93 @@ export const asyncRoutes = [
     children: [
       {
         path: 'Info-comercial',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'Info-comercial',
-        meta: { title: 'Información Comercial', icon: 'clipboard', noCache: true, roles: ['admin', 'gestor'] }
+        meta: { title: 'Información Comercial', icon: 'clipboard', noCache: true, roles: ['gestor'] }
       }
     ]
   },
+
   {
     path: '/D097',
     component: Layout,
+    redirect: 'noRedirect', // cuando se seleccione esta opcion en la ruta se redirecciona a la vista principal
+    name: 'D097',
+    meta: { title: 'Información D097', icon: 'clipboard', roles: ['gestor'] },
     children: [
       {
-        path: 'info-d097',
-        component: () => import('@/views/error-page/404'),
-        name: 'info-d097',
-        meta: { title: 'Información D097', icon: 'clipboard', noCache: true, roles: ['admin', 'gestor'] }
+        path: 'modificar',
+        component: () => import('@/views/roles'), // Parent router-view
+        name: 'modificar',
+        meta: { title: 'modificar', icon: 'edit', roles: ['gestor'] },
+        redirect: 'noRedirect',
+        children: [
+          {
+            path: 'resolucion',
+            component: () => import('@/views/roles'),
+            name: 'resolucion',
+            meta: { title: 'Resolución', icon: 'form', roles: ['gestor'] }
+          },
+          {
+            path: 'error',
+            component: () => import('@/views/roles'),
+            name: 'error',
+            meta: { title: 'Error', icon: 'bug', roles: ['gestor'] }
+          }
+        ]
       }
     ]
   },
+
   {
     path: '/perdidas',
     component: Layout,
     children: [
       {
         path: 'perdidas-stn',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'perdidas-stn',
-        meta: { title: 'Perdidas STN', icon: 'nested', noCache: true, roles: ['admin', 'gestor'] }
+        meta: { title: 'Perdidas STN', icon: 'example', noCache: true, roles: ['gestor'] }
       }
     ]
   },
+
   // vistas revisor
   {
     path: '/verificacion',
     component: Layout,
-    redirect: '/',
+    redirect: 'noRedirect',
     name: 'verificacion',
     meta: {
       title: 'Verificación CU',
       icon: 'edit',
-      roles: ['admin', 'revisor']
+      roles: ['revisor']
     },
     children: [
       {
         path: 'costo-unitario',
         component: () => import('@/views/roles'),
         name: 'costo-unitario',
-        meta: { title: 'Costo Unitario', icon: 'example', noCache: true, roles: ['admin', 'revisor'] }
+        meta: { title: 'Costo Unitario', icon: 'example', noCache: true, roles: ['revisor'] }
       },
       {
         path: 'componentes',
         component: () => import('@/views/roles'), // Parent router-view
         name: 'componentes',
-        meta: { title: 'Componentes', icon: 'nested', roles: ['admin', 'revisor'] },
-        redirect: '/',
+        meta: { title: 'Componentes', icon: 'nested', roles: ['revisor'] },
+        redirect: 'noRedirect',
         children: [
           {
             path: 'd097',
             component: () => import('@/views/roles'),
             name: 'd097',
-            meta: { title: 'D - CREG 097', icon: 'clipboard', roles: ['admin', 'revisor'] }
+            meta: { title: 'D - CREG 097', icon: 'clipboard', roles: ['revisor'] }
           },
           {
             path: 'd015',
             component: () => import('@/views/roles'),
             name: 'd015',
-            meta: { title: 'D - CREG 015', icon: 'clipboard', roles: ['admin', 'revisor'] }
+            meta: { title: 'D - CREG 015', icon: 'clipboard', roles: ['revisor'] }
           }
         ]
       }
@@ -319,7 +340,7 @@ export const asyncRoutes = [
         path: 'tarifas',
         component: () => import('@/views/error-page/404'),
         name: 'tarifas',
-        meta: { title: 'Verificación Tarifas', icon: 'edit', noCache: true, roles: ['admin', 'revisor'] }
+        meta: { title: 'Verificación Tarifas', icon: 'edit', noCache: true, roles: ['revisor'] }
       }
     ]
   },
@@ -331,7 +352,7 @@ export const asyncRoutes = [
         path: 'sensibilidad',
         component: () => import('@/views/error-page/404'),
         name: 'sensibilidad',
-        meta: { title: 'Análisis de senbilidad', icon: 'skill', noCache: true, roles: ['admin', 'revisor'] }
+        meta: { title: 'Análisis de senbilidad', icon: 'skill', noCache: true, roles: ['revisor'] }
       }
     ]
   },
@@ -343,7 +364,7 @@ export const asyncRoutes = [
         path: 'verificaciones',
         component: () => import('@/views/error-page/404'),
         name: 'verificaciones',
-        meta: { title: 'Histórico Verificaciones', icon: 'tree-table', noCache: true, roles: ['admin', 'revisor'] }
+        meta: { title: 'Histórico Verificaciones', icon: 'tree-table', noCache: true, roles: ['revisor'] }
       }
     ]
   },
@@ -355,7 +376,7 @@ export const asyncRoutes = [
         path: 'reportes',
         component: () => import('@/views/error-page/404'),
         name: 'reportes',
-        meta: { title: 'Reportes', icon: 'form', noCache: true, roles: ['admin', 'revisor'] }
+        meta: { title: 'Reportes', icon: 'form', noCache: true, roles: ['revisor'] }
       }
     ]
   },
@@ -584,7 +605,7 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+// Detail see: https://github.com/vuejs/vue-router/issues/1234noRedirectissuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

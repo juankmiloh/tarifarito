@@ -14,9 +14,9 @@
 
 			<el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span><b>ÍNDICES DANE</b></span>
+          <span><b>INFORMACIÓN D097 | Resolución</b></span>
         </div>
-        <div style="margin-bottom:140px;">
+        <div style="margin-bottom:40px;">
           <el-col :span="24" style="border: 0px solid red; text-align: center;">
 						<el-select v-model="value1" clearable placeholder="Año">
 							<el-option
@@ -26,49 +26,89 @@
 								:value="item.value">
 							</el-option>
 						</el-select>
-						<el-select v-model="value2" clearable placeholder="Mes">
+						<el-select v-model="value2" clearable placeholder="Empresa">
 							<el-option
-								v-for="item in optionsMes"
+								v-for="item in optionsEmpresa"
 								:key="item.value"
 								:label="item.label"
 								:value="item.value">
 							</el-option>
-						</el-select>				
+						</el-select>			
 					</el-col>
+        </div>
+      </el-card>
+
+			<el-card class="box-card" style="margin-top:20px;">
+        <div style="margin-bottom:200px;">
 
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
-							<el-col :span="12" style="text-align:right;  padding-right: 2px;">
+							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
 								<el-input
 									type="number"
-									placeholder="IPC"
+									placeholder="TENSIÓN 1 | INVERSIÓN"
 									prefix-icon="el-icon-edit"
 									v-model="input1"
-									style="width: 48.5%;">
+									style="width: 50%;">
 								</el-input>
 							</el-col>
-							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 48.5%;">Modificar</el-button>
+							<el-col :span="10" style="text-align:left; padding-left: 3px;">
+								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
 
 					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
 						<el-row>
-							<el-col :span="12" style="text-align:right;  padding-right: 2px;">
+							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
 								<el-input
 									type="number"
-									placeholder="IPP"
+									placeholder="TENSIÓN 1 | MANTENIMIENTO"
 									prefix-icon="el-icon-edit"
 									v-model="input2"
-									style="width: 48.5%;">
+									style="width: 50%;">
 								</el-input>
 							</el-col>
-							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 48.5%;">Modificar</el-button>
+							<el-col :span="10" style="text-align:left; padding-left: 3px;">
+								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
 							</el-col>			
 						</el-row>
 					</el-col>
+
+					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
+						<el-row>
+							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-input
+									type="number"
+									placeholder="TENSIÓN 2"
+									prefix-icon="el-icon-edit"
+									v-model="input3"
+									style="width: 50%;">
+								</el-input>
+							</el-col>
+							<el-col :span="10" style="text-align:left; padding-left: 3px;">
+								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+							</el-col>			
+						</el-row>
+					</el-col>
+
+					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
+						<el-row>
+							<el-col :span="14" style="text-align:right;  padding-right: 2px;">
+								<el-input
+									type="number"
+									placeholder="TENSIÓN 3"
+									prefix-icon="el-icon-edit"
+									v-model="input4"
+									style="width: 50%;">
+								</el-input>
+							</el-col>
+							<el-col :span="10" style="text-align:left; padding-left: 3px;">
+								<el-button type="primary" icon="el-icon-refresh" style="width: 30%;">Modificar</el-button>
+							</el-col>			
+						</el-row>
+					</el-col>
+
         </div>
       </el-card>
 
@@ -89,7 +129,7 @@
 	import BackToTop from '@/components/BackToTop'
 
   export default {
-		name: 'viewIndicesDane',
+		name: 'viewInfoComercial',
 		components: { BackToTop },
 		data() {
 			return {
@@ -115,47 +155,38 @@
 					value: '2019',
 					label: '2019'
 				}],
-				optionsMes: [{
-					value: '1',
-					label: 'Enero'
+				optionsEmpresa: [{
+					value: '2103',
+					label: 'CODENSA SA'
 				}, {
-					value: '2',
-					label: 'Febrero'
+					value: '2249',
+					label: 'ELECTRIFICADORA DEL CARIBE SA'
 				}, {
-					value: '3',
-					label: 'Marzo'
+					value: '204',
+					label: 'ELECTRIFICADORA DEL META SA'
+				}],
+				optionsFactor: [{
+					value: '0',
+					label: '0'
 				}, {
-					value: '4',
-					label: 'Abril'
+					value: '0.00725',
+					label: '0.00725'
 				}, {
-					value: '5',
-					label: 'Mayo'
-				}, {
-					value: '6',
-					label: 'Junio'
-				}, {
-					value: '7',
-					label: 'Julio'
-				}, {
-					value: '8',
-					label: 'Agosto'
-				}, {
-					value: '9',
-					label: 'Septiembre'
-				}, {
-					value: '10',
-					label: 'Octubre'
-				}, {
-					value: '11',
-					label: 'Noviembre'
-				}, {
-					value: '12',
-					label: 'Diciembre'
+					value: '0.0145',
+					label: '0.0145'
+				},{
+					value: '0.02175',
+					label: '0.02175'
+				},{
+					value: '0.029',
+					label: '0.029'
 				}],
 				value1: '',
 				value2: '',
 				input1: '',
 				input2: '',
+				input3: '',
+				input4: '',
 			}
 		},
     computed: {
@@ -171,7 +202,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.placeholder-container div {
-		margin: 10px;
+	.components-container{
+		// background-color: #f0f2f5;
 	}
 </style>

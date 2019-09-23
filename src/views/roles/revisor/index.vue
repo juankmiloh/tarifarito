@@ -10,7 +10,7 @@ import viewd097 from './components/d097'
 import viewd015 from './components/d015'
 
 export default {
-  name: 'EditForm',
+  name: 'menuRevisor',
   components: { viewCostoUnitario, viewd097, viewd015 },
 	data() {
 		return {
