@@ -12,21 +12,25 @@
         @click.middle.native="closeSelectedTag(tag)"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
-        {{ tag.title }}
+        {{ generateTitle(tag.title) }}
         <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">Refrescar</li>
+      
+      <!-- <li @click="refreshSelectedTag(selectedTag)">{{ $t('tagsView.refresh') }}</li> -->
+      
+      <li @click="refreshSelectedTag(selectedTag)">Actualizar</li>
       <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">Cerrar</li>
-      <li @click="closeOthersTags">Cerrar Otras</li>
-      <li @click="closeAllTags(selectedTag)">Cerrar Todo</li>
+      <li @click="closeOthersTags">Cerrar otras</li>
+      <li @click="closeAllTags(selectedTag)">Cerrar todo</li>
     </ul>
   </div>
 </template>
 
 <script>
 import ScrollPane from './ScrollPane'
+import { generateTitle } from '@/utils/i18n'
 import path from 'path'
 
 export default {
@@ -66,6 +70,7 @@ export default {
     this.addTags()
   },
   methods: {
+    generateTitle, // generateTitle by vue-i18n
     isActive(route) {
       return route.path === this.$route.path
     },

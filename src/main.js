@@ -13,11 +13,15 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import i18n from './lang' // Internationalization
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
+
+// import 'vue-awesome/icons'
+// import Icon from 'vue-awesome/components/Icon'
 
 /**
  * If you don't want to use mock-server
@@ -33,7 +37,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'medium', // set element-ui default size
+  i18n: (key, value) => i18n.t(key, value)
 })
 
 // register global utility filters
@@ -41,11 +46,16 @@ Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key])
 })
 
+i18n.locale = 'es'
+
 Vue.config.productionTip = false
+
+// Vue.component('v-icon', Icon)
 
 new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })

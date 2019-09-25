@@ -218,7 +218,7 @@ export const asyncRoutes = [
         path: 'nivel-tolerancia',
         component: () => import('@/views/roles'),
         name: 'nivel-tolerancia',
-        meta: { title: 'Nivel de Tolerancia', icon: 'size', noCache: true, roles: ['gestor'] }
+        meta: { title: 'nivelTolerancia', icon: 'size', noCache: true, roles: ['gestor'] }
       }
     ]
   },

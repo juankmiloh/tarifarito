@@ -23,15 +23,21 @@
         src\views\dashboard\editor\index.vue
     login ->
         src\views\login\index.vue
-    opciones menu desplegable de usuario (perfil, imagen de usuario, salir) ->
+    opciones menu desplegable de usuario (perfil, imagen de usuario, salir) | opcines de busqueda y ampliar a pantalla completa ->
         src\layout\components\Navbar.vue
     visualizacion de dashboard principal segun el rol que inicia sesión) ->
         src\views\dashboard\index.vue
     el texto del 'menu desplegable' de las pestañas abiertas recientemente
         src\layout\components\TagsView\index.vue
+    internacionalización agregar un diccionario al correspondiente script (Teniendo en cuenta el identificador del diccionario):
+        src\lang\es.js <- español
+        src\lang\en.js <- ingles
+    el texto de la raiz del menu (rutas)
+        src\components\Breadcrumb\index.vue
     
 *asociar:
     rutas de vistas a un nombre especifico que permita redireccionar facil a una vista ->
         /mock/role/route.js
     que rol puede ver todas las vistas
         src\store\modules\permission.js
+    

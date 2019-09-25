@@ -14,7 +14,7 @@
 
 			<el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span><b>INFORMACIÓN D097 | Error</b></span>
+          <span><b>{{$t('error.info')}} D097 | Error</b></span>
         </div>
         <div style="margin-bottom:40px;">
           <el-col :span="24" style="border: 0px solid red; text-align: center;">
@@ -24,8 +24,8 @@
 							align="right"
 							unlink-panels
 							range-separator="a"
-							start-placeholder="Fecha Inicio"
-							end-placeholder="Fecha Fin"
+							:start-placeholder="$t('datePicker.startDate')"
+							:end-placeholder="$t('datePicker.endDate')"
 							:picker-options="pickerOptions"
 							style="width: 21em;">
 						</el-date-picker>
