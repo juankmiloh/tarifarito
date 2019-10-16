@@ -14,66 +14,12 @@
 
 			<el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span><b>ÍNDICES DANE</b></span>
-        </div>
-        <div style="margin-bottom:140px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center;">
-						<el-select v-model="value1" clearable placeholder="Año">
-							<el-option
-								v-for="item in optionsAno"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value">
-							</el-option>
-						</el-select>
-						<el-select v-model="value2" clearable placeholder="Mes">
-							<el-option
-								v-for="item in optionsMes"
-								:key="item.value"
-								:label="item.label"
-								:value="item.value">
-							</el-option>
-						</el-select>				
-					</el-col>
-
-					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-						<el-row>
-							<el-col :span="12" style="text-align:right;  padding-right: 2px;">
-								<el-input
-									type="number"
-									placeholder="IPC"
-									prefix-icon="el-icon-edit"
-									v-model="input1"
-									style="width: 16em;">
-								</el-input>
-							</el-col>
-							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
-							</el-col>			
-						</el-row>
-					</el-col>
-
-					<el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-						<el-row>
-							<el-col :span="12" style="text-align:right;  padding-right: 2px;">
-								<el-input
-									type="number"
-									placeholder="IPP"
-									prefix-icon="el-icon-edit"
-									v-model="input2"
-									style="width: 16em;">
-								</el-input>
-							</el-col>
-							<el-col :span="12" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
-							</el-col>			
-						</el-row>
-					</el-col>
+          <span><b>ANÁLISIS DE SENSIBILIDAD</b></span>
         </div>
       </el-card>
 
-			<el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
-				<el-button type="success" icon="el-icon-check" :loading="false" round>Cargar</el-button>
+			<el-col :span="24" style="border: 0px solid red; text-align: right; padding: 10px;">
+				<el-button type="success" icon="el-icon-check" :loading="false" round>Consultar</el-button>
 			</el-col>
     </el-row>
 
@@ -178,11 +124,31 @@
 				}, {
 					value: '12',
 					label: 'Diciembre'
-				}],
+        }],        
+				optionsEmpresa: [{
+					value: '2103',
+					label: 'CODENSA SA'
+				}, {
+					value: '2249',
+					label: 'ELECTRIFICADORA DEL CARIBE SA'
+				}, {
+					value: '204',
+					label: 'ELECTRIFICADORA DEL META SA'
+        }],
+        optionsMercado: [{
+					value: '0',
+					label: 'Opción 1'
+				}, {
+					value: '1',
+					label: 'Opción 2'
+				}, {
+					value: '2',
+					label: 'Opción 3'
+        }],
 				value1: '',
-				value2: '',
-				input1: '',
-				input2: '',
+        value2: '',
+        value3: '',
+        value4: ''        
 			}
 		},
     computed: {

@@ -250,7 +250,7 @@ export const asyncRoutes = [
   {
     path: '/D097',
     component: Layout,
-    redirect: 'noRedirect', // cuando se seleccione esta opcion en la ruta se redirecciona a la vista principal
+    redirect: '#', // cuando se seleccione esta opcion en la ruta se redirecciona a la vista principal
     name: 'D097',
     meta: { title: 'Información D097', icon: 'clipboard', roles: ['gestor'] },
     children: [
@@ -259,7 +259,7 @@ export const asyncRoutes = [
         component: () => import('@/views/roles'), // Parent router-view
         name: 'modificar',
         meta: { title: 'modificar', icon: 'edit', roles: ['gestor'] },
-        redirect: 'noRedirect',
+        redirect: '#',
         children: [
           {
             path: 'resolucion',
@@ -295,7 +295,8 @@ export const asyncRoutes = [
   {
     path: '/verificacion',
     component: Layout,
-    redirect: 'noRedirect',
+    // redirect: 'noRedirect',
+    redirect: '#',
     name: 'verificacion',
     meta: {
       title: 'Verificación CU',
@@ -314,7 +315,7 @@ export const asyncRoutes = [
         component: () => import('@/views/roles'), // Parent router-view
         name: 'componentes',
         meta: { title: 'Componentes', icon: 'nested', roles: ['revisor'] },
-        redirect: 'noRedirect',
+        redirect: '#',
         children: [
           {
             path: 'd097',
@@ -333,48 +334,48 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/tarifas',
+    path: '/verificar-tarifas',
     component: Layout,
     children: [
       {
         path: 'tarifas',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'tarifas',
         meta: { title: 'Verificación Tarifas', icon: 'edit', noCache: true, roles: ['revisor'] }
       }
     ]
   },
   {
-    path: '/sensibilidad',
+    path: '/analisis-sensibilidad',
     component: Layout,
     children: [
       {
         path: 'sensibilidad',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'sensibilidad',
-        meta: { title: 'Análisis de senbilidad', icon: 'skill', noCache: true, roles: ['revisor'] }
+        meta: { title: 'Análisis de sensibilidad', icon: 'skill', noCache: true, roles: ['revisor'] }
       }
     ]
   },
   {
-    path: '/verificaciones',
+    path: '/historico-verificaciones',
     component: Layout,
     children: [
       {
         path: 'verificaciones',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'verificaciones',
         meta: { title: 'Histórico Verificaciones', icon: 'tree-table', noCache: true, roles: ['revisor'] }
       }
     ]
   },
   {
-    path: '/reportes',
+    path: '/reportes-revisor',
     component: Layout,
     children: [
       {
         path: 'reportes',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/roles'),
         name: 'reportes',
         meta: { title: 'Reportes', icon: 'form', noCache: true, roles: ['revisor'] }
       }

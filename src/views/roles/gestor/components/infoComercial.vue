@@ -9,6 +9,7 @@
 			<el-col :span="24" style="border: 0px solid red; text-align: center;">          
         <aside>
           <span style="font-size: 120%;"><b>{{ name }}</b></span>
+					<!-- <span style="font-size: 120%;"><b>{{ form.name }}</b></span> -->
         </aside>
       </el-col>
 
@@ -57,8 +58,50 @@
 								</el-select>
 							</el-col>
 							<el-col :span="10" style="text-align:left; padding-left: 3px;">
-								<el-button type="primary" icon="el-icon-circle-plus-outline" style="width: 10em;">Agregar</el-button>
-							</el-col>			
+								<el-button type="primary" @click="dialogFormVisible = true" icon="el-icon-circle-plus-outline" style="width: 10em;">Agregar</el-button>
+							</el-col>
+							<!-- <el-dialog
+								title="Agregar Factor de productividad"
+								:visible.sync="dialogVisible"
+								width="30%"
+								:before-close="handleClose">
+								<span>Ingrese un valor</span>
+								<el-input
+									type="number"
+									placeholder="Factor de productividad"
+									prefix-icon="el-icon-edit"
+									v-model="inputDialog"
+									style="width: 21em;">
+								</el-input>
+								<span slot="footer" class="dialog-footer">
+									<el-button @click="dialogVisible = false">Cancelar</el-button>
+									<el-button type="primary" @click="dialogVisible = false">Confirmar</el-button>
+								</span>
+							</el-dialog>	 -->
+
+							<!-- Form -->
+							<!-- <el-button type="text" @click="dialogFormVisible = true">open a Form nested Dialog</el-button> -->
+
+							<el-dialog title="Agregar Factor de productividad" :before-close="handleClose" :visible.sync="dialogFormVisible">
+								<el-form :model="form">
+									<el-form-item>										
+										<hr>
+										<span>Ingrese un valor</span><br>
+										<el-input
+											type="number"
+											placeholder="Factor de productividad"
+											prefix-icon="el-icon-edit"
+											v-model="form.name"
+											style="width: 21em;">
+										</el-input>
+									</el-form-item>
+								</el-form>
+								<span slot="footer" class="dialog-footer">
+									<el-button @click="dialogFormVisible = false">Cancelar</el-button>
+									<el-button type="primary" @click="functionConfirmar">Confirmar</el-button>
+								</span>
+							</el-dialog>
+
 						</el-row>
 					</el-col>
 					
@@ -179,6 +222,19 @@
 		components: { BackToTop },
 		data() {
 			return {
+				dialogFormVisible: false,
+        form: {
+          name: '',
+          region: '',
+          date1: '',
+          date2: '',
+          delivery: false,
+          type: [],
+          resource: '',
+          desc: ''
+        },
+        formLabelWidth: '120px',
+				dialogVisible: false,
 				myBackToTopStyle: {
 					right: '50px',
 					bottom: '50px',
@@ -230,13 +286,32 @@
 				value1: '',
 				value2: '',
 				value3: '',
+				inputDialog: '',
 				input1: '',
 				input2: '',
 				input3: '',
 				input4: '',
 				input5: '',
+				inputDialog: ''
 			}
 		},
+		methods: {
+      handleClose(done) {
+        this.$confirm('¿Realmente deseas cerrar la ventana?')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+			},
+			functionConfirmar(){
+				// alert('hola function!');
+				this.optionsFactor.push({
+					value: this.form.name,
+					label: this.form.name
+				})
+				this.dialogFormVisible = false
+			}
+    },
     computed: {
       ...mapGetters([
         'name',
