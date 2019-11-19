@@ -258,7 +258,7 @@ export const asyncRoutes = [
         path: 'modificar',
         component: () => import('@/views/roles'), // Parent router-view
         name: 'modificar',
-        meta: { title: 'modificar', icon: 'edit', roles: ['gestor'] },
+        meta: { title: 'Modificar', icon: 'edit', roles: ['gestor'] },
         redirect: '#',
         children: [
           {

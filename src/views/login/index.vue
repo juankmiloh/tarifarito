@@ -247,7 +247,7 @@
     /* display:inline-block; */
 		vertical-align:middle;
 		/* line-height:normal; */
-    font-size: 80%;
+    font-size: 100%;
     cursor: pointer;
   }
 </style>

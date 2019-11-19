@@ -10,7 +10,7 @@
     rutas de vistas y/o permitir asociar vistas a los roles de usuario ->
         src\router\index.js
     
-    request.js    
+    request.js
 
 *cambiar | modificar:
     logo -> 

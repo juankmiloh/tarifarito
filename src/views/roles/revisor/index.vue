@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import viewCostoUnitario from './components/costoUnitario'
+import viewCostoUnitario from './components/costo-unitario/index'
 import viewd097 from './components/d097'
 import viewd015 from './components/d015'
 import viewTarifas from './components/tarifas'
@@ -25,6 +25,7 @@ export default {
 		let route = this.$route //obtenemos los parametros de la URL
 		let tempRoute = Object.assign({}, route) //creamos un objeto de la URL
 		let view = tempRoute.fullPath //obtenemos la URL de la vista
+		console.log(route)
 		console.log(view)
 		
 		if (view == '/verificacion/costo-unitario') {
