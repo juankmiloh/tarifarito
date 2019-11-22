@@ -78,21 +78,36 @@
 										<el-col :span="8">
 											<span>{{value.unidad}}</span>
 										</el-col>
-										<el-col :span="8">
-											<el-input
-													type="number" 
-													:placeholder=value.input.placeholder
-													style="width: 50%;"/>
-											<span v-for="input in value.inputs" :key="input.modelo">
-												<el-input-number
-													v-if="valoresDiferencia === input.show"
-													type="number"
-													:placeholder=input.placeholder
-													style="width: 50%;"/>
+										<el-col :span="8">											
+											<span v-for="input in value.inputs" :key="input.key">
+												<span v-if="input.start === true && input.diferencia === false">
+													<input
+														v-if="valorInputDefault === input.show"
+														v-model=values[input.key].values
+														:type=input.type
+														:placeholder=input.placeholder
+														style="width: 50%;"/>
+												</span>
+												<span v-else-if="input.start === false && input.diferencia === false">
+													<input
+														v-if="valoresDiferencia === input.show"
+														v-model=values[input.key].values
+														:type=input.type
+														:placeholder=input.placeholder
+														style="width: 50%;"/>
+												</span>
+												<span v-else>
+													<input
+														v-if="valoresDiferencia === input.show"
+														v-model=values[input.key].values
+														:type=input.type
+														:placeholder=input.placeholder
+														style="width: 50%;"/>
+												</span>
 											</span>
 										</el-col>
 									</el-row>
-								</el-collapse-item>								
+								</el-collapse-item>
 							</el-collapse>
 						</el-col>
 					</el-row>
@@ -108,7 +123,7 @@
 					<el-button type="primary" @click="functionCalcular">Calcular</el-button>
 					<el-button type="primary" @click="functionVerificar">Verificado</el-button>
 			</el-col>
-		</el-row>		
+		</el-row>
 		<el-row style="padding-top: 0%;">
 			<el-col :span="24" style="border: 0px solid yellow;">
 				<span>Fórmula componente</span>
@@ -132,20 +147,22 @@
 		data() {
 			return {
 				logo: logTarifarito,
+				valorInputDefault: true,
 				valoresDiferencia: false,
 				components: [
 					{
 						title: 'Demanda Comercial Regulada',
 						data: [ 
-										{ campo: '16', 
-											concepto: 'Demanda Comercial Regulada', 
-											unidad: 'kWh', 
-											type: 'number', 
-											placeholder: 'Valor', 
-											input: { modelo: 'input1', placeholder: 'input1', show: true },
-											inputs: [															
-																{ modelo: 'input2', placeholder: 'input2', show: true },
-																{ modelo: 'input3', placeholder: 'input3', show: true },
+										{											
+											campo: '16',
+											concepto: 'Demanda Comercial Regulada',
+											unidad: 'kWh',
+											type: 'number',
+											placeholder: 'Valor',
+											inputs: [
+																{ key: '2kd034', modelo: 'input1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
+																{ key: 'avcn2r', modelo: 'input2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 12 },
+																{ key: 'clm7rv', modelo: 'input3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 },
 														  ], 
 											model2: 'inputDCR2',
 											model3: 'inputDCR3'
@@ -157,17 +174,6 @@
 									] 
 					},
 				],
-				// inputDCR1: 1,
-				myBackToTopStyle: {
-					right: '50px',
-					bottom: '50px',
-					width: '40px',
-					height: '40px',
-					'border-radius': '4px',
-					'line-height': '45px',
-					background: '#e7eaf1'
-				},
-				input: '',
 				matches: [
 					{
 						key: 'avcn2r',
@@ -190,22 +196,29 @@
 						visitor: 'Sampdoria'
 					}
 				],
-				scores: {}
+				scores: {},
+				input: null,
+				values: []
 			}
 		},
 		methods: {
 			showScores() {
-				console.log(this.scores);
+				// console.log(this.scores);
+				console.log(this.values['clm7rv'].values = 26);
+				console.log(this.values['clm7rv']);
 			},
 			functionCalcular() {
 				// console.log('functionCalcular');
 				this.valoresDiferencia = true;
+				console.log('values: ', this.values);
 			},
 			functionVerificar() {
 				// console.log('functionVerificar');
 				this.valoresDiferencia = false;
 			},
-
+			calcularDiferencia() {
+				console.log("Calcular diferencia!");
+			}
 		},
     computed: {
       ...mapGetters([
@@ -221,6 +234,31 @@
 					scores: [null, null]
 				}
 			})
+			let valores = [];
+			let diferencia = 0; 
+			this.components.forEach(item => {
+				item.data.forEach( input => {
+					input.inputs.forEach(campo => {
+						if (campo.diferencia === false) {
+							valores.push(campo.value);
+							this.values[campo.key] = {
+								modelo: campo.modelo,
+								placeholder: campo.placeholder,
+								show: campo.show,
+								values: campo.value
+							}
+						} else {
+							diferencia = valores[0] - valores[1];
+							this.values[campo.key] = {
+								modelo: campo.modelo,
+								placeholder: campo.placeholder,
+								show: campo.show,
+								values: diferencia
+							}
+						}
+					})					
+				})				
+			})
 		},
 		// props(){
 		// 	// title: { type:str }
@@ -232,57 +270,4 @@
 	.el-collapse-item__content{
 		padding-bottom: 1.5%;
 	}
-
-	button {
-		background-color: #009BFF;
-		border: 1px solid #009BFF;
-		border-radius: 2px;
-		color: #fff;
-		font-family: 'Noto Sans';
-		font-size: 14px;
-		height: 35px;
-		padding: 0 12px;
-	}
-
-	table {
-		border-collapse: collapse;
-		margin-top: 20px;
-		width: 100%;
-	}
-
-	table thead {
-		border-bottom: 3px solid #eee;
-	}
-
-	table th,
-	table td {
-		color: #555;
-		font-family: 'Noto Sans';
-		font-size: 14px;
-		padding: 15px;
-		text-align: center;
-	}
-
-	table tbody tr:nth-child(odd) {
-		background-color: #f9f9f9;
-	}
-
-	table tr:not(:last-of-type) {
-		border-bottom: 1px solid #eee;
-	}
-
-	table td:not(:last-of-type) {
-		border-right: 1px solid #eee;
-	}
-
-	table input {
-		border: 1px solid #ccc;
-		border-radius: 2px;
-		color: #555;
-		font-family: 'Noto Sans';
-		font-size: 14px;
-		padding: 5px 10px;
-		width: 50px;
-	}
-
 </style>
