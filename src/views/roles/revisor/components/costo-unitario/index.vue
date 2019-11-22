@@ -1,5 +1,5 @@
 <template>
-  <div class="components-container">		
+  <div class="components-container">
     <el-row>
       <el-col :span="24" style="border: 0px solid red; text-align: center;">
         <aside>
@@ -18,7 +18,7 @@
         </div>
         <div style="margin-bottom:145px;">
           <el-col :span="24" style="border: 0px solid red; text-align: center;">
-						<el-select v-model="value1" clearable placeholder="Año">
+						<el-select v-model="value_ano" clearable placeholder="Año">
 							<el-option
 								v-for="item in optionsAno"
 								:key="item.value"
@@ -26,7 +26,7 @@
 								:value="item.value">
 							</el-option>
 						</el-select><br><br>
-						<el-select v-model="value2" clearable placeholder="Mes">
+						<el-select v-model="value_mes" clearable placeholder="Mes">
 							<el-option
 								v-for="item in optionsMes"
 								:key="item.value"
@@ -34,14 +34,14 @@
 								:value="item.value">
 							</el-option>
 						</el-select><br><br>
-            <el-select v-model="value3" clearable placeholder="Empresa">
+            <el-select v-model="value_empresa" clearable placeholder="Empresa">
 							<el-option
 								v-for="item in optionsEmpresa"
 								:key="item.value"
 								:label="item.label"
 								:value="item.value">
-							</el-option>
-						</el-select>		
+							</el-option>							
+						</el-select>	
 					</el-col>
         </div>
       </el-card>
@@ -54,21 +54,24 @@
 				<el-button type="success" icon="el-icon-check" @click="dialogFormVisible = true">Consultar</el-button>
 			</el-col>
 
-			<el-dialog title="CODENSA" :before-close="handleClose" :visible.sync="dialogFormVisible">
+			<el-dialog :title="getTextSelectEmpresa(value_empresa)" :before-close="handleClose" :visible.sync="dialogFormVisible" width="100%" top="0" height="100vh">
 				<el-dialog
 					:title="modulo"
 					:before-close="handleClose"
 					:visible.sync="innerVisible"
-					append-to-body>
+					append-to-body
+					width="100%"
+					top="0"
+					height="100vh">
 					<component :is="currentView" /> <!-- Se carga la vista de lso diferentes componentes -->
 				</el-dialog>
 								
 				<el-row>
 					<el-col :span="24">
-						<div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%;">
+						<div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;">
 							<el-row>
 								<el-col :span="2" style="border: 0px solid; color: black;">		
-									<div>
+									<div style="text-align: center;">
 										<img v-if="logo" :src="logo" width="100" height="auto">
 									</div>																
 								</el-col>
@@ -89,14 +92,20 @@
 							</el-row>
 						</div>
 						<br>
-						<div style="border: 2px solid #C0C4CC; color: black;">
+						<div style="border: 2px solid #C0C4CC; color: black; background-color: white; border-radius: 4px;">
 							<el-row>
-								<el-col :span="24" style="border: 0px solid; color: black; padding-top: 1%;">	
-									<el-row>
-										<el-col :span="20" style="border: 0px solid; color: black; text-align: left; padding-left: 2%;">									
-											<span><b>AÑO:</b> 2019</span>
-											<span><b>MES:</b> 1</span>
-											<span><b>TOLERANCIA:</b> 1</span>
+								<el-col :span="24" style="border: 0px solid; color: black; padding-top: 1%; background-color: #304156;">	
+									<el-row style="padding-bottom: 1em;">
+										<el-col :span="20" style="border: 0px solid; color: black; text-align: left; padding-left: 0.6em; color: white;">
+											<el-row>
+												<el-col :span="8"><span><b>AÑO:</b> {{value_ano}}</span></el-col>
+											</el-row>							
+											<el-row>
+												<el-col :span="8"><span><b>MES:</b> {{getTextSelectMes(value_mes)}}</span></el-col>
+											</el-row>							
+											<el-row>
+												<el-col :span="8"><span><b>TOLERANCIA:</b> 1</span></el-col>
+											</el-row>																		
 										</el-col>
 										<el-col :span="4" style="border: 0px solid; color: black; text-align: center; padding-right: 2%;">									
 											<el-input
@@ -109,7 +118,7 @@
 									<el-table
 										:default-sort = "{prop: 'nt_pro', order: 'ascending'}"
 										:data="tableData.filter(data => !search || data.mercado.toLowerCase().includes(search.toLowerCase()))"
-										height="17em"
+										height="53vh"
 										style="width: 100%; height: 100%;">
 										<el-table-column
 											prop="idmercado"
@@ -374,33 +383,15 @@
 					</el-col>
 				</el-row>
 
-				<!-- <el-form style="border: 0px solid red;" :model="form">
-					<el-form-item>
-						<hr>
-						<span>Ingrese un valor</span><br>
-						<el-input
-							type="number"
-							placeholder="Factor de productividad"
-							prefix-icon="el-icon-edit"
-							v-model="form.name"
-							style="width: 21em;">
-						</el-input>
-					</el-form-item>
-				</el-form> -->
-				<span slot="footer" class="dialog-footer" style="border: 0px solid;">
-					<el-button @click="dialogFormVisible = false">Cancelar</el-button>
-					<el-button type="primary" @click="functionConfirmar">Verificación en lote</el-button>
-					<el-tooltip class="item" effect="dark" content="La ejecución de este boton, cerrará la verificación de los componentes que no superaron los niveles de tolerancia establecidos." placement="top-start">							
-						<i class="el-icon-info" style="color: #304156;"></i>
-					</el-tooltip>
-				</span>
+				<el-row style="padding-top: 1%;">
+					<el-col :span="15" style="border: 1px solid transparent;"></el-col>
+					<el-col :span="9" style="text-align: right; border: 0px solid;">
+							<el-button @click="dialogFormVisible = false">Cancelar</el-button>
+							<el-button type="primary" @click="functionConfirmar">Verificado</el-button>
+					</el-col>
+				</el-row>
 			</el-dialog>
     </el-row>
-
-    <!-- you can add element-ui's tooltip -->
-    <el-tooltip placement="top" content="subir">
-      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
-    </el-tooltip>
   </div>
 </template>
 
@@ -424,7 +415,7 @@
 				modulo: null,
 				currentView: null,
 				changeView: null,
-				logo: logTarifarito,
+				logo: logTarifarito,		
 				tableData: [
 					{
 						idmercado: '174',
@@ -465,13 +456,121 @@
 					{
 						idmercado: '177',
 						mercado: 'Medellin',
-						nt_pro: '1 - 49',
+						nt_pro: '1 - 100',
 						component_g: [{value: "g", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
 						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
 						component_p: [{value: "p", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
 						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
 						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
 						component_c: [{value: "c", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
+					},
+					{
+						idmercado: '178',
+						mercado: 'Cartagena',
+						nt_pro: '1 - 50',
+						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
+						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
 						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
 					},
 					{
@@ -596,9 +695,9 @@
 					value: '204',
 					label: 'ELECTRIFICADORA DEL META SA'
 				}],
-				value1: '',
-        value2: '',
-        value3: '',        
+				value_ano: '',
+        value_mes: '',
+        value_empresa: '',
 			}
 		},
 		methods: {
@@ -611,37 +710,37 @@
 				// console.log(this.changeView);}
 				console.log("componente seleccionado -> "+component);
 				if (component == "g") {		
-					this.modulo = "CODENSA - CHOCO | Módulo Generación"		
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Generación"
 					this.currentView = 'viewG';
 					this.innerVisible = true;
 				}
 				if (component == "t") {			
-					this.modulo = "CODENSA - CHOCO | Módulo Transmisión"		
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Transmisión"
 					this.currentView = 'viewT';
 					this.innerVisible = true;
 				}
 				if (component == "p") {					
-					this.modulo = "CODENSA - CHOCO | Módulo Perdidas"
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Perdidas"
 					this.currentView = 'viewP';
 					this.innerVisible = true;
 				}
-				if (component == "dtun") {				
-					this.modulo = "CODENSA - CHOCO | Componente DTUN"	
+				if (component == "dtun") {
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Componente DTUN"
 					this.currentView = 'viewDtun';
 					this.innerVisible = true;
 				}
 				if (component == "r") {					
-					this.modulo = "CODENSA - CHOCO | Módulo Restricciones"
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Restricciones"
 					this.currentView = 'viewR';
 					this.innerVisible = true;
 				}
 				if (component == "c") {				
-					this.modulo = "CODENSA - CHOCO | Módulo Comercialización"	
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Comercialización"
 					this.currentView = 'viewC';
 					this.innerVisible = true;
 				}
 				if (component == "cu") {					
-					this.modulo = "CODENSA - CHOCO | Módulo CU"
+					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo CU"
 					this.currentView = 'viewCu';
 					this.innerVisible = true;
 				}
@@ -664,6 +763,23 @@
 					label: this.form.name
 				})
 				this.dialogFormVisible = false
+			},
+			getTextSelectEmpresa(val) {
+				for (let i = 0; i < this.optionsEmpresa.length; i++) {
+					if (this.optionsEmpresa[i].value === val){
+						// console.log(this.optionsEmpresa[i].label);
+						return this.optionsEmpresa[i].label;
+					}
+				}
+				return '';
+			},
+			getTextSelectMes(val) {
+				for (let i = 0; i < this.optionsMes.length; i++) {
+					if (this.optionsMes[i].value === val){
+						return this.optionsMes[i].label;
+					}
+				}
+				return '';
 			}
     },
     computed: {
@@ -680,20 +796,41 @@
 
 <style lang="scss">
 
+	.el-dialog__wrapper{
+		display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+		// background-color: #F2F6FC;
+	}
+
 	.el-dialog{
-		width: 100%;
-		height: 100%;
+		flex: 1;
+		background-color: #F2F6FC;		
+	}
+
+	.el-dialog__headerbtn .el-dialog__close {
+    color: white;
 	}
 
 	.el-dialog__header{
-		margin-top: -15vh;
-		padding-left: 1.8%;
-		color: black;
-		font-weight: bold;
+		background-color: #304156;
+		padding-bottom: 1em;
 	}	
+
+	.el-dialog__title{
+		font-weight: bold;
+		color: white;
+		margin-left: 0.5%;
+	}
 
 	.el-dialog__body{
 		padding-top: 1%;
+		padding-left: 3%;
+		padding-right: 3%;
+	}
+
+	.el-dialog__footer{
+		
 	}
 
 	.cell{
@@ -707,12 +844,4 @@
 		padding-bottom: 2%; 
 		border-bottom: 1px solid;
 	}
-
-	// .el-popover{
-	// 	background-color: #F2F6FC;
-	// }
-
-	// .popper__arrow{
-		
-	// }
 </style>
