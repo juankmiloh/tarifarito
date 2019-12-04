@@ -15,6 +15,7 @@
 			<el-card class="box-card">
         <div slot="header" class="clearfix">
           <span><b>COSTO UNITARIO</b></span>
+					<p>valor del hijo: {{valor}}</p>
         </div>
         <div style="margin-bottom:145px;">
           <el-col :span="24" style="border: 0px solid red; text-align: center;">
@@ -63,9 +64,10 @@
 					width="100%"
 					top="0"
 					height="100vh">
-					<component :is="currentView" /> <!-- Se carga la vista de lso diferentes componentes -->
-				</el-dialog>
-								
+					<!-- Se carga la vista de los diferentes componentes -->
+					<!-- <component :is="currentView" v-on:inputChange="handleChange" @clicked="onClickChild"/> -->
+					<component :is="currentView" @clicked="onClickChild"/>
+				</el-dialog>				
 				<el-row>
 					<el-col :span="24">
 						<div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;">
@@ -387,7 +389,10 @@
 					<el-col :span="15" style="border: 1px solid transparent;"></el-col>
 					<el-col :span="9" style="text-align: right; border: 0px solid;">
 							<el-button @click="dialogFormVisible = false">Cancelar</el-button>
-							<el-button type="primary" @click="functionConfirmar">Verificado</el-button>
+							<el-button type="primary" @click="functionConfirmar">Verificación en lote</el-button>
+							<el-tooltip class="item" effect="dark" content="Se cerrará la verificación de los componentes que no superaron los niveles de tolerancia establecidos." placement="top-start">
+								<i class="el-icon-info" style="color: #304156;"></i>
+							</el-tooltip>
 					</el-col>
 				</el-row>
 			</el-dialog>
@@ -406,308 +411,44 @@
 	import viewR from './modules/component-r.vue'
 	import viewC from './modules/component-c.vue'
 	import viewCu from './modules/component-cu.vue'
+	
+	import meses from './options/optionsMes'
+	import anos from './options/optionsAno'
+	import componentsTable from './options/componentsTable'
+	import empresas from './options/optionsEmpresa'
 
   export default {
 		name: 'viewCostoUnitario',
 		components: { BackToTop, viewG, viewT, viewP, viewDtun, viewR, viewC, viewCu },
 		data() {
 			return {
+				valor: 'hello',
 				modulo: null,
 				currentView: null,
-				changeView: null,
-				logo: logTarifarito,		
-				tableData: [
-					{
-						idmercado: '174',
-						mercado: 'Choco',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_c: [{value: "c", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '175',
-						mercado: 'Bogotá',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 500, cpte_calculado: 550, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_c: [{value: "c", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '176',
-						mercado: 'Cali',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_c: [{value: "c", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '177',
-						mercado: 'Medellin',
-						nt_pro: '1 - 100',
-						component_g: [{value: "g", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-					{
-						idmercado: '178',
-						mercado: 'Cartagena',
-						nt_pro: '1 - 50',
-						component_g: [{value: "g", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_t: [{value: "t", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_p: [{value: "p", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_dtun: [{value: "dtun", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_r: [{value: "r", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_c: [{value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50}],
-						component_cu: [{value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0}]
-					},
-				],
+				logo: logTarifarito,
+				tableData: componentsTable,
         search: '',
 				dialogFormVisible: false,
 				innerVisible: false,
-        form: {
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
-        },
-				myBackToTopStyle: {
-					right: '50px',
-					bottom: '50px',
-					width: '40px',
-					height: '40px',
-					'border-radius': '4px',
-					'line-height': '45px',
-					background: '#e7eaf1'
-				},
-				optionsAno: [{
-					value: '2007',
-					label: '2007'
-				}, {
-					value: '2008',
-					label: '2008'
-				}, {
-					value: '2009',
-					label: '2009'
-				}, {	
-					value: '2010',
-					label: '2010'
-				}, {
-					value: '2011',
-					label: '2011'
-				}, {
-					value: '2012',
-					label: '2012'
-				}, {
-					value: '2013',
-					label: '2013'
-				}, {
-					value: '2014',
-					label: '2014'
-				}, {
-					value: '2015',
-					label: '2015'
-				}, {
-					value: '2016',
-					label: '2016'
-				}, {
-					value: '2017',
-					label: '2017'
-				}, {
-					value: '2018',
-					label: '2018'
-				}, {
-					value: '2019',
-					label: '2019'
-				}],
-				optionsMes: [{
-					value: '1',
-					label: 'Enero'
-				}, {
-					value: '2',
-					label: 'Febrero'
-				}, {
-					value: '3',
-					label: 'Marzo'
-				}, {
-					value: '4',
-					label: 'Abril'
-				}, {
-					value: '5',
-					label: 'Mayo'
-				}, {
-					value: '6',
-					label: 'Junio'
-				}, {
-					value: '7',
-					label: 'Julio'
-				}, {
-					value: '8',
-					label: 'Agosto'
-				}, {
-					value: '9',
-					label: 'Septiembre'
-				}, {
-					value: '10',
-					label: 'Octubre'
-				}, {
-					value: '11',
-					label: 'Noviembre'
-				}, {
-					value: '12',
-					label: 'Diciembre'
-        }],        
-				optionsEmpresa: [{
-					value: '2103',
-					label: 'CODENSA SA'
-				}, {
-					value: '2249',
-					label: 'ELECTRIFICADORA DEL CARIBE SA'
-				}, {
-					value: '204',
-					label: 'ELECTRIFICADORA DEL META SA'
-				}],
+				optionsAno: anos,
+				optionsMes: meses,        
+				optionsEmpresa: empresas,
 				value_ano: '',
         value_mes: '',
         value_empresa: '',
 			}
 		},
 		methods: {
-			formatter(row, column) {
-				// console.log(row.address);
-        return row.address;
+			onClickChild (value) {
+				console.log(value) // someValue
+				this.innerVisible = value;
+			},
+			handleChange(event){
+				const { value } = event.target;
+				this.valor = value;
 			},
 			handleClickComponent(index, row, component) {
 				console.log(index, row, component);
-				// console.log(this.changeView);}
 				console.log("componente seleccionado -> "+component);
 				if (component == "g") {		
 					this.modulo = this.getTextSelectEmpresa(this.value_empresa) + " - " + row.mercado + " | Módulo Generación"
@@ -745,11 +486,8 @@
 					this.innerVisible = true;
 				}
       },
-      handleDelete(index, row) {
-        console.log(index, row);
-      },
       handleClose(done) {
-				console.log(done);
+				// console.log('click en el botón cerrar: ', done);
         this.$confirm('¿Realmente deseas cerrar la ventana?')
           .then(_ => {
             done();
@@ -757,12 +495,7 @@
           .catch(_ => {});
 			},
 			functionConfirmar(){
-				// alert('hola function!');
-				this.optionsFactor.push({
-					value: this.form.name,
-					label: this.form.name
-				})
-				this.dialogFormVisible = false
+				console.log('Verificación en lote!');
 			},
 			getTextSelectEmpresa(val) {
 				for (let i = 0; i < this.optionsEmpresa.length; i++) {
