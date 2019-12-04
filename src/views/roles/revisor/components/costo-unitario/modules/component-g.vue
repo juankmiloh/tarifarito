@@ -32,8 +32,8 @@
           <el-row>
             <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
               <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                <el-col style="border: 0px solid red;" :span="13">
-                  <span>CONCEPTO</span>
+                <el-col style="border: 0px solid red; text-align: left;" :span="13">
+                  <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
                 </el-col>
                 <el-col style="border: 0px solid red;" :span="2">
                   <span>UNIDAD</span>
@@ -50,7 +50,6 @@
               </el-row>
               <el-row>
                 <el-col :span="24">
-                  <span style="color: black;">{{ actualiza }}</span>
                   <el-collapse accordion>
                     <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
                       <template slot="title">

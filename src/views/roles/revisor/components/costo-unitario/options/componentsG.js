@@ -33,8 +33,8 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'adrr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
           { key: 'adrr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'adrr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
           { key: 'adrr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
