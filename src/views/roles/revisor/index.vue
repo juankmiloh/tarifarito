@@ -6,8 +6,8 @@
 
 <script>
 import viewCostoUnitario from './components/costo-unitario/index'
-import viewd097 from './components/d097'
-import viewd015 from './components/d015'
+import viewd097 from './components/distribucion/d097'
+import viewd015 from './components/distribucion/d015'
 import viewTarifas from './components/tarifas'
 import viewSensibilidad from './components/sensibilidad'
 import viewHistorico from './components/historico'
@@ -15,7 +15,15 @@ import viewReportes from './components/reportes'
 
 export default {
   name: 'menuRevisor',
-  components: { viewCostoUnitario, viewd097, viewd015, viewTarifas, viewSensibilidad, viewHistorico, viewReportes },
+  components: { 
+		viewCostoUnitario,
+		viewd097,
+		viewd015,
+		viewTarifas,
+		viewSensibilidad,
+		viewHistorico,
+		viewReportes 
+	},
 	data() {
 		return {
 			// currentView: 'defaultDashboard'

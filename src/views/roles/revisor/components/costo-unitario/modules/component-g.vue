@@ -31,77 +31,80 @@
           <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
           <el-row>
             <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
-              <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                <el-col style="border: 0px solid red; text-align: left;" :span="13">
-                  <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="2">
-                  <span>UNIDAD</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>DIFERENCIA</span>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse accordion>
-                    <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
-                      <template slot="title">
-                        {{ item.title }}<i class="header-icon el-icon-information" />
-                      </template>
-                      <el-row v-for="value in item.data" :key="value.campo">
-                        <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
-                          <span>{{ value.concepto }}</span>
-                        </el-col>
-                        <el-col style="border: 0px solid blue; text-align: center;" :span="2">
-                          <span>{{ value.unidad }}</span>
-                        </el-col>
-                        <span v-for="valorInput in value.inputs" :key="valorInput.key">
-                          <span v-if="valorInput.start === true && valorInput.diferencia === false">
-                            <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
+              <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+                  <el-col style="border: 0px solid red; text-align: left;" :span="13">
+                    <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="2">
+                    <span>UNIDAD</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>VALORES</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>VALORES</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>DIFERENCIA</span>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24">
+                    <el-collapse accordion>
+                      <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
+                        <template slot="title">
+                          {{ item.title }}<i class="header-icon el-icon-information" />
+                        </template>
+                        <el-row v-for="value in item.data" :key="value.campo">
+                          <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
+                            <span>{{ value.concepto }}</span>
+                          </el-col>
+                          <el-col style="border: 0px solid blue; text-align: center;" :span="2">
+                            <span>{{ value.unidad }}</span>
+                          </el-col>
+                          <span v-for="valorInput in value.inputs" :key="valorInput.key">
+                            <span v-if="valorInput.start === true && valorInput.diferencia === false">
+                              <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                  :disabled="true"
+                                  @input="diferencia(valorInput.key)"
+                                >
+                              </el-col>
+                            </span>
+                            <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
+                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                  @input="diferencia(valorInput.key)"
+                                >
+                              </el-col>
+                            </span>
+                            <span v-else>
+                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  :disabled="true"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                >
+                              </el-col>
+                            </span>
                           </span>
-                          <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
-                          </span>
-                          <span v-else>
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                :disabled="true"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                              >
-                            </el-col>
-                          </span>
-                        </span>
-                      </el-row>
-                    </el-collapse-item>
-                  </el-collapse>
-                </el-col>
-              </el-row>
+                        </el-row>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </el-col>
+                </el-row>
+              </el-card>
             </el-col>
           </el-row>
         </div>

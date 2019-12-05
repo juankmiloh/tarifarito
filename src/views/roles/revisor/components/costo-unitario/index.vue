@@ -76,18 +76,22 @@
           :before-close="handleClose"
           :visible.sync="dialogComponentP"
           append-to-body
-          top="15%"
+          width="20em"
+          top="10em"
+          border-radius="25px"
         >
           <div style="text-align: center; padding-top: 1.5em;">
             <el-row style="padding-top: 1%;">
               <el-col :span="24">
-                <el-radio v-model="radioCreg" label="1" border>Resolución CREG 097</el-radio>
-                <el-radio v-model="radioCreg" label="2" border>Resolución CREG 015</el-radio>
+                <el-row>
+                  <el-col style="padding-bottom: 1em;" :span="24"><el-radio v-model="radioCreg" style="background-color: white; color: black;" label="1" border>Resolución CREG 097</el-radio></el-col>
+                  <el-col :span="24"><el-radio v-model="radioCreg" style="background-color: white; color: black;" label="2" border>Resolución CREG 015</el-radio></el-col>
+                </el-row>
               </el-col>
             </el-row>
-            <el-row style="margin-top: 2.5em; padding-top: 1.5em; border-top: 1px solid #e0e0e0;">
-              <el-col :span="13" style="border: 1px solid transparent;" />
-              <el-col :span="11" style="border: 0px solid;">
+            <el-row style="margin-top: 2.3em; padding-top: 1.5em; border-top: 1px solid #e0e0e0;">
+              <!-- <el-col :span="13" style="border: 1px solid transparent;" /> -->
+              <el-col :span="24" style="border: 0px solid;">
                 <el-button type="primary" @click="handleSelectComponentP">Seleccionar</el-button>
               </el-col>
             </el-row>
@@ -423,7 +427,7 @@
           </el-col>
         </el-row>
       </el-dialog>
-    </el-row>    
+    </el-row>
   </div>
 </template>
 
@@ -449,7 +453,7 @@ export default {
   name: 'ViewCostoUnitario',
   components: { BackToTop, viewG, viewT, ViewP015, ViewP097, viewDtun, viewR, viewC, viewCu },
   data() {
-    return {      
+    return {
       valor: 'hello',
       modulo: null,
       currentView: null,
@@ -524,11 +528,11 @@ export default {
     handleSelectComponentP() {
       this.dialogComponentP = false
       if (this.radioCreg === '1') {
-        this.modulo = this.modulo  + ' | Módulo Perdidas CREG 097'
+        this.modulo = this.modulo + ' | Módulo Perdidas CREG 097'
         this.currentView = 'ViewP097'
         this.innerVisible = true
       } else if (this.radioCreg === '2') {
-        this.modulo = this.modulo  + ' | Módulo Perdidas CREG 015'
+        this.modulo = this.modulo + ' | Módulo Perdidas CREG 015'
         this.currentView = 'ViewP015'
         this.innerVisible = true
       }

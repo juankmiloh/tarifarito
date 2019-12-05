@@ -31,94 +31,107 @@
           <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
           <el-row>
             <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
-              <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                <el-col style="border: 0px solid red; text-align: left;" :span="13">
-                  <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="2">
-                  <span>UNIDAD</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>DIFERENCIA</span>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse accordion>
-                    <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
-                      <template slot="title">
-                        {{ item.title }}<i class="header-icon el-icon-information" />
-                      </template>
-                      <el-row v-for="value in item.data" :key="value.campo">
-                        <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
-                          <span>{{ value.concepto }}</span>
-                        </el-col>
-                        <el-col style="border: 0px solid blue; text-align: center;" :span="2">
-                          <span>{{ value.unidad }}</span>
-                        </el-col>
-                        <span v-for="valorInput in value.inputs" :key="valorInput.key">
-                          <span v-if="valorInput.start === true && valorInput.diferencia === false">
-                            <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
+              <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+                  <el-col style="border: 0px solid red; text-align: left;" :span="13">
+                    <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="2">
+                    <span>UNIDAD</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>VALORES</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>VALORES</span>
+                  </el-col>
+                  <el-col style="border: 0px solid red;" :span="3">
+                    <span>DIFERENCIA</span>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24">
+                    <el-collapse accordion>
+                      <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
+                        <template slot="title">
+                          {{ item.title }}<i class="header-icon el-icon-information" />
+                        </template>
+                        <el-row v-for="value in item.data" :key="value.campo">
+                          <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
+                            <span>{{ value.concepto }}</span>
+                          </el-col>
+                          <el-col style="border: 0px solid blue; text-align: center;" :span="2">
+                            <span>{{ value.unidad }}</span>
+                          </el-col>
+                          <span v-for="valorInput in value.inputs" :key="valorInput.key">
+                            <span v-if="valorInput.start === true && valorInput.diferencia === false">
+                              <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                  :disabled="true"
+                                  @input="diferencia(valorInput.key)"
+                                >
+                              </el-col>
+                            </span>
+                            <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
+                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                  @input="diferencia(valorInput.key)"
+                                >
+                              </el-col>
+                            </span>
+                            <span v-else>
+                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
+                                <input
+                                  v-model="values[valorInput.key].values"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
+                                  :disabled="true"
+                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                                >
+                              </el-col>
+                            </span>
                           </span>
-                          <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
-                          </span>
-                          <span v-else>
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                :disabled="true"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                              >
-                            </el-col>
-                          </span>
-                        </span>
-                      </el-row>
-                    </el-collapse-item>
-                  </el-collapse>
-                </el-col>
-              </el-row>
+                        </el-row>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </el-col>
+                </el-row>
+              </el-card>
             </el-col>
           </el-row>
         </div>
       </el-col>
     </el-row>
-    <el-row style="padding-top: 1%;">
-      <el-col :span="15" style="border: 0px solid yellow;">
-        <span>Componente publicado $/kWh</span>
-        <el-input v-model="input" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
+    <el-row>
+      <el-col style="border: 0px solid red;" :span="15">
+        <el-row>
+          <span v-for="item in componentsFooter" :key="item.name">
+            <el-col :span="12" style="padding-top: 1em;">
+              <span>{{ item.concepto }}</span>
+              <input
+                v-model="valuesFooter[item.input.key].values"
+                :type="item.input.type"
+                style="width: 30%; margin-left: 1%;"
+              >
+            </el-col>
+          </span>
+        </el-row>
       </el-col>
-      <el-col :span="9" style="text-align: right; border: 0px solid;">
+      <el-col :span="9" style="text-align: right; padding-top: 1em;">
         <el-button type="primary" @click="calcular">Calcular</el-button>
         <el-button v-if="!valoresDiferencia" type="primary" @click="verificar">Verificado</el-button>
         <el-button v-if="valoresDiferencia" type="primary" @click="reportar">Reportar</el-button>
       </el-col>
     </el-row>
-    <el-row style="padding-top: 0%;">
+    <el-row style="padding-top: 1em;">
       <el-col :span="24" style="border: 0px solid yellow;">
         <span>Fórmula componente</span>
         <el-tooltip class="item" effect="dark" content="Fórmula" placement="top-start">
@@ -132,7 +145,8 @@
 <script>
 import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
-import componentesGeneracion from './../options/componentsG'
+import ComponentesP015 from './../options/componentP'
+import ComponentesPFooter from './../options/componentPFooter'
 
 export default {
   name: 'ViewG',
@@ -141,9 +155,11 @@ export default {
       logo: logTarifarito,
       valorInputDefault: true,
       valoresDiferencia: false,
-      components: componentesGeneracion,
+      components: ComponentesP015,
+      componentsFooter: ComponentesPFooter,
       input: 0,
       values: [],
+      valuesFooter: [],
       actualiza: false
     }
   },
@@ -177,6 +193,12 @@ export default {
         })
       })
     })
+    this.componentsFooter.forEach(item => {
+      this.valuesFooter[item.input.key] = {
+        placeholder: item.input.placeholder,
+        values: item.input.value
+      }
+    })
   },
   methods: {
     diferencia: function(key) {
@@ -200,8 +222,8 @@ export default {
     },
     reportar() {
       this.valoresDiferencia = false
-      this.$alert('La empresa no reporto los ajustes aplicados', 'TARIFARITO REPORTA', {
-        confirmButtonText: 'Aceptar',
+      this.$alert('<p style="text-align: center;">El % de pérdidas referido al STN utilizado por la ESP, no corresponde al aprobado por la CREG</p>', 'TARIFARITO REPORTA', {
+        dangerouslyUseHTMLString: true,
         callback: action => {
           this.$emit('clicked', false)
         }
