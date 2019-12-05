@@ -9,9 +9,9 @@ const componentesGeneracion = [
         concepto: 'Demanda Comercial Regulada',
         unidad: 'kWh',
         inputs: [
-          { key: 'dcr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'dcr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'dcr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'dcr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'dcr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'dcr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -21,9 +21,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'drr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'drr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'drr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'drr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'drr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'drr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -33,9 +33,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'adrr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'adrr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'adrr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'adrr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'adrr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'adrr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -45,9 +45,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'prdldr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdldr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdldr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'prdldr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'prdldr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'prdldr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -57,9 +57,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'aprdldr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'aprdldr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'aprdldr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'aprdldr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'aprdldr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'aprdldr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -74,9 +74,9 @@ const componentesGeneracion = [
         concepto: 'Qc',
         unidad: '%',
         inputs: [
-          { key: 'qc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'qc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'qc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'qc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'qc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'qc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -91,9 +91,9 @@ const componentesGeneracion = [
         concepto: 'Pc',
         unidad: 'kWh',
         inputs: [
-          { key: 'pc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'pc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'pc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'pc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'pc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'pc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -103,9 +103,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'cecmragente_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cecmragente_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cecmragente_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'cecmragente_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'cecmragente_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'cecmragente_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -115,9 +115,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'cecmrasic_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cecmrasic_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cecmrasic_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'cecmrasic_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'cecmrasic_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'cecmrasic_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -127,9 +127,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'acecmr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'acecmr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'acecmr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'acecmr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'acecmr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'acecmr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -139,9 +139,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'vcecmragente_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'vcecmragente_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'vcecmragente_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'vcecmragente_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'vcecmragente_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'vcecmragente_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -151,9 +151,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'vcecmrasic_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'vcecmrasic_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'vcecmrasic_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'vcecmrasic_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'vcecmrasic_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'vcecmrasic_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -163,9 +163,9 @@ const componentesGeneracion = [
         type: 'number',
         placeholder: 'Valor',
         inputs: [
-          { key: 'avcecmr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'avcecmr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'avcecmr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'avcecmr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'avcecmr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'avcecmr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -180,9 +180,9 @@ const componentesGeneracion = [
         concepto: 'Qb',
         unidad: '%',
         inputs: [
-          { key: 'qb_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'qb_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'qb_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'qb_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'qb_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'qb_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -197,9 +197,9 @@ const componentesGeneracion = [
         concepto: 'Pb',
         unidad: '$/kWh',
         inputs: [
-          { key: 'pb_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'pb_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'pb_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'pb_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'pb_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'pb_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -207,9 +207,9 @@ const componentesGeneracion = [
         concepto: 'Compras en bolsa MR',
         unidad: 'kWh',
         inputs: [
-          { key: 'cebmr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cebmr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cebmr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'cebmr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'cebmr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'cebmr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -217,9 +217,9 @@ const componentesGeneracion = [
         concepto: 'Valor compras en bolsa MR',
         unidad: '$',
         inputs: [
-          { key: 'vcebmr_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'vcebmr_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'vcebmr_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'vcebmr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'vcebmr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'vcebmr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -234,9 +234,9 @@ const componentesGeneracion = [
         concepto: 'Qagd',
         unidad: '%',
         inputs: [
-          { key: 'qagd_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'qagd_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'qagd_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'qagd_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'qagd_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'qagd_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -244,9 +244,9 @@ const componentesGeneracion = [
         concepto: 'AGPE',
         unidad: '%',
         inputs: [
-          { key: 'agpe_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'agpe_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'agpe_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'agpe_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'agpe_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'agpe_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -254,9 +254,9 @@ const componentesGeneracion = [
         concepto: 'GD',
         unidad: '%',
         inputs: [
-          { key: 'gd_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'gd_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'gd_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'gd_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'gd_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'gd_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -271,9 +271,9 @@ const componentesGeneracion = [
         concepto: 'Mc aplicado',
         unidad: '$/kWh',
         inputs: [
-          { key: 'mca_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'mca_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'mca_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'mca_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'mca_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'mca_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -281,9 +281,9 @@ const componentesGeneracion = [
         concepto: 'Mc',
         unidad: '$/kWh',
         inputs: [
-          { key: 'mc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'mc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'mc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'mc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'mc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'mc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       },
       {
@@ -291,9 +291,9 @@ const componentesGeneracion = [
         concepto: 'Ajuste Mc',
         unidad: '$/kWh',
         inputs: [
-          { key: 'amc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'amc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'amc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'amc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'amc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'amc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -308,9 +308,9 @@ const componentesGeneracion = [
         concepto: 'Factor de Ajuste AJ',
         unidad: '$/kWh',
         inputs: [
-          { key: 'fdaaj_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'fdaaj_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'fdaaj_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'fdaaj_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'fdaaj_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'fdaaj_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -325,9 +325,9 @@ const componentesGeneracion = [
         concepto: 'Alfa',
         unidad: 'Adimensional',
         inputs: [
-          { key: 'alfa_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'alfa_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'alfa_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'alfa_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'alfa_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'alfa_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -342,9 +342,9 @@ const componentesGeneracion = [
         concepto: 'G Transitorio',
         unidad: '$/kWh',
         inputs: [
-          { key: 'gt_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'gt_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'gt_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'gt_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'gt_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'gt_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -359,9 +359,9 @@ const componentesGeneracion = [
         concepto: 'G Contratos',
         unidad: '',
         inputs: [
-          { key: 'gc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'gc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'gc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'gc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'gc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'gc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -376,9 +376,9 @@ const componentesGeneracion = [
         concepto: 'G Bolsa',
         unidad: '',
         inputs: [
-          { key: 'gb_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'gb_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'gb_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'gb_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'gb_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'gb_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -393,9 +393,9 @@ const componentesGeneracion = [
         concepto: 'CFNC',
         unidad: '$/kWh',
         inputs: [
-          { key: 'cfnc_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cfnc_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cfnc_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'cfnc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'cfnc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'cfnc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]
@@ -410,9 +410,9 @@ const componentesGeneracion = [
         concepto: 'Componente Generación',
         unidad: '$/kWh',
         inputs: [
-          { key: 'cg_1', type: 'number', placeholder: 'input1', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cg_2', type: 'number', placeholder: 'input2', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cg_3', type: 'number', placeholder: 'input3', start: false, show: true, diferencia: true, value: 0 }
+          { key: 'cg_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+          { key: 'cg_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+          { key: 'cg_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
         ]
       }
     ]

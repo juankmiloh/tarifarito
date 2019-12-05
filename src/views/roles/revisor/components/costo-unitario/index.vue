@@ -55,22 +55,43 @@
         <el-button type="success" icon="el-icon-check" @click="dialogFormVisible = true">Consultar</el-button>
       </el-col>
 
-      <el-dialog :title="getTextSelectEmpresa(value_empresa)" :before-close="handleClose" :visible.sync="dialogFormVisible" width="100%" top="0" height="100vh">
+      <el-dialog :title="getTextSelectEmpresa(value_empresa)" :before-close="handleClose" :visible.sync="dialogFormVisible" fullscreen append-to-body>
         <!-- Se carga la vista de los diferentes componentes -->
         <el-dialog
           :title="modulo"
           :before-close="handleClose"
           :visible.sync="innerVisible"
+          fullscreen
           append-to-body
-          width="100%"
-          top="0"
-          height="100vh"
         >
           <!-- <component :is="currentView" v-on:inputChange="handleChange" @clicked="onClickChild"/> -->
           <component
             :is="currentView"
             @clicked="onClickChild"
           />
+        </el-dialog>
+
+        <el-dialog
+          title="Seleccione una metodología"
+          :before-close="handleClose"
+          :visible.sync="dialogComponentP"
+          append-to-body
+          top="15%"
+        >
+          <div style="text-align: center; padding-top: 1.5em;">
+            <el-row style="padding-top: 1%;">
+              <el-col :span="24">
+                <el-radio v-model="radioCreg" label="1" border>Resolución CREG 097</el-radio>
+                <el-radio v-model="radioCreg" label="2" border>Resolución CREG 015</el-radio>
+              </el-col>
+            </el-row>
+            <el-row style="margin-top: 2.5em; padding-top: 1.5em; border-top: 1px solid #e0e0e0;">
+              <el-col :span="13" style="border: 1px solid transparent;" />
+              <el-col :span="11" style="border: 0px solid;">
+                <el-button type="primary" @click="handleSelectComponentP">Seleccionar</el-button>
+              </el-col>
+            </el-row>
+          </div>
         </el-dialog>
         <el-row>
           <el-col :span="24">
@@ -402,7 +423,7 @@
           </el-col>
         </el-row>
       </el-dialog>
-    </el-row>
+    </el-row>    
   </div>
 </template>
 
@@ -412,7 +433,8 @@ import BackToTop from '@/components/BackToTop'
 import logTarifarito from '../../../../../assets/logo_buho.png'
 import viewG from './modules/component-g.vue'
 import viewT from './modules/component-t.vue'
-import viewP from './modules/component-p.vue'
+import ViewP015 from './modules/component-p-015'
+import ViewP097 from './modules/component-p-097'
 import viewDtun from './modules/component-dtun.vue'
 import viewR from './modules/component-r.vue'
 import viewC from './modules/component-c.vue'
@@ -425,9 +447,9 @@ import empresas from './options/optionsEmpresa'
 
 export default {
   name: 'ViewCostoUnitario',
-  components: { BackToTop, viewG, viewT, viewP, viewDtun, viewR, viewC, viewCu },
+  components: { BackToTop, viewG, viewT, ViewP015, ViewP097, viewDtun, viewR, viewC, viewCu },
   data() {
-    return {
+    return {      
       valor: 'hello',
       modulo: null,
       currentView: null,
@@ -441,7 +463,9 @@ export default {
       optionsEmpresa: empresas,
       value_ano: '',
       value_mes: '',
-      value_empresa: ''
+      value_empresa: '',
+      dialogComponentP: false,
+      radioCreg: ''
     }
   },
   computed: {
@@ -473,9 +497,8 @@ export default {
         this.innerVisible = true
       }
       if (component === 'p') {
-        this.modulo = this.getTextSelectEmpresa(this.value_empresa) + ' - ' + row.mercado + ' | Módulo Perdidas'
-        this.currentView = 'viewP'
-        this.innerVisible = true
+        this.modulo = this.getTextSelectEmpresa(this.value_empresa) + ' - ' + row.mercado
+        this.dialogComponentP = true
       }
       if (component === 'dtun') {
         this.modulo = this.getTextSelectEmpresa(this.value_empresa) + ' - ' + row.mercado + ' | Componente DTUN'
@@ -498,8 +521,19 @@ export default {
         this.innerVisible = true
       }
     },
+    handleSelectComponentP() {
+      this.dialogComponentP = false
+      if (this.radioCreg === '1') {
+        this.modulo = this.modulo  + ' | Módulo Perdidas CREG 097'
+        this.currentView = 'ViewP097'
+        this.innerVisible = true
+      } else if (this.radioCreg === '2') {
+        this.modulo = this.modulo  + ' | Módulo Perdidas CREG 015'
+        this.currentView = 'ViewP015'
+        this.innerVisible = true
+      }
+    },
     handleClose(done) {
-      // console.log('click en el botón cerrar: ', done);
       this.$confirm('¿Realmente deseas cerrar la ventana?')
         .then(_ => {
           done()
@@ -532,15 +566,14 @@ export default {
 
 <style lang="scss">
 
-  .el-dialog__wrapper{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    // background-color: #F2F6FC;
-  }
+  // .el-dialog__wrapper{
+  //   display: flex;
+  //   flex-direction: column;
+  //   min-height: 100vh;
+  //   // background-color: #F2F6FC;
+  // }
 
   .el-dialog{
-    flex: 1;
     background-color: #F2F6FC;
   }
 

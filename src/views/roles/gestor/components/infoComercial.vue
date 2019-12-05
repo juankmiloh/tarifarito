@@ -324,6 +324,11 @@
 	}
 </script>
 
-<style lang="scss" scoped>
-	
+<style lang="scss" scope>
+	// .el-dialog__wrapper{
+  //   display: flex;
+  //   flex-direction: column;
+  //   min-height: 0vh;
+	// 	bottom: 40%;
+  // }
 </style>

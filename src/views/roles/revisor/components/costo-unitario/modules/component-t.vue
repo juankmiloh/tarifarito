@@ -27,102 +27,83 @@
           </el-row>
         </div>
         <br>
-        <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"> <!-- valor pantalla super -->
-          <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
+        <div class="containerCards">
           <el-row>
-            <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
-              <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                <el-col style="border: 0px solid red; text-align: left;" :span="13">
-                  <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="2">
-                  <span>UNIDAD</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>VALORES</span>
-                </el-col>
-                <el-col style="border: 0px solid red;" :span="3">
-                  <span>DIFERENCIA</span>
-                </el-col>
-              </el-row>
-              <el-row>
-                <el-col :span="24">
-                  <el-collapse accordion>
-                    <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
-                      <template slot="title">
-                        {{ item.title }}<i class="header-icon el-icon-information" />
-                      </template>
-                      <el-row v-for="value in item.data" :key="value.campo">
-                        <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
-                          <span>{{ value.concepto }}</span>
-                        </el-col>
-                        <el-col style="border: 0px solid blue; text-align: center;" :span="2">
-                          <span>{{ value.unidad }}</span>
-                        </el-col>
-                        <span v-for="valorInput in value.inputs" :key="valorInput.key">
-                          <span v-if="valorInput.start === true && valorInput.diferencia === false">
-                            <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
-                          </span>
-                          <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                @input="diferencia(valorInput.key)"
-                              >
-                            </el-col>
-                          </span>
-                          <span v-else>
-                            <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
-                              <input
-                                v-model="values[valorInput.key].values"
-                                :type="valorInput.type"
-                                :placeholder="valorInput.placeholder"
-                                style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                              >
-                            </el-col>
-                          </span>
+            <el-col :span="24" style="border: 0px solid; color: black; padding-top: 1em; padding-left: 10em; padding-right: 10em;">
+              <span v-for="item in components" :key="item.key" :name="item.key">
+                <span v-if="item.start === true">
+                  <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                    <div class="text item">
+                      <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+                        <span v-for="cabecera in item.header" :key="cabecera.title">
+                          <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                            <span>{{ cabecera.title }}</span>
+                          </el-col>
                         </span>
                       </el-row>
-                    </el-collapse-item>
-                  </el-collapse>
-                </el-col>
-              </el-row>
+                      <el-row style="border: 0px solid blue;">
+                        <span v-for="content in item.data" :key="content.campo">
+                          <el-col class="contentConcept" :span="12">
+                            <span class="itemText">{{ content.concepto }}</span>
+                          </el-col>
+                          <el-col class="contentText" :span="4">
+                            <span class="itemText">{{ content.unidad }}</span>
+                          </el-col>
+                          <el-col class="contentText" :span="8">
+                            <input
+                              v-model="values[content.input.key].values"
+                              :type="content.input.type"
+                              :placeholder="content.input.placeholder"
+                              style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                            >
+                          </el-col>
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-card>
+                </span>
+                <span v-else>
+                  <el-card v-if="showCard === item.show" class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                    <div class="text item">
+                      <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+                        <span v-for="cabecera in item.header" :key="cabecera.title">
+                          <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                            <span>{{ cabecera.title }}</span>
+                          </el-col>
+                        </span>
+                      </el-row>
+                      <el-row style="border: 0px solid blue;">
+                        <span v-for="content in item.data" :key="content.campo">
+                          <el-col class="contentConcept" :span="12">
+                            <span class="itemText">{{ content.concepto }}</span>
+                          </el-col>
+                          <el-col class="contentText" :span="4">
+                            <span class="itemText">{{ content.unidad }}</span>
+                          </el-col>
+                          <el-col class="contentText" :span="8">
+                            <input
+                              v-model="values[content.input.key].values"
+                              :type="content.input.type"
+                              :placeholder="content.input.placeholder"
+                              style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                            >
+                          </el-col>
+                        </span>
+                      </el-row>
+                    </div>
+                  </el-card>
+                </span>
+              </span>
             </el-col>
           </el-row>
         </div>
       </el-col>
     </el-row>
     <el-row style="padding-top: 1%;">
-      <el-col :span="15" style="border: 0px solid yellow;">
-        <span>Componente publicado $/kWh</span>
-        <el-input v-model="input" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
-      </el-col>
-      <el-col :span="9" style="text-align: right; border: 0px solid;">
+      <el-col :span="24" style="text-align: center; border: 0px solid;">
         <el-button type="primary" @click="calcular">Calcular</el-button>
-        <el-button v-if="!valoresDiferencia" type="primary" @click="verificar">Verificado</el-button>
-        <el-button v-if="valoresDiferencia" type="primary" @click="reportar">Reportar</el-button>
-      </el-col>
-    </el-row>
-    <el-row style="padding-top: 0%;">
-      <el-col :span="24" style="border: 0px solid yellow;">
-        <span>Fórmula componente</span>
-        <el-tooltip class="item" effect="dark" content="Fórmula" placement="top-start">
-          <i class="el-icon-info" style="color: #304156;" />
-        </el-tooltip>
+        <el-button v-if="!showCard" type="primary" @click="verificar">Verificado</el-button>
+        <el-button v-if="showCard" type="primary" @click="reportar">Reportar</el-button>
       </el-col>
     </el-row>
   </div>
@@ -131,17 +112,15 @@
 <script>
 import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
-import componentesGeneracion from './../options/componentsG'
+import componentesTransmision from './../options/componentsT'
 
 export default {
   name: 'ViewG',
   data() {
     return {
       logo: logTarifarito,
-      valorInputDefault: true,
-      valoresDiferencia: false,
-      components: componentesGeneracion,
-      input: 0,
+      showCard: false,
+      components: componentesTransmision,
       values: [],
       actualiza: false
     }
@@ -153,35 +132,19 @@ export default {
     ])
   },
   created() {
-    const valores = []
-    let diferencia = 0
     this.components.forEach(item => {
-      item.data.forEach(input => {
-        input.inputs.forEach(campo => {
-          if (campo.diferencia === false) {
-            valores.push(campo.value)
-            this.values[campo.key] = {
-              modelo: campo.modelo,
-              placeholder: campo.placeholder,
-              show: campo.show,
-              values: campo.value
-            }
-          } else {
-            diferencia = valores[0] - valores[1]
-            this.values[campo.key] = {
-              modelo: campo.modelo,
-              placeholder: campo.placeholder,
-              show: campo.show,
-              values: diferencia
-            }
-          }
-        })
+      item.data.forEach(campo => {
+        // console.log('inputs transmisión: ', input)
+        this.values[campo.input.key] = {
+          placeholder: campo.input.placeholder,
+          values: campo.input.value
+        }
       })
     })
   },
   methods: {
     diferencia: function(key) {
-      this.actualiza = false // sirve para renderizar el nuevo valor diferencia, no quitar
+      this.actualiza = false // sirve para renderizar el nuevo valor, no quitar
       const splitKey = key.split('_')
       const idKey = splitKey[0]
       const KeyOne = idKey + '_' + 1
@@ -194,14 +157,14 @@ export default {
       this.actualiza = true
     },
     calcular: function() {
-      this.valoresDiferencia = true
+      this.showCard = true
     },
     verificar() {
-      this.valoresDiferencia = false
+      this.showCard = false
     },
     reportar() {
-      this.valoresDiferencia = false
-      this.$alert('La empresa no reporto los ajustes aplicados', 'TARIFARITO REPORTA', {
+      this.showCard = false
+      this.$alert('La empresa publico el cargo máximo y no el cargo mínimo', 'TARIFARITO REPORTA', {
         confirmButtonText: 'Aceptar',
         callback: action => {
           this.$emit('clicked', false)
@@ -215,5 +178,31 @@ export default {
 <style lang="scss">
   .el-collapse-item__content{
     padding-bottom: 1.5%;
+  }
+
+  .containerCards{
+    border: 2px solid #C0C4CC;
+    color: black;
+    background-color: white;
+    border-radius: 5px;
+  }
+
+  .contentConcept{
+    border: 0px solid red;
+    line-height: 3em;
+    text-align: left;
+    padding-left: 10%;
+  }
+
+  .contentText{
+    border: px solid red;
+    line-height: 3em;
+    text-align: center;
+  }
+
+  .itemText{
+    display:inline-block;
+    vertical-align:middle;
+    line-height:normal;
   }
 </style>
