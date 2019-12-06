@@ -127,23 +127,6 @@ const distribucion097 = [
         concepto: 'PR1-2',
         unidad: '%',
         inputs: [
-          { key: 'pr1-2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'pr1-2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'pr1-2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'PR1-2',
-    campo: '12',
-    name: '6',
-    data: [
-      {
-        campo: '12',
-        concepto: 'PR1-2',
-        unidad: '%',
-        inputs: [
           { key: 'pr12_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
           { key: 'pr12_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
           { key: 'pr12_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
@@ -154,7 +137,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT2 - NT1',
     campo: '17',
-    name: '7',
+    name: '6',
     data: [
       {
         campo: '17',
@@ -171,7 +154,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT1 Prop. OR',
     campo: '18',
-    name: '8',
+    name: '7',
     data: [
       {
         campo: '18',
@@ -188,7 +171,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT1 Prop. Cliente',
     campo: '19',
-    name: '9',
+    name: '8',
     data: [
       {
         campo: '19',
@@ -205,7 +188,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT1 Prop. Compartida',
     campo: '20',
-    name: '10',
+    name: '9',
     data: [
       {
         campo: '20',
@@ -222,7 +205,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT2',
     campo: '21',
-    name: '11',
+    name: '10',
     data: [
       {
         campo: '21',
@@ -239,7 +222,7 @@ const distribucion097 = [
   {
     title: 'Cargos acumulados por nivel de tensión por uso del SDL NT3',
     campo: '22',
-    name: '12',
+    name: '11',
     data: [
       {
         campo: '22',
@@ -316,7 +299,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT1 Prop. OR',
     campo: '23',
-    name: '13',
+    name: '12',
     data: [
       {
         campo: '23',
@@ -333,7 +316,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT1 Prop. Cliente',
     campo: '24',
-    name: '14',
+    name: '13',
     data: [
       {
         campo: '24',
@@ -350,7 +333,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT1 Prop. Compartida',
     campo: '25',
-    name: '15',
+    name: '14',
     data: [
       {
         campo: '25',
@@ -367,7 +350,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT2',
     campo: '26',
-    name: '16',
+    name: '15',
     data: [
       {
         campo: '26',
@@ -384,7 +367,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT3',
     campo: '27',
-    name: '17',
+    name: '16',
     data: [
       {
         campo: '27',
@@ -401,7 +384,7 @@ const distribucion097 = [
   {
     title: 'Componente de Distribución NT4',
     campo: '28',
-    name: '18',
+    name: '17',
     data: [
       {
         campo: '28',

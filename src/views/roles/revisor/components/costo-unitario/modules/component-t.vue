@@ -32,7 +32,7 @@
             <el-col :span="24" style="border: 0px solid; color: black; padding-top: 1em; padding-left: 10em; padding-right: 10em;">
               <span v-for="item in components" :key="item.key" :name="item.key">
                 <span v-if="item.start === true">
-                  <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                  <el-card class="box-card" style="border: 2px solid #C0C4CC; padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
                     <div class="text item">
                       <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
                         <span v-for="cabecera in item.header" :key="cabecera.title">
@@ -43,13 +43,13 @@
                       </el-row>
                       <el-row style="border: 0px solid blue;">
                         <span v-for="content in item.data" :key="content.campo">
-                          <el-col class="contentConcept" :span="12">
+                          <el-col style="border: 0px solid;" class="contentConcept" :span="12">
                             <span class="itemText">{{ content.concepto }}</span>
                           </el-col>
-                          <el-col class="contentText" :span="4">
+                          <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
                             <span class="itemText">{{ content.unidad }}</span>
                           </el-col>
-                          <el-col class="contentText" :span="8">
+                          <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
                             <input
                               v-model="values[content.input.key].values"
                               :type="content.input.type"
@@ -63,7 +63,7 @@
                   </el-card>
                 </span>
                 <span v-else>
-                  <el-card v-if="showCard === item.show" class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
+                  <el-card v-if="showCard === item.show" class="box-card" style="border: 2px solid #C0C4CC; padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
                     <div class="text item">
                       <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
                         <span v-for="cabecera in item.header" :key="cabecera.title">
@@ -77,10 +77,10 @@
                           <el-col class="contentConcept" :span="12">
                             <span class="itemText">{{ content.concepto }}</span>
                           </el-col>
-                          <el-col class="contentText" :span="4">
+                          <el-col style="text-align: center;" class="contentText" :span="4">
                             <span class="itemText">{{ content.unidad }}</span>
                           </el-col>
-                          <el-col class="contentText" :span="8">
+                          <el-col style="text-align: center;" class="contentText" :span="8">
                             <input
                               v-model="values[content.input.key].values"
                               :type="content.input.type"
@@ -113,9 +113,8 @@
 import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
 import componentesTransmision from './../options/componentsT'
-
 export default {
-  name: 'ViewG',
+  name: 'ViewT',
   data() {
     return {
       logo: logTarifarito,
@@ -179,27 +178,23 @@ export default {
   .el-collapse-item__content{
     padding-bottom: 1.5%;
   }
-
   .containerCards{
     border: 2px solid #C0C4CC;
     color: black;
     background-color: white;
     border-radius: 5px;
   }
-
   .contentConcept{
     border: 0px solid red;
-    line-height: 3em;
+    line-height: 2em;
     text-align: left;
     padding-left: 10%;
   }
-
   .contentText{
-    border: px solid red;
+    border: 0px solid red;
     line-height: 3em;
     text-align: center;
   }
-
   .itemText{
     display:inline-block;
     vertical-align:middle;

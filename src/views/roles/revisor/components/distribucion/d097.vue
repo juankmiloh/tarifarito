@@ -34,7 +34,7 @@
                 :value="item.value"
               />
             </el-select><br><br>
-            <el-select v-model="value3" clearable placeholder="Empresa">
+            <el-select v-model="value_empresa" clearable placeholder="Empresa">
               <el-option
                 v-for="item in optionsEmpresa"
                 :key="item.value"
@@ -58,14 +58,21 @@
       </el-card>
 
       <el-col :span="24" style="border: 0px solid red; text-align: right; padding: 10px;">
-        <el-button type="success" icon="el-icon-check" :loading="false" round>Consultar</el-button>
+        <el-button round :loading="false" type="success" icon="el-icon-check" @click="showModal()">Consultar</el-button>
       </el-col>
     </el-row>
-
-    <!-- you can add element-ui's tooltip -->
-    <el-tooltip placement="top" content="subir">
-      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
-    </el-tooltip>
+    <el-dialog
+      :title="modulo"
+      :before-close="handleClose"
+      :visible.sync="innerVisible"
+      fullscreen
+      append-to-body
+    >
+      <component
+        :is="currentView"
+        @clicked="onClickChild"
+      />
+    </el-dialog>
   </div>
 </template>
 
@@ -74,14 +81,19 @@ import { mapGetters } from 'vuex'
 import meses from './options/optionsMes'
 import anos from './options/optionsAno'
 import empresas from './options/optionsEmpresa'
+import Distribucion097 from './modules/distribucion097'
 
 export default {
   name: 'D097',
+  components: { Distribucion097 },
   data() {
     return {
       optionsAno: anos,
       optionsMes: meses,
       optionsEmpresa: empresas,
+      currentView: null,
+      innerVisible: false,
+      modulo: null,
       optionsNTPRO: [{
         value: '0',
         label: 'Opción 1'
@@ -94,17 +106,8 @@ export default {
       }],
       value1: '',
       value2: '',
-      value3: '',
-      value4: '',
-      myBackToTopStyle: {
-        right: '50px',
-        bottom: '50px',
-        width: '40px',
-        height: '40px',
-        'border-radius': '4px',
-        'line-height': '45px',
-        background: '#e7eaf1'
-      }
+      value_empresa: '',
+      value4: ''
     }
   },
   computed: {
@@ -115,6 +118,32 @@ export default {
   },
   created() {
 
+  },
+  methods: {
+    handleClose(done) {
+      this.$confirm('¿Realmente deseas cerrar la ventana?')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
+    },
+    showModal() {
+      this.currentView = 'Distribucion097'
+      this.innerVisible = true
+      this.modulo = this.getTextSelectEmpresa(this.value_empresa) + ' - ' + ' | Módulo Distribución CREG 097'
+    },
+    getTextSelectEmpresa(val) {
+      for (let i = 0; i < this.optionsEmpresa.length; i++) {
+        if (this.optionsEmpresa[i].value === val) {
+          return this.optionsEmpresa[i].label
+        }
+      }
+      return ''
+    },
+    onClickChild(value) {
+      console.log(value) // someValue
+      this.innerVisible = value
+    }
   }
 }
 </script>
