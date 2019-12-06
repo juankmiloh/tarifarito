@@ -50,7 +50,7 @@
                             <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
                               <span class="itemText">{{ content.unidad }}</span>
                             </el-col>
-                            <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">                            
+                            <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
                               <input
                                 v-model="values[content.input.key].values"
                                 :type="content.input.type"
@@ -58,7 +58,7 @@
                                 style="width: 75%; height: 2em; margin-bottom: 0.5em;"
                               >
                             </el-col>
-                          </span>  
+                          </span>
                           <span v-else>
                             <span v-if="showCard === content.show">
                               <el-col style="border: 0px solid;" class="contentConcept" :span="12">
@@ -67,7 +67,7 @@
                               <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
                                 <span class="itemText">{{ content.unidad }}</span>
                               </el-col>
-                              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">                            
+                              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
                                 <input
                                   v-model="values[content.input.key].values"
                                   :type="content.input.type"
@@ -76,7 +76,7 @@
                                 >
                               </el-col>
                             </span>
-                          </span>                        
+                          </span>
                         </span>
                       </el-row>
                     </div>

@@ -149,7 +149,7 @@ import ComponentesP097 from './../options/componentP'
 import ComponentesPFooter from './../options/componentPFooter'
 
 export default {
-  name: 'ViewG',
+  name: 'P097',
   data() {
     return {
       logo: logTarifarito,
