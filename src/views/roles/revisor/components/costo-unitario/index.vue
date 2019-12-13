@@ -73,7 +73,6 @@
 
         <el-dialog
           title="Seleccione una metodología"
-          :before-close="handleClose"
           :visible.sync="dialogComponentP"
           append-to-body
           width="20em"
@@ -375,7 +374,7 @@
                         </el-popover>
                       </template>
                     </el-table-column>
-                    <el-table-column label="Cu">
+                    <!-- <el-table-column label="Cu">
                       <template slot-scope="scope">
                         <el-popover
                           placement="top-start"
@@ -408,7 +407,7 @@
                           />
                         </el-popover>
                       </template>
-                    </el-table-column>
+                    </el-table-column> -->
                   </el-table>
                 </el-col>
               </el-row>
