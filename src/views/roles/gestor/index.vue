@@ -11,17 +11,32 @@ import viewInfoComercial from './components/infoComercial'
 import viewResolucion from './components/infoD097/resolucion'
 import viewError from './components/infoD097/error'
 import viewPerdidas from './components/perdidasSTN'
-import { fetchList } from '@/api/users'
+import {
+  getNToleranciaList,
+  getNTolerancia,
+  postNTolerancia,
+  deleteNTolerancia,
+  putNTolerancia
+} from '@/api/gestor/tolerancia'
 
 export default {
   name: 'MenuGestor',
-  components: { viewTolerancia, viewIndicesDane, viewInfoComercial, viewResolucion, viewError, viewPerdidas },
+  components: {
+    viewTolerancia,
+    viewIndicesDane,
+    viewInfoComercial,
+    viewResolucion,
+    viewError,
+    viewPerdidas
+  },
   data() {
-    console.log('Consumo de API!')
-    this.fetchData()
+    // console.log('Consumo de API!')
+    // this.dropNTolerancia()
+    // this.sendNTolerancia()
+    // this.modifyNTolerancia()
+    this.getListNTolerancia()
     return {
       // currentView: 'defaultDashboard'
-      list: null,
       listLoading: true
     }
   },
@@ -46,12 +61,58 @@ export default {
     }
   },
   methods: {
-    fetchData() {
+    async getListNTolerancia() {
       this.listLoading = true
-      fetchList(1016040458).then(response => {
+      await getNToleranciaList().then(response => {
         this.list = response
-        this.listLoading = false
-        console.log('response: ', this.list)
+        console.log(this.list)
+      })
+    },
+    async sendNTolerancia() {
+      const model = {
+        anio: 2017,
+        meses: {
+          enero: [
+            {
+              fecha_modif: '',
+              n_tolerancia: 0
+            },
+            {
+              fecha_modif: '',
+              n_tolerancia: 1
+            }
+          ],
+          febrero: [
+            {
+              fecha_modif: '',
+              n_tolerancia: 3
+            },
+            {
+              fecha_modif: '',
+              n_tolerancia: 4
+            }
+          ]
+        }
+      }
+      await postNTolerancia(model).then(response => {
+        const list = response
+        console.log(list)
+      })
+    },
+    async modifyNTolerancia() {
+      const model = {
+        fecha_modif: '',
+        n_tolerancia: 1.34
+      }
+      await getNTolerancia(2017).then(response => {
+        putNTolerancia(2017, 'enero', model).then(response => {
+          console.log(response)
+        })
+      })
+    },
+    async dropNTolerancia() {
+      await deleteNTolerancia(2017).then(response => {
+        console.log(response)
       })
     }
   }

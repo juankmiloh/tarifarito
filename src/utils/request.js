@@ -28,7 +28,7 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    const res = response.data
+    const res = JSON.parse(JSON.stringify(response.data))
     return res
   },
   error => {
