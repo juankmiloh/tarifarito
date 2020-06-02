@@ -1,121 +1,107 @@
 <template>
-  <div class="components-container">
-    <el-row>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+  <div class="div-cont">
+    <el-row class="cont-row">
+      <el-col :span="24">
         <aside>
-          <span style="color: black; font-size: 170%;">
+          <span class="text-header">
             <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
           </span>
         </aside>
       </el-col>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+      <el-col :span="24">
         <aside>
-          <span style="font-size: 120%;">
+          <span class="text-user">
             <b>{{ name }}</b>
           </span>
         </aside>
       </el-col>
-
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>
-            <b>NIVEL DE TOLERANCIA</b>
-          </span>
-        </div>
-        <div style="margin-bottom:50px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center;">
-            <el-select v-model="value1" placeholder="Año" @change="verifyVariable($event)">
-              <el-option
-                v-for="item in optionsAno"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-select
-              v-model="value2"
-              :disabled="value1 == ''"
-              placeholder="Mes"
-              @change="verifyVariable($event)"
-            >
-              <el-option
-                v-for="item in optionsMes"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-input-number
-              v-model="variable"
-              :disabled="disableVariable"
-              :precision="2"
-              :step="0.01"
-              :min="0"
-              :max="10"
-              placeholder="Tolerancia"
-              @change="verifyVariable('input')"
-            />
-            <el-button
-              :disabled="disableModify"
-              type="primary"
-              :loading="loadingModify"
-              icon="el-icon-refresh"
-              class="btnLogin"
-              @click.native.prevent="modifyVariable"
-            >Modificar</el-button>
-          </el-col>
-        </div>
-      </el-card>
-
-      <el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
-        <el-button
-          :disabled="disableLoad"
-          type="success"
-          :loading="loadingLoad"
-          icon="el-icon-check"
-          class="btnLogin"
-          round
-          @click.native.prevent="saveVariable"
-        >Cargar</el-button>
-      </el-col>
     </el-row>
-    <!-- you can add element-ui's tooltip -->
-    <el-tooltip placement="top" content="subir">
-      <back-to-top
-        :custom-style="myBackToTopStyle"
-        :visibility-height="300"
-        :back-position="50"
-        transition-name="fade"
-      />
-    </el-tooltip>
+
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span class="text-page">
+          <b>NIVEL DE TOLERANCIA</b>
+        </span>
+      </div>
+      <el-row :gutter="1">
+        <el-col :sm="24" :md="8" style="text-align: right;">
+          <el-select v-model="value1" placeholder="Año" class="select" @change="verifyVariable($event)">
+            <el-option
+              v-for="item in optionsAno"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :sm="24" :md="8" style="text-align: center;">
+          <el-select v-model="value2" placeholder="Mes" class="select" @change="verifyVariable($event)">
+            <el-option
+              v-for="item in optionsMes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :sm="24" :md="8" style="text-align: left;">
+          <el-input-number
+            id="input"
+            v-model="variable"
+            :disabled="disableVariable"
+            :precision="2"
+            :step="0.01"
+            :min="0"
+            :max="10"
+            class="input-number"
+            @change="verifyVariable('input_variable')"
+          />
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <el-card class="box-card margin-card">
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-button
+            :disabled="disableModify"
+            type="primary"
+            icon="el-icon-refresh"
+            :loading="loadingModify"
+            class="btn"
+            @click.native.prevent="modifyVariable"
+          >Modificar</el-button>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-button
+            :disabled="disableLoad"
+            type="success"
+            icon="el-icon-check"
+            :loading="loadingLoad"
+            class="btn"
+            @click.native.prevent="saveVariable"
+          >Cargar</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import BackToTop from '@/components/BackToTop'
 import { Message } from 'element-ui'
 import { CONSTANTS } from '../../../../constants/constants'
 import {
   getNTolerancia,
   postNTolerancia,
   putNTolerancia
-} from '@/api/gestor/tolerancia'
+} from '@/api/gestor/nTolerancia'
 
 export default {
   name: 'ViewTolerancia',
-  components: { BackToTop },
   data() {
     return {
-      myBackToTopStyle: {
-        right: '50px',
-        bottom: '50px',
-        width: '40px',
-        height: '40px',
-        'border-radius': '4px',
-        'line-height': '45px',
-        background: '#e7eaf1'
-      },
+      myBackToTopStyle: CONSTANTS.myBackToTopStyle,
       disableLoad: true,
       disableModify: true,
       disableVariable: true,
@@ -139,7 +125,7 @@ export default {
         if (response.length > 0 && this.value2 !== '') {
           const mes = this.optionsMes[this.value2 - 1].key
           if (response[0].meses.hasOwnProperty(mes)) {
-            if (evt !== 'input') {
+            if (evt !== 'input_variable') {
               const length = response[0].meses[mes].length - 1
               const valueVariable = response[0].meses[mes][length].n_tolerancia
               if (valueVariable >= 0) {
@@ -152,7 +138,7 @@ export default {
               this.disableModify = false
             }
           } else {
-            if (evt !== 'input') {
+            if (evt !== 'input_variable') {
               this.disableVariable = false
               this.disableLoad = false
               this.disableModify = true
@@ -160,7 +146,7 @@ export default {
             }
           }
         } else if (response.length === 0 && this.value2 !== '') {
-          if (evt !== 'input') {
+          if (evt !== 'input_variable') {
             this.disableVariable = false
             this.disableLoad = false
             this.disableModify = true
@@ -182,7 +168,7 @@ export default {
         Message({
           message: 'Registro actualizado con éxito!',
           type: 'success',
-          duration: 5 * 1000
+          duration: 2 * 1000
         })
         this.loadingModify = false
       })
@@ -210,7 +196,7 @@ export default {
             Message({
               message: 'Registro guardado con éxito!',
               type: 'success',
-              duration: 5 * 1000
+              duration: 2 * 1000
             })
           })
         } else {
@@ -222,7 +208,7 @@ export default {
             Message({
               message: 'Registro guardado con éxito!',
               type: 'success',
-              duration: 5 * 1000
+              duration: 2 * 1000
             })
           })
           this.loadingLoad = false
@@ -235,7 +221,85 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.placeholder-container div {
-		margin: 10px;
+  .text-header {
+    color: black;
+  }
+
+  .div-cont {
+    padding: 1em;
+  }
+  .margin-card {
+    margin-top: 1em;
+  }
+
+  .cont-row {
+    text-align: center;
+  }
+
+	// Pantallas superiores a 800px (PC)
+	@media screen and (min-width: 800px) {
+    .text-header {
+      font-size: x-large;
+    }
+
+    .text-user {
+      font-size: large;
+    }
+
+    .text-page {
+      font-size: large;
+    }
+
+		.cont-col-right {
+			text-align: right;
+		}
+
+    .cont-select {
+      width: 33.3%;
+    }
+
+    .select {
+      width: 15em;
+    }
+
+		.input-number {
+			width: 15em;
+		}
+
+		.btn {
+			width: 10em;
+		}
+	}
+
+	// Pantallas inferiores a 800px (mobile)
+	@media screen and (max-width: 800px) {
+    .text-header {
+      font-size: small;
+    }
+
+    .text-user {
+      font-size: small;
+    }
+
+    .text-page {
+      font-size: small;
+    }
+
+		.cont-col-right {
+			padding-bottom: 0.5em;
+		}
+
+    .select {
+      width: 100%;
+      padding-bottom: 1em;
+    }
+
+		.input-number {
+			width: 100%;
+		}
+
+		.btn {
+			width: 100%;
+		}
 	}
 </style>

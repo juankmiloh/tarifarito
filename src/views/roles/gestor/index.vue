@@ -12,12 +12,8 @@ import viewResolucion from './components/infoD097/resolucion'
 import viewError from './components/infoD097/error'
 import viewPerdidas from './components/perdidasSTN'
 import {
-  getNToleranciaList,
-  getNTolerancia,
-  postNTolerancia,
-  deleteNTolerancia,
-  putNTolerancia
-} from '@/api/gestor/tolerancia'
+  getNToleranciaList
+} from '@/api/gestor/nTolerancia'
 
 export default {
   name: 'MenuGestor',
@@ -30,11 +26,7 @@ export default {
     viewPerdidas
   },
   data() {
-    // console.log('Consumo de API!')
-    // this.dropNTolerancia()
-    // this.sendNTolerancia()
-    // this.modifyNTolerancia()
-    this.getListNTolerancia()
+    // this.getListNTolerancia()
     return {
       // currentView: 'defaultDashboard'
       listLoading: true
@@ -66,53 +58,6 @@ export default {
       await getNToleranciaList().then(response => {
         this.list = response
         console.log(this.list)
-      })
-    },
-    async sendNTolerancia() {
-      const model = {
-        anio: 2017,
-        meses: {
-          enero: [
-            {
-              fecha_modif: '',
-              n_tolerancia: 0
-            },
-            {
-              fecha_modif: '',
-              n_tolerancia: 1
-            }
-          ],
-          febrero: [
-            {
-              fecha_modif: '',
-              n_tolerancia: 3
-            },
-            {
-              fecha_modif: '',
-              n_tolerancia: 4
-            }
-          ]
-        }
-      }
-      await postNTolerancia(model).then(response => {
-        const list = response
-        console.log(list)
-      })
-    },
-    async modifyNTolerancia() {
-      const model = {
-        fecha_modif: '',
-        n_tolerancia: 1.34
-      }
-      await getNTolerancia(2017).then(response => {
-        putNTolerancia(2017, 'enero', model).then(response => {
-          console.log(response)
-        })
-      })
-    },
-    async dropNTolerancia() {
-      await deleteNTolerancia(2017).then(response => {
-        console.log(response)
       })
     }
   }

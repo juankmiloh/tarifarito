@@ -41,7 +41,6 @@
 
       <el-card class="box-card" style="margin-top:20px;">
         <div style="margin-bottom:285px;">
-
           <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
             <el-row>
               <el-col :span="14" style="text-align:right;  padding-right: 2px;">

@@ -1,237 +1,332 @@
 <template>
-  <div class="components-container">
-    <el-row>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+  <div class="div-cont">
+    <el-row class="cont-row">
+      <el-col :span="24">
         <aside>
-          <span style="color: black; font-size: 170%;">
+          <span class="text-header">
             <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
           </span>
         </aside>
       </el-col>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+      <el-col :span="24">
         <aside>
-          <span style="font-size: 120%;">
+          <span class="text-user">
             <b>{{ name }}</b>
           </span>
         </aside>
       </el-col>
-
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span>
-            <b>ÍNDICES DANE</b>
-          </span>
-        </div>
-        <div style="margin-bottom:140px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center;">
-            <el-select v-model="value1" clearable placeholder="Año">
-              <el-option
-                v-for="item in optionsAno"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-select v-model="value2" clearable placeholder="Mes">
-              <el-option
-                v-for="item in optionsMes"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="12" style="text-align:right;  padding-right: 2px;">
-                <el-input
-                  v-model="input1"
-                  type="number"
-                  placeholder="IPC"
-                  prefix-icon="el-icon-edit"
-                  style="width: 16em;"
-                />
-              </el-col>
-              <el-col :span="12" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="12" style="text-align:right;  padding-right: 2px;">
-                <el-input
-                  v-model="input2"
-                  type="number"
-                  placeholder="IPP"
-                  prefix-icon="el-icon-edit"
-                  style="width: 16em;"
-                />
-              </el-col>
-              <el-col :span="12" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 16em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-        </div>
-      </el-card>
-
-      <el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
-        <el-button type="success" icon="el-icon-check" :loading="false" round>Cargar</el-button>
-      </el-col>
     </el-row>
 
-    <!-- you can add element-ui's tooltip -->
-    <el-tooltip placement="top" content="subir">
-      <back-to-top
-        :custom-style="myBackToTopStyle"
-        :visibility-height="300"
-        :back-position="50"
-        transition-name="fade"
-      />
-    </el-tooltip>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span class="text-page">
+          <b>ÍNDICES DANE</b>
+        </span>
+      </div>
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-select v-model="value1" placeholder="Año" class="select" @change="verifyVariable($event)">
+            <el-option
+              v-for="item in optionsAno"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-select v-model="value2" placeholder="Mes" class="select" @change="verifyVariable($event)">
+            <el-option
+              v-for="item in optionsMes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <el-card class="box-card margin-card">
+      <el-row class="cont-row">
+        <el-col :sm="24" :md="24">
+          <label for="input1">IPC</label>
+          <el-input-number
+            id="input1"
+            v-model="input1"
+            :disabled="disableVariable"
+            :precision="2"
+            :step="0.01"
+            :min="0"
+            :max="100"
+            class="input-number"
+            @change="verifyVariable('input_variable')"
+          />
+        </el-col>
+        <el-col :sm="24" :md="24" style="padding-top: 1em;">
+          <label for="input2">IPP</label>
+          <el-input-number
+            id="input2"
+            v-model="input2"
+            :disabled="disableVariable"
+            :precision="2"
+            :step="0.01"
+            :min="0"
+            :max="100"
+            class="input-number"
+            @change="verifyVariable('input_variable')"
+          />
+        </el-col>
+      </el-row>
+
+      <el-divider />
+
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-button
+            :disabled="disableModify"
+            type="primary"
+            icon="el-icon-refresh"
+            :loading="loadingModify"
+            class="btn"
+            @click.native.prevent="modifyVariable"
+          >Modificar</el-button>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-button
+            :disabled="disableLoad"
+            type="success"
+            icon="el-icon-check"
+            :loading="loadingLoad"
+            class="btn"
+            @click.native.prevent="saveVariable"
+          >Cargar</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import BackToTop from '@/components/BackToTop'
+import { Message } from 'element-ui'
+import { CONSTANTS } from '../../../../constants/constants'
+import { getIDaneList, getIDane, putIDane, postIDane } from '@/api/gestor/iDane'
 
 export default {
   name: 'ViewIndicesDane',
-  components: { BackToTop },
   data() {
+    // this.getList()
     return {
-      myBackToTopStyle: {
-        right: '50px',
-        bottom: '50px',
-        width: '40px',
-        height: '40px',
-        'border-radius': '4px',
-        'line-height': '45px',
-        background: '#e7eaf1'
-      },
-      optionsAno: [
-        {
-          value: '2007',
-          label: '2007'
-        },
-        {
-          value: '2008',
-          label: '2008'
-        },
-        {
-          value: '2009',
-          label: '2009'
-        },
-        {
-          value: '2010',
-          label: '2010'
-        },
-        {
-          value: '2011',
-          label: '2011'
-        },
-        {
-          value: '2012',
-          label: '2012'
-        },
-        {
-          value: '2013',
-          label: '2013'
-        },
-        {
-          value: '2014',
-          label: '2014'
-        },
-        {
-          value: '2015',
-          label: '2015'
-        },
-        {
-          value: '2016',
-          label: '2016'
-        },
-        {
-          value: '2017',
-          label: '2017'
-        },
-        {
-          value: '2018',
-          label: '2018'
-        },
-        {
-          value: '2019',
-          label: '2019'
-        }
-      ],
-      optionsMes: [
-        {
-          value: '1',
-          label: 'Enero'
-        },
-        {
-          value: '2',
-          label: 'Febrero'
-        },
-        {
-          value: '3',
-          label: 'Marzo'
-        },
-        {
-          value: '4',
-          label: 'Abril'
-        },
-        {
-          value: '5',
-          label: 'Mayo'
-        },
-        {
-          value: '6',
-          label: 'Junio'
-        },
-        {
-          value: '7',
-          label: 'Julio'
-        },
-        {
-          value: '8',
-          label: 'Agosto'
-        },
-        {
-          value: '9',
-          label: 'Septiembre'
-        },
-        {
-          value: '10',
-          label: 'Octubre'
-        },
-        {
-          value: '11',
-          label: 'Noviembre'
-        },
-        {
-          value: '12',
-          label: 'Diciembre'
-        }
-      ],
+      disableLoad: true,
+      disableModify: true,
+      disableVariable: true,
+      loadingLoad: false,
+      loadingModify: false,
+      myBackToTopStyle: CONSTANTS.myBackToTopStyle,
+      optionsAno: CONSTANTS.optionsAno,
+      optionsMes: CONSTANTS.optionsMes,
       value1: '',
       value2: '',
-      input1: '',
-      input2: ''
+      input1: 0,
+      input2: 0,
+      date: new Date()
     }
   },
   computed: {
     ...mapGetters(['name', 'roles'])
   },
-  created() {}
+  created() {},
+  methods: {
+    async getList() {
+      await getIDaneList().then(response => {
+        console.log(response)
+      })
+    },
+    async verifyVariable(evt) {
+      console.log(evt)
+      await getIDane(this.value1).then(response => {
+        if (response.length > 0 && this.value2 !== '') {
+          const mes = this.optionsMes[this.value2 - 1].key
+          if (response[0].meses.hasOwnProperty(mes)) {
+            if (evt !== 'input_variable') {
+              console.log(response)
+              const length = response[0].meses[mes].length - 1
+              const valueVariableIPC = response[0].meses[mes][length].ipc
+              const valueVariableIPP = response[0].meses[mes][length].ipp
+              if (valueVariableIPC >= 0 || valueVariableIPP >= 0) {
+                this.input1 = valueVariableIPC
+                this.input2 = valueVariableIPP
+                this.disableVariable = false
+                this.disableLoad = true
+                this.disableModify = false
+              }
+            } else {
+              this.disableModify = false
+            }
+          } else {
+            if (evt !== 'input_variable') {
+              this.disableVariable = false
+              this.disableLoad = false
+              this.disableModify = true
+              this.input1 = 0
+              this.input2 = 0
+            }
+          }
+        } else if (response.length === 0 && this.value2 !== '') {
+          if (evt !== 'input_variable') {
+            this.disableVariable = false
+            this.disableLoad = false
+            this.disableModify = true
+            this.input1 = 0
+            this.input2 = 0
+          }
+        }
+      })
+    },
+    async modifyVariable() {
+      this.loadingModify = true
+      const anio = this.value1
+      const mes = this.optionsMes[this.value2 - 1].key
+      const model = {
+        fecha_modif: this.date,
+        ipc: this.input1,
+        ipp: this.input2
+      }
+      await putIDane(anio, mes, model).then(response => {
+        this.disableModify = true
+        Message({
+          message: 'Registros actualizados con éxito!',
+          type: 'success',
+          duration: 2 * 1000
+        })
+        this.loadingModify = false
+      })
+    },
+    async saveVariable() {
+      this.loadingLoad = true
+      const anio = parseInt(this.value1)
+      const mes = this.optionsMes[this.value2 - 1].key
+      await getIDane(this.value1).then(async response => {
+        if (response.length === 0) {
+          const model = {
+            anio: anio,
+            meses: {
+              [mes]: [
+                {
+                  fecha_modif: this.date,
+                  ipc: this.input1,
+                  ipp: this.input2
+                }
+              ]
+            }
+          }
+          await postIDane(model).then(response => {
+            this.loadingLoad = false
+            this.disableLoad = true
+            Message({
+              message: 'Registros guardados con éxito!',
+              type: 'success',
+              duration: 2 * 1000
+            })
+          })
+        } else {
+          const model = {
+            fecha_modif: this.date,
+            ipc: this.input1,
+            ipp: this.input2
+          }
+          await putIDane(anio, mes, model).then(response => {
+            Message({
+              message: 'Registros guardados con éxito!',
+              type: 'success',
+              duration: 2 * 1000
+            })
+          })
+          this.loadingLoad = false
+          this.disableLoad = true
+        }
+      })
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-	.placeholder-container div {
-		margin: 10px;
+  .text-header {
+    color: black;
+  }
+
+  .div-cont {
+    padding: 1em;
+  }
+  .margin-card {
+    margin-top: 1em;
+  }
+
+  .cont-row {
+    text-align: center;
+  }
+
+	// Pantallas superiores a 800px (PC)
+	@media screen and (min-width: 800px) {
+    .text-header {
+      font-size: x-large;
+    }
+
+    .text-user {
+      font-size: large;
+    }
+
+    .text-page {
+      font-size: large;
+    }
+
+		.cont-col-right {
+			text-align: right;
+		}
+
+    .select {
+      width: 13em;
+    }
+
+		.input-number {
+			width: 17em;
+		}
+
+		.btn {
+			width: 10em;
+		}
+	}
+
+	// Pantallas inferiores a 800px (mobile)
+	@media screen and (max-width: 800px) {
+    .text-header {
+      font-size: small;
+    }
+
+    .text-user {
+      font-size: small;
+    }
+
+    .text-page {
+      font-size: small;
+    }
+
+		.cont-col-right {
+			padding-bottom: 0.5em;
+		}
+
+    .select {
+      width: 100%;
+    }
+
+		.input-number {
+			width: 100%;
+		}
+
+		.btn {
+			width: 100%;
+		}
 	}
 </style>
