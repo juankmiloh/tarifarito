@@ -1,213 +1,286 @@
 <template>
-  <div class="components-container">
-    <el-row>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+  <div class="div-cont">
+    <el-row class="cont-row">
+      <el-col :span="24">
         <aside>
-          <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
+          <span class="text-header">
+            <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
+          </span>
         </aside>
       </el-col>
-      <el-col :span="24" style="border: 0px solid red; text-align: center;">
+      <el-col :span="24">
         <aside>
-          <span style="font-size: 120%;"><b>{{ name }}</b></span>
-          <!-- <span style="font-size: 120%;"><b>{{ form.name }}</b></span> -->
+          <span class="text-user">
+            <b>{{ name }}</b>
+          </span>
         </aside>
-      </el-col>
-
-      <el-card class="box-card">
-        <div slot="header" class="clearfix">
-          <span><b>INFORMACIÓN COMERCIAL</b></span>
-        </div>
-        <div style="margin-bottom:40px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center;">
-            <el-select v-model="value1" clearable placeholder="Año">
-              <el-option
-                v-for="item in optionsAno"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-            <el-select v-model="value2" clearable placeholder="Empresa">
-              <el-option
-                v-for="item in optionsEmpresa"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </el-col>
-        </div>
-      </el-card>
-
-      <el-card class="box-card" style="margin-top:20px;">
-        <div style="margin-bottom:285px;">
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-tooltip class="item" effect="dark" content="Factor de productividad acumulado." placement="left">
-                  <i class="el-icon-info" style="color: #304156;" />
-                </el-tooltip>
-                <el-select v-model="value3" clearable placeholder="Factor de productividad" style="width: 18.5em;">
-                  <el-option
-                    v-for="item in optionsFactor"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
-                </el-select>
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-circle-plus-outline" style="width: 10em;" @click="dialogFormVisible = true">Agregar</el-button>
-              </el-col>
-              <!-- <el-dialog
-								title="Agregar Factor de productividad"
-								:visible.sync="dialogVisible"
-								width="30%"
-								:before-close="handleClose">
-								<span>Ingrese un valor</span>
-								<el-input
-									type="number"
-									placeholder="Factor de productividad"
-									prefix-icon="el-icon-edit"
-									v-model="inputDialog"
-									style="width: 21em;">
-								</el-input>
-								<span slot="footer" class="dialog-footer">
-									<el-button @click="dialogVisible = false">Cancelar</el-button>
-									<el-button type="primary" @click="dialogVisible = false">Confirmar</el-button>
-								</span>
-							</el-dialog>	 -->
-
-              <!-- Form -->
-              <!-- <el-button type="text" @click="dialogFormVisible = true">open a Form nested Dialog</el-button> -->
-
-              <el-dialog title="Agregar Factor de productividad" :before-close="handleClose" :visible.sync="dialogFormVisible">
-                <el-form :model="form">
-                  <el-form-item>
-                    <hr>
-                    <span>Ingrese un valor</span><br>
-                    <el-input
-                      v-model="form.name"
-                      type="number"
-                      placeholder="Factor de productividad"
-                      prefix-icon="el-icon-edit"
-                      style="width: 21em;"
-                    />
-                  </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                  <el-button @click="dialogFormVisible = false">Cancelar</el-button>
-                  <el-button type="primary" @click="functionConfirmar">Confirmar</el-button>
-                </span>
-              </el-dialog>
-
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-tooltip class="item" effect="dark" content="Prima de riesgo de cartera." placement="left">
-                  <i class="el-icon-info" style="color: #304156;" />
-                </el-tooltip>
-                <el-input
-                  v-model="input1"
-                  type="number"
-                  placeholder="RCNU"
-                  prefix-icon="el-icon-edit"
-                  style="width: 21em;"
-                />
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-tooltip class="item" effect="dark" content="Costo de la contribución liquidado al comercializador minorista." placement="left">
-                  <i class="el-icon-info" style="color: #304156;" />
-                </el-tooltip>
-                <el-input
-                  v-model="input2"
-                  type="number"
-                  placeholder="Contribución CREG"
-                  prefix-icon="el-icon-edit"
-                  style="width: 21em;"
-                />
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-tooltip class="item" effect="dark" content="Costo de la contribución liquidado al comercializador minorista." placement="left">
-                  <i class="el-icon-info" style="color: #304156;" />
-                </el-tooltip>
-                <el-input
-                  v-model="input3"
-                  type="number"
-                  placeholder="Contribución SSPD"
-                  prefix-icon="el-icon-edit"
-                  style="width: 21em;"
-                />
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-input
-                  v-model="input4"
-                  type="number"
-                  placeholder="N° Resolución CREG"
-                  prefix-icon="el-icon-edit"
-                  style="width: 21em;"
-                />
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-
-          <el-col :span="24" style="border: 0px solid red; text-align: center; padding-top: 10px;">
-            <el-row>
-              <el-col :span="14" style="text-align:right;  padding-right: 2px;">
-                <el-input
-                  v-model="input5"
-                  type="number"
-                  placeholder="N° Radicado SSPD"
-                  prefix-icon="el-icon-edit"
-                  style="width: 21em;"
-                />
-              </el-col>
-              <el-col :span="10" style="text-align:left; padding-left: 3px;">
-                <el-button type="primary" icon="el-icon-refresh" style="width: 10em;">Modificar</el-button>
-              </el-col>
-            </el-row>
-          </el-col>
-        </div>
-      </el-card>
-
-      <el-col :span="24" style="border: 0px solid red; text-align: center; padding: 10px;">
-        <el-button type="success" icon="el-icon-check" :loading="false" round>Cargar</el-button>
       </el-col>
     </el-row>
 
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span class="text-page">
+          <b>INFORMACIÓN COMERCIAL</b>
+        </span>
+      </div>
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-select v-model="value1" placeholder="Año" class="select" @change="verifyVariable($event)">
+            <el-option
+              v-for="item in optionsAno"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-select
+            v-model="value2"
+            placeholder="Empresa"
+            class="select"
+            @change="verifyVariable($event)"
+          >
+            <el-option
+              v-for="item in optionsEmpresa"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <el-card class="box-card margin-card">
+      <el-row class="cont-row">
+        <el-col :sm="24" :md="24">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Factor de productividad acumulado."
+                placement="top"
+              >
+                <i class="el-icon-info" style="color: #304156;" />
+              </el-tooltip>
+              <label for="input1">Factor de productividad</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-select v-model="value3" class="input-select">
+                <el-option
+                  v-for="item in optionsFactor"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                />
+              </el-select>
+              <el-button
+                type="primary"
+                icon="el-icon-circle-plus-outline"
+                class="btn-plain"
+                plain
+                @click="dialogFormVisible = true"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :sm="24" :md="24" class="cont-input">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <el-tooltip class="item" effect="dark" content="Prima de riesgo de cartera." placement="top">
+                <i class="el-icon-info" style="color: #304156;" />
+              </el-tooltip>
+              <label for="input2">RCNU</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-input-number
+                id="input2"
+                v-model="input2"
+                :disabled="disableVariable"
+                :precision="2"
+                :step="0.01"
+                :min="0"
+                :max="100"
+                class="input-number"
+                @change="verifyVariable('input_variable')"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :sm="24" :md="24" class="cont-input">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Costo de la contribución liquidado al comercializador minorista."
+                placement="top"
+              >
+                <i class="el-icon-info" style="color: #304156;" />
+              </el-tooltip>
+              <label for="input3">Contribución CREG</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-input-number
+                id="input3"
+                v-model="input3"
+                :disabled="disableVariable"
+                :precision="2"
+                :step="0.01"
+                :min="0"
+                :max="100"
+                class="input-number"
+                @change="verifyVariable('input_variable')"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :sm="24" :md="24" class="cont-input">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="Costo de la contribución liquidado al comercializador minorista."
+                placement="top"
+              >
+                <i class="el-icon-info" style="color: #304156;" />
+              </el-tooltip>
+              <label for="input4">Contribución SSPD</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-input-number
+                id="input4"
+                v-model="input4"
+                :disabled="disableVariable"
+                :precision="2"
+                :step="0.01"
+                :min="0"
+                :max="100"
+                class="input-number"
+                @change="verifyVariable('input_variable')"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :sm="24" :md="24" class="cont-input">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <label for="input5">N° Resolución CREG</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-input-number
+                id="input5"
+                v-model="input5"
+                :disabled="disableVariable"
+                :precision="2"
+                :step="0.01"
+                :min="0"
+                :max="100"
+                class="input-number"
+                @change="verifyVariable('input_variable')"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+        <el-col :sm="24" :md="24" class="cont-input">
+          <el-row>
+            <el-col :sm="24" :md="24">
+              <label for="input6">N° Radicado SSPD</label>
+            </el-col>
+            <el-col :sm="24" :md="24" class="input-padding">
+              <el-input-number
+                id="input6"
+                v-model="input6"
+                :disabled="disableVariable"
+                :precision="2"
+                :step="0.01"
+                :min="0"
+                :max="100"
+                class="input-number"
+                @change="verifyVariable('input_variable')"
+              />
+            </el-col>
+          </el-row>
+        </el-col>
+      </el-row>
+
+      <el-divider />
+
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-button
+            :disabled="disableModify"
+            type="primary"
+            icon="el-icon-refresh"
+            :loading="loadingModify"
+            class="btn"
+            @click.native.prevent="modifyVariable"
+          >Modificar</el-button>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-button
+            :disabled="disableLoad"
+            type="success"
+            icon="el-icon-check"
+            :loading="loadingLoad"
+            class="btn"
+            @click.native.prevent="saveVariable"
+          >Cargar</el-button>
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <!-- dialog agregar factor de productividad -->
+    <el-dialog
+      title="Agregar"
+      :visible.sync="dialogFormVisible"
+      width="20em"
+    >
+      <el-card class="cont-row" style="margin-top: 1.2em;">
+        <el-row>
+          <el-col :sm="24" :md="24">
+            <label for="input1">Factor de productividad</label>
+          </el-col>
+          <el-col :sm="24" :md="24" class="input-padding">
+            <el-input-number
+              id="input1"
+              v-model="input1"
+              :disabled="disableVariable"
+              :precision="2"
+              :step="0.01"
+              :min="0"
+              :max="100"
+              class="input-number"
+              @change="verifyVariable('input_variable')"
+            />
+          </el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :sm="24" :md="24">
+            <el-button
+              type="success"
+              icon="el-icon-check"
+              :loading="loadingFP"
+              class="btn"
+              @click="functionConfirmar"
+            >Guardar</el-button>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-dialog>
+
     <!-- you can add element-ui's tooltip -->
     <el-tooltip placement="top" content="subir">
-      <back-to-top :custom-style="myBackToTopStyle" :visibility-height="300" :back-position="50" transition-name="fade" />
+      <back-to-top
+        :custom-style="myBackToTopStyle"
+        :visibility-height="300"
+        :back-position="50"
+        transition-name="fade"
+      />
     </el-tooltip>
   </div>
 </template>
@@ -215,6 +288,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import BackToTop from '@/components/BackToTop'
+import { CONSTANTS } from '../../../../constants/constants'
 
 export default {
   name: 'ViewInfoComercial',
@@ -222,86 +296,28 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
-      formLabelWidth: '120px',
       dialogVisible: false,
-      myBackToTopStyle: {
-        right: '50px',
-        bottom: '50px',
-        width: '40px',
-        height: '40px',
-        'border-radius': '4px',
-        'line-height': '45px',
-        background: '#e7eaf1'
-      },
-      optionsAno: [{
-        value: '2016',
-        label: '2016'
-      }, {
-        value: '2017',
-        label: '2017'
-      }, {
-        value: '2018',
-        label: '2018'
-      }, {
-        value: '2019',
-        label: '2019'
-      }],
-      optionsEmpresa: [{
-        value: '2103',
-        label: 'CODENSA SA'
-      }, {
-        value: '2249',
-        label: 'ELECTRIFICADORA DEL CARIBE SA'
-      }, {
-        value: '204',
-        label: 'ELECTRIFICADORA DEL META SA'
-      }],
-      optionsFactor: [{
-        value: '0',
-        label: '0'
-      }, {
-        value: '0.00725',
-        label: '0.00725'
-      }, {
-        value: '0.0145',
-        label: '0.0145'
-      }, {
-        value: '0.02175',
-        label: '0.02175'
-      }, {
-        value: '0.029',
-        label: '0.029'
-      }],
+      loadingFP: false,
+      myBackToTopStyle: CONSTANTS.myBackToTopStyle,
+      optionsAno: CONSTANTS.optionsAno,
+      optionsEmpresa: CONSTANTS.optionsEmpresa,
+      optionsFactor: CONSTANTS.optionsFactor,
       value1: '',
       value2: '',
       value3: '',
       inputDialog: '',
-      input1: '',
-      input2: '',
-      input3: '',
-      input4: '',
-      input5: ''
+      input1: 0,
+      input2: 0,
+      input3: 0,
+      input4: 0,
+      input5: 0,
+      input6: 0
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+    ...mapGetters(['name', 'roles'])
   },
-  created() {
-
-  },
+  created() {},
   methods: {
     handleClose(done) {
       this.$confirm('¿Realmente deseas cerrar la ventana?')
@@ -311,22 +327,124 @@ export default {
         .catch(_ => {})
     },
     functionConfirmar() {
-      // alert('hola function!');
+      this.loadingFP = true
       this.optionsFactor.push({
-        value: this.form.name,
-        label: this.form.name
+        value: this.input1,
+        label: this.input1
       })
+      this.loadingFP = false
       this.dialogFormVisible = false
+      this.value3 = this.input1
+      this.input1 = 0
     }
   }
 }
 </script>
 
-<style lang="scss" scope>
-	// .el-dialog__wrapper{
-  //   display: flex;
-  //   flex-direction: column;
-  //   min-height: 0vh;
-	// 	bottom: 40%;
-  // }
+<style lang="scss" scoped>
+	.text-header {
+		color: black;
+	}
+
+	.div-cont {
+		padding: 1em;
+	}
+
+	.margin-card {
+		margin-top: 1em;
+	}
+
+	.cont-row {
+		text-align: center;
+	}
+
+	.input-padding {
+		padding-top: 0.5em;
+	}
+
+  .dialog-style {
+    border: 1px solid red;
+  }
+
+	// Pantallas superiores a 800px (PC)
+	@media screen and (min-width: 800px) {
+		.text-header {
+			font-size: x-large;
+		}
+
+		.text-user {
+			font-size: large;
+		}
+
+		.text-page {
+			font-size: large;
+		}
+
+		.cont-col-right {
+			text-align: right;
+		}
+
+		.select {
+			width: 13em;
+		}
+
+		.input-number {
+			width: 17em;
+		}
+
+		.btn {
+			width: 10em;
+		}
+
+		.cont-input {
+			padding-top: 1.5em;
+		}
+
+		.input-select {
+			width: 13em;
+		}
+	}
+
+	// Pantallas inferiores a 800px (mobile)
+	@media screen and (max-width: 800px) {
+		.text-header {
+			font-size: small;
+		}
+
+		.text-user {
+			font-size: small;
+		}
+
+		.text-page {
+			font-size: small;
+		}
+
+		.cont-col-right {
+			padding-bottom: 0.5em;
+		}
+
+		.select {
+			width: 100%;
+		}
+
+		.input-number {
+			width: 100%;
+		}
+
+		.btn {
+			width: 100%;
+		}
+
+		.cont-input {
+			padding-top: 1em;
+		}
+
+		.input-select {
+			width: 77%;
+		}
+
+		.btn-plain {
+			width: 21%;
+		}
+	}
 </style>

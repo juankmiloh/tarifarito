@@ -260,6 +260,7 @@ export default {
   .div-cont {
     padding: 1em;
   }
+
   .margin-card {
     margin-top: 1em;
   }

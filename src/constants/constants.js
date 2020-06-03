@@ -105,6 +105,32 @@ export const CONSTANTS = {
 		label: 'Diciembre'
 	}
 	],
+	optionsEmpresa: [{
+		value: '2103',
+		label: 'CODENSA SA'
+	}, {
+		value: '2249',
+		label: 'ELECTRIFICADORA DEL CARIBE SA'
+	}, {
+		value: '204',
+		label: 'ELECTRIFICADORA DEL META SA'
+	}],
+	optionsFactor: [{
+		value: '0',
+		label: '0'
+	}, {
+		value: '0.00725',
+		label: '0.00725'
+	}, {
+		value: '0.0145',
+		label: '0.0145'
+	}, {
+		value: '0.02175',
+		label: '0.02175'
+	}, {
+		value: '0.029',
+		label: '0.029'
+	}],
 	myBackToTopStyle: {
 		right: '50px',
 		bottom: '50px',
