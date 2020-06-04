@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+/* eslint-disable */
 const componentesComercializacion = [
   {
     title: 'Costo Base de Comercialización actualizado (Cfj,m)',
@@ -732,6 +734,6 @@ const componentesComercializacion = [
       }
     ]
   }
-]
+];
 
-export default componentesComercializacion
+export default componentesComercializacion;

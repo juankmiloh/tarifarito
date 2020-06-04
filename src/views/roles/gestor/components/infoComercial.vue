@@ -37,6 +37,7 @@
         <el-col :sm="24" :md="12">
           <el-select
             v-model="value2"
+            :disabled="disableSelect"
             placeholder="Empresa"
             class="select"
             @change="verifyVariable($event)"
@@ -65,10 +66,15 @@
               >
                 <i class="el-icon-info" style="color: #304156;" />
               </el-tooltip>
-              <label for="input1">Factor de productividad</label>
+              <label>Factor de productividad</label>
             </el-col>
             <el-col :sm="24" :md="24" class="input-padding">
-              <el-select v-model="value3" class="input-select">
+              <el-select
+                v-model="value3"
+                :disabled="disableVariable"
+                class="input-select"
+                @change="verifyVariable('input_variable')"
+              >
                 <el-option
                   v-for="item in optionsFactor"
                   :key="item.value"
@@ -77,7 +83,8 @@
                 />
               </el-select>
               <el-button
-                type="primary"
+                :disabled="disableVariable"
+                type="success"
                 icon="el-icon-circle-plus-outline"
                 class="btn-plain"
                 plain
@@ -86,120 +93,29 @@
             </el-col>
           </el-row>
         </el-col>
-        <el-col :sm="24" :md="24" class="cont-input">
-          <el-row>
-            <el-col :sm="24" :md="24">
-              <el-tooltip class="item" effect="dark" content="Prima de riesgo de cartera." placement="top">
-                <i class="el-icon-info" style="color: #304156;" />
-              </el-tooltip>
-              <label for="input2">RCNU</label>
-            </el-col>
-            <el-col :sm="24" :md="24" class="input-padding">
-              <el-input-number
-                id="input2"
-                v-model="input2"
-                :disabled="disableVariable"
-                :precision="2"
-                :step="0.01"
-                :min="0"
-                :max="100"
-                class="input-number"
-                @change="verifyVariable('input_variable')"
-              />
-            </el-col>
-          </el-row>
-        </el-col>
-        <el-col :sm="24" :md="24" class="cont-input">
-          <el-row>
+        <el-col v-for="(item, index) in components" :key="item.id" :sm="24" :md="24">
+          <el-row v-if="index !== 0" class="cont-input">
             <el-col :sm="24" :md="24">
               <el-tooltip
+                v-if="item.tooltip !== ''"
                 class="item"
                 effect="dark"
-                content="Costo de la contribución liquidado al comercializador minorista."
+                :content="item.tooltip"
                 placement="top"
               >
                 <i class="el-icon-info" style="color: #304156;" />
               </el-tooltip>
-              <label for="input3">Contribución CREG</label>
+              <label>{{ item.title }}</label>
             </el-col>
             <el-col :sm="24" :md="24" class="input-padding">
               <el-input-number
-                id="input3"
-                v-model="input3"
+                v-model="values[index]"
                 :disabled="disableVariable"
-                :precision="2"
-                :step="0.01"
-                :min="0"
-                :max="100"
-                class="input-number"
-                @change="verifyVariable('input_variable')"
-              />
-            </el-col>
-          </el-row>
-        </el-col>
-        <el-col :sm="24" :md="24" class="cont-input">
-          <el-row>
-            <el-col :sm="24" :md="24">
-              <el-tooltip
-                class="item"
-                effect="dark"
-                content="Costo de la contribución liquidado al comercializador minorista."
-                placement="top"
-              >
-                <i class="el-icon-info" style="color: #304156;" />
-              </el-tooltip>
-              <label for="input4">Contribución SSPD</label>
-            </el-col>
-            <el-col :sm="24" :md="24" class="input-padding">
-              <el-input-number
-                id="input4"
-                v-model="input4"
-                :disabled="disableVariable"
-                :precision="2"
-                :step="0.01"
-                :min="0"
-                :max="100"
-                class="input-number"
-                @change="verifyVariable('input_variable')"
-              />
-            </el-col>
-          </el-row>
-        </el-col>
-        <el-col :sm="24" :md="24" class="cont-input">
-          <el-row>
-            <el-col :sm="24" :md="24">
-              <label for="input5">N° Resolución CREG</label>
-            </el-col>
-            <el-col :sm="24" :md="24" class="input-padding">
-              <el-input-number
-                id="input5"
-                v-model="input5"
-                :disabled="disableVariable"
-                :precision="2"
-                :step="0.01"
-                :min="0"
-                :max="100"
-                class="input-number"
-                @change="verifyVariable('input_variable')"
-              />
-            </el-col>
-          </el-row>
-        </el-col>
-        <el-col :sm="24" :md="24" class="cont-input">
-          <el-row>
-            <el-col :sm="24" :md="24">
-              <label for="input6">N° Radicado SSPD</label>
-            </el-col>
-            <el-col :sm="24" :md="24" class="input-padding">
-              <el-input-number
-                id="input6"
-                v-model="input6"
-                :disabled="disableVariable"
-                :precision="2"
-                :step="0.01"
-                :min="0"
-                :max="100"
-                class="input-number"
+                :precision="item.precision"
+                :step="item.step"
+                :min="item.min"
+                :max="item.max"
+                :class="item.class"
                 @change="verifyVariable('input_variable')"
               />
             </el-col>
@@ -234,20 +150,15 @@
     </el-card>
 
     <!-- dialog agregar factor de productividad -->
-    <el-dialog
-      title="Agregar"
-      :visible.sync="dialogFormVisible"
-      width="20em"
-    >
+    <el-dialog title="Agregar" :visible.sync="dialogFormVisible" width="20em">
       <el-card class="cont-row" style="margin-top: 1.2em;">
         <el-row>
           <el-col :sm="24" :md="24">
-            <label for="input1">Factor de productividad</label>
+            <label>Factor de productividad</label>
           </el-col>
           <el-col :sm="24" :md="24" class="input-padding">
             <el-input-number
-              id="input1"
-              v-model="input1"
+              v-model="values[0]"
               :disabled="disableVariable"
               :precision="2"
               :step="0.01"
@@ -261,13 +172,7 @@
         <el-divider />
         <el-row>
           <el-col :sm="24" :md="24">
-            <el-button
-              type="success"
-              icon="el-icon-check"
-              :loading="loadingFP"
-              class="btn"
-              @click="functionConfirmar"
-            >Guardar</el-button>
+            <el-button type="success" icon="el-icon-check" class="btn" @click="functionConfirmar">Aceptar</el-button>
           </el-col>
         </el-row>
       </el-card>
@@ -288,13 +193,29 @@
 <script>
 import { mapGetters } from 'vuex'
 import BackToTop from '@/components/BackToTop'
+import { Message } from 'element-ui'
 import { CONSTANTS } from '../../../../constants/constants'
+import componentsIComercial from './../options/info_comercial'
+import {
+  getIComercialList,
+  getIComercial,
+  putIComercial,
+  postIComercial
+} from '@/api/gestor/iComercial'
 
 export default {
   name: 'ViewInfoComercial',
   components: { BackToTop },
   data() {
+    this.getList()
     return {
+      components: componentsIComercial,
+      disableLoad: true,
+      disableModify: true,
+      disableVariable: true,
+      disableSelect: true,
+      loadingLoad: false,
+      loadingModify: false,
       dialogFormVisible: false,
       dialogVisible: false,
       loadingFP: false,
@@ -306,36 +227,198 @@ export default {
       value2: '',
       value3: '',
       inputDialog: '',
-      input1: 0,
-      input2: 0,
-      input3: 0,
-      input4: 0,
-      input5: 0,
-      input6: 0
+      date: new Date(),
+      values: [],
+      model: {}
     }
   },
   computed: {
     ...mapGetters(['name', 'roles'])
   },
-  created() {},
+  created() {
+    this.components.forEach((element, index) => {
+      this.values[index] = 0
+    })
+  },
   methods: {
-    handleClose(done) {
-      this.$confirm('¿Realmente deseas cerrar la ventana?')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
+    async getList() {
+      await getIComercialList().then(response => {
+        console.log(response)
+      })
     },
     functionConfirmar() {
-      this.loadingFP = true
-      this.optionsFactor.push({
-        value: this.input1,
-        label: this.input1
+      const resultFP = this.optionsFactor.find(
+        element => element.value === this.values[0]
+      )
+      console.log('resultFP: ', resultFP)
+      if (resultFP === undefined) {
+        this.optionsFactor.push({
+          value: this.values[0],
+          label: this.values[0]
+        })
+        this.dialogFormVisible = false
+        this.value3 = this.values[0]
+        this.values[0] = 0
+      } else {
+        Message({
+          message: 'Valor de Factor de productividad ya agregado.',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
+    },
+    async verifyVariable(evt) {
+      // console.log(evt)
+      if (this.value1) {
+        this.disableSelect = false
+      }
+      await getIComercial(this.value1).then(response => {
+        if (response.length > 0 && this.value2 !== '') {
+          const empresa = `e_${this.value2}`
+          console.log('Empresa: ', empresa)
+          // console.log('Response: ', response[0].empresas)
+          const arrayEmpresas = response[0].empresas
+          if (arrayEmpresas.hasOwnProperty(empresa)) {
+            if (evt !== 'input_variable') {
+              console.log('La tiene: ', arrayEmpresas[empresa])
+              const length = arrayEmpresas[empresa].length - 1
+              console.log('length: ', length)
+              const objValues = arrayEmpresas[empresa][length]
+              console.log('element: ', objValues)
+              // Verificamos si existen valores de factor de productividad repetidos
+              const resultFP = this.optionsFactor.find(
+                element => element.value === objValues.factorP
+              )
+              console.log('Ya tiene el factor: ', resultFP)
+              if (resultFP === undefined) {
+                this.optionsFactor.push({
+                  value: objValues.factorP,
+                  label: objValues.factorP
+                })
+              }
+              this.value3 = objValues.factorP
+              this.values[1] = objValues.rcnu
+              this.values[2] = objValues.ccreg
+              this.values[3] = objValues.csspd
+              this.values[4] = objValues.rcreg
+              this.values[5] = objValues.rsspd
+              this.disableVariable = false
+              this.disableLoad = true
+              this.disableModify = false
+            } else {
+              this.disableModify = false
+            }
+          } else {
+            if (evt !== 'input_variable') {
+              this.disableVariable = false
+              this.disableLoad = false
+              this.disableModify = true
+              this.value3 = ''
+              this.values[1] = 0
+              this.values[2] = 0
+              this.values[3] = 0
+              this.values[4] = 0
+              this.values[5] = 0
+            }
+          }
+        } else if (response.length === 0 && this.value2 !== '') {
+          if (evt !== 'input_variable') {
+            this.disableVariable = false
+            this.disableLoad = false
+            this.disableModify = true
+            this.value3 = ''
+            this.values[1] = 0
+            this.values[2] = 0
+            this.values[3] = 0
+            this.values[4] = 0
+            this.values[5] = 0
+          }
+        }
       })
-      this.loadingFP = false
-      this.dialogFormVisible = false
-      this.value3 = this.input1
-      this.input1 = 0
+    },
+    async modifyVariable() {
+      this.loadingModify = true
+      const anio = this.value1
+      const empresa = `e_${this.value2}`
+      const model = {
+        fecha_modif: this.date,
+        factorP: this.value3,
+        rcnu: this.values[1],
+        ccreg: this.values[2],
+        csspd: this.values[3],
+        rcreg: this.values[4],
+        rsspd: this.values[5]
+      }
+      await putIComercial(anio, empresa, model).then(response => {
+        this.disableModify = true
+        Message({
+          message: 'Registros actualizados con éxito!',
+          type: 'success',
+          duration: 2 * 1000
+        })
+        this.loadingModify = false
+      })
+    },
+    async saveVariable() {
+      if (this.value3 !== '') {
+        this.loadingLoad = true
+        const anio = parseInt(this.value1)
+        const empresa = `e_${this.value2}`
+        await getIComercial(this.value1).then(async response => {
+          if (response.length === 0) {
+            const model = {
+              anio: anio,
+              empresas: {
+                [empresa]: [
+                  {
+                    fecha_modif: this.date,
+                    factorP: this.value3,
+                    rcnu: this.values[1],
+                    ccreg: this.values[2],
+                    csspd: this.values[3],
+                    rcreg: this.values[4],
+                    rsspd: this.values[5]
+                  }
+                ]
+              }
+            }
+            await postIComercial(model).then(response => {
+              this.loadingLoad = false
+              this.disableLoad = true
+              Message({
+                message: 'Registros guardados con éxito!',
+                type: 'success',
+                duration: 2 * 1000
+              })
+            })
+          } else {
+            const model = {
+              fecha_modif: this.date,
+              factorP: this.value3,
+              rcnu: this.values[1],
+              ccreg: this.values[2],
+              csspd: this.values[3],
+              rcreg: this.values[4],
+              rsspd: this.values[5]
+            }
+            await putIComercial(anio, empresa, model).then(response => {
+              Message({
+                message: 'Registros guardados con éxito!',
+                type: 'success',
+                duration: 2 * 1000
+              })
+            })
+            this.loadingLoad = false
+            this.disableLoad = true
+          }
+        })
+      } else {
+        Message({
+          message: 'Selecciona un factor de productividad',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
     }
   }
 }
@@ -362,9 +445,9 @@ export default {
 		padding-top: 0.5em;
 	}
 
-  .dialog-style {
-    border: 1px solid red;
-  }
+	.dialog-style {
+		border: 1px solid red;
+	}
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {

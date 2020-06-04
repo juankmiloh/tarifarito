@@ -2,7 +2,9 @@
   <div class="components-container" style="border: 0px solid red; margin: 0;">
     <el-row>
       <el-col :span="24">
-        <div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;">
+        <div
+          style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;"
+        >
           <el-row>
             <el-col :span="2" style="border: 0px solid; color: black;">
               <div style="text-align: center;">
@@ -13,12 +15,16 @@
               <el-row>
                 <el-col :span="24" style="border: 0px solid red; text-align: center;">
                   <aside>
-                    <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
+                    <span style="color: black; font-size: 170%;">
+                      <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
+                    </span>
                   </aside>
                 </el-col>
                 <el-col :span="24" style="border: 0px solid red; text-align: center;">
                   <aside>
-                    <span style="font-size: 120%;"><b>{{ name }}</b></span>
+                    <span style="font-size: 120%;">
+                      <b>{{ name }}</b>
+                    </span>
                     <!-- <input type="text" v-on:input="(event) => this.$emit('inputChange', event)"> -->
                   </aside>
                 </el-col>
@@ -27,14 +33,19 @@
           </el-row>
         </div>
         <br>
-        <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"> <!-- valor pantalla super -->
+        <div
+          style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"
+        >
+          <!-- valor pantalla super -->
           <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
           <el-row>
             <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
               <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
                 <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
                   <el-col style="border: 0px solid red; text-align: left;" :span="13">
-                    <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
+                    <span>CONCEPTO</span>
+                    <span style="color: white;">{{ actualiza }}</span>
+                    <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
                   </el-col>
                   <el-col style="border: 0px solid red;" :span="2">
                     <span>UNIDAD</span>
@@ -54,7 +65,8 @@
                     <el-collapse accordion>
                       <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
                         <template slot="title">
-                          {{ item.title }}<i class="header-icon el-icon-information" />
+                          {{ item.title }}
+                          <i class="header-icon el-icon-information" />
                         </template>
                         <el-row v-for="value in item.data" :key="value.campo">
                           <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
@@ -65,7 +77,11 @@
                           </el-col>
                           <span v-for="valorInput in value.inputs" :key="valorInput.key">
                             <span v-if="valorInput.start === true && valorInput.diferencia === false">
-                              <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
+                              <el-col
+                                v-if="valorInputDefault === valorInput.show"
+                                style="border: 0px solid yellow; text-align: center;"
+                                :span="3"
+                              >
                                 <input
                                   v-model="values[valorInput.key].values"
                                   :type="valorInput.type"
@@ -77,7 +93,11 @@
                               </el-col>
                             </span>
                             <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
-                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
+                              <el-col
+                                v-if="valoresDiferencia === valorInput.show"
+                                style="border: 0px solid blue;"
+                                :span="3"
+                              >
                                 <input
                                   v-model="values[valorInput.key].values"
                                   :type="valorInput.type"
@@ -88,7 +108,11 @@
                               </el-col>
                             </span>
                             <span v-else>
-                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
+                              <el-col
+                                v-if="valoresDiferencia === valorInput.show"
+                                style="border: 0px solid red;"
+                                :span="3"
+                              >
                                 <input
                                   v-model="values[valorInput.key].values"
                                   :type="valorInput.type"
@@ -165,14 +189,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+    ...mapGetters(['name', 'roles'])
   },
   created() {
     const valores = []
     let diferencia = 0
+    console.log(this.components)
     this.components.forEach(item => {
       item.data.forEach(input => {
         input.inputs.forEach(campo => {
@@ -226,19 +248,23 @@ export default {
     },
     reportar() {
       this.valoresDiferencia = false
-      this.$alert('<p style="text-align: center;">La empresa reporto el cargo máximo y no el cargo mínimo</p>', 'TARIFARITO REPORTA', {
-        dangerouslyUseHTMLString: true,
-        callback: action => {
-          this.$emit('clicked', false)
+      this.$alert(
+        '<p style="text-align: center;">La empresa reporto el cargo máximo y no el cargo mínimo</p>',
+        'TARIFARITO REPORTA',
+        {
+          dangerouslyUseHTMLString: true,
+          callback: action => {
+            this.$emit('clicked', false)
+          }
         }
-      })
+      )
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .el-collapse-item__content{
-    padding-bottom: 1.5%;
-  }
+	.el-collapse-item__content {
+		padding-bottom: 1.5%;
+	}
 </style>

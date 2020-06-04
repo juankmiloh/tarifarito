@@ -35,7 +35,13 @@
           </el-select>
         </el-col>
         <el-col :sm="24" :md="12">
-          <el-select v-model="value2" placeholder="Mes" class="select" @change="verifyVariable($event)">
+          <el-select
+            v-model="value2"
+            :disabled="disableSelect"
+            placeholder="Mes"
+            class="select"
+            @change="verifyVariable($event)"
+          >
             <el-option
               v-for="item in optionsMes"
               :key="item.value"
@@ -111,7 +117,12 @@
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { CONSTANTS } from '../../../../constants/constants'
-import { getIDaneList, getIDane, putIDane, postIDane } from '@/api/gestor/iDane'
+import {
+  getIDaneList,
+  getIDane,
+  putIDane,
+  postIDane
+} from '@/api/gestor/iDane'
 
 export default {
   name: 'ViewIndicesDane',
@@ -121,6 +132,7 @@ export default {
       disableLoad: true,
       disableModify: true,
       disableVariable: true,
+      disableSelect: true,
       loadingLoad: false,
       loadingModify: false,
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
@@ -144,7 +156,10 @@ export default {
       })
     },
     async verifyVariable(evt) {
-      console.log(evt)
+      // console.log(evt)
+      if (this.value1) {
+        this.disableSelect = false
+      }
       await getIDane(this.value1).then(response => {
         if (response.length > 0 && this.value2 !== '') {
           const mes = this.optionsMes[this.value2 - 1].key
@@ -253,43 +268,43 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .text-header {
-    color: black;
-  }
+	.text-header {
+		color: black;
+	}
 
-  .div-cont {
-    padding: 1em;
-  }
+	.div-cont {
+		padding: 1em;
+	}
 
-  .margin-card {
-    margin-top: 1em;
-  }
+	.margin-card {
+		margin-top: 1em;
+	}
 
-  .cont-row {
-    text-align: center;
-  }
+	.cont-row {
+		text-align: center;
+	}
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
-    .text-header {
-      font-size: x-large;
-    }
+		.text-header {
+			font-size: x-large;
+		}
 
-    .text-user {
-      font-size: large;
-    }
+		.text-user {
+			font-size: large;
+		}
 
-    .text-page {
-      font-size: large;
-    }
+		.text-page {
+			font-size: large;
+		}
 
 		.cont-col-right {
 			text-align: right;
 		}
 
-    .select {
-      width: 13em;
-    }
+		.select {
+			width: 13em;
+		}
 
 		.input-number {
 			width: 17em;
@@ -302,25 +317,25 @@ export default {
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
-    .text-header {
-      font-size: small;
-    }
+		.text-header {
+			font-size: small;
+		}
 
-    .text-user {
-      font-size: small;
-    }
+		.text-user {
+			font-size: small;
+		}
 
-    .text-page {
-      font-size: small;
-    }
+		.text-page {
+			font-size: small;
+		}
 
 		.cont-col-right {
 			padding-bottom: 0.5em;
 		}
 
-    .select {
-      width: 100%;
-    }
+		.select {
+			width: 100%;
+		}
 
 		.input-number {
 			width: 100%;

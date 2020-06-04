@@ -35,7 +35,13 @@
           </el-select>
         </el-col>
         <el-col :sm="24" :md="8" style="text-align: center;">
-          <el-select v-model="value2" placeholder="Mes" class="select" @change="verifyVariable($event)">
+          <el-select
+            v-model="value2"
+            :disabled="disableSelect"
+            placeholder="Mes"
+            class="select"
+            @change="verifyVariable($event)"
+          >
             <el-option
               v-for="item in optionsMes"
               :key="item.value"
@@ -105,6 +111,7 @@ export default {
       disableLoad: true,
       disableModify: true,
       disableVariable: true,
+      disableSelect: true,
       loadingLoad: false,
       loadingModify: false,
       optionsAno: CONSTANTS.optionsAno,
@@ -121,6 +128,9 @@ export default {
   created() {},
   methods: {
     async verifyVariable(evt) {
+      if (this.value1) {
+        this.disableSelect = false
+      }
       await getNTolerancia(this.value1).then(response => {
         if (response.length > 0 && this.value2 !== '') {
           const mes = this.optionsMes[this.value2 - 1].key
@@ -221,47 +231,47 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .text-header {
-    color: black;
-  }
+	.text-header {
+		color: black;
+	}
 
-  .div-cont {
-    padding: 1em;
-  }
+	.div-cont {
+		padding: 1em;
+	}
 
-  .margin-card {
-    margin-top: 1em;
-  }
+	.margin-card {
+		margin-top: 1em;
+	}
 
-  .cont-row {
-    text-align: center;
-  }
+	.cont-row {
+		text-align: center;
+	}
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
-    .text-header {
-      font-size: x-large;
-    }
+		.text-header {
+			font-size: x-large;
+		}
 
-    .text-user {
-      font-size: large;
-    }
+		.text-user {
+			font-size: large;
+		}
 
-    .text-page {
-      font-size: large;
-    }
+		.text-page {
+			font-size: large;
+		}
 
 		.cont-col-right {
 			text-align: right;
 		}
 
-    .cont-select {
-      width: 33.3%;
-    }
+		.cont-select {
+			width: 33.3%;
+		}
 
-    .select {
-      width: 15em;
-    }
+		.select {
+			width: 15em;
+		}
 
 		.input-number {
 			width: 15em;
@@ -274,26 +284,26 @@ export default {
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
-    .text-header {
-      font-size: small;
-    }
+		.text-header {
+			font-size: small;
+		}
 
-    .text-user {
-      font-size: small;
-    }
+		.text-user {
+			font-size: small;
+		}
 
-    .text-page {
-      font-size: small;
-    }
+		.text-page {
+			font-size: small;
+		}
 
 		.cont-col-right {
 			padding-bottom: 0.5em;
 		}
 
-    .select {
-      width: 100%;
-      padding-bottom: 1em;
-    }
+		.select {
+			width: 100%;
+			padding-bottom: 1em;
+		}
 
 		.input-number {
 			width: 100%;
