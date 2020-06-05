@@ -13,7 +13,7 @@ import viewError from './components/infoD097/error'
 import viewPerdidas from './components/perdidasSTN'
 import {
   getNToleranciaList
-} from '@/api/gestor/nTolerancia'
+} from '@/api/tarifarito/gestor/nTolerancia'
 
 export default {
   name: 'MenuGestor',

@@ -37,16 +37,18 @@
         <el-col :sm="24" :md="12">
           <el-select
             v-model="value2"
+            filterable
             :disabled="disableSelect"
             placeholder="Empresa"
-            class="select"
+            class="select-style"
+            popper-class="select-popper"
             @change="verifyVariable($event)"
           >
             <el-option
               v-for="item in optionsEmpresa"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.cod_empresa"
+              :label="item.nombre"
+              :value="item.cod_empresa"
             />
           </el-select>
         </el-col>
@@ -201,13 +203,17 @@ import {
   getIComercial,
   putIComercial,
   postIComercial
-} from '@/api/gestor/iComercial'
+} from '@/api/tarifarito/gestor/iComercial'
+import {
+  getSUIEmpresasList
+} from '@/api/tarifarito/sui-empresas'
 
 export default {
   name: 'ViewInfoComercial',
   components: { BackToTop },
   data() {
-    this.getList()
+    // this.getList()
+    this.getEmpresasList()
     return {
       components: componentsIComercial,
       disableLoad: true,
@@ -221,7 +227,7 @@ export default {
       loadingFP: false,
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
       optionsAno: CONSTANTS.optionsAno,
-      optionsEmpresa: CONSTANTS.optionsEmpresa,
+      optionsEmpresa: [],
       optionsFactor: CONSTANTS.optionsFactor,
       value1: '',
       value2: '',
@@ -241,6 +247,12 @@ export default {
     })
   },
   methods: {
+    async getEmpresasList() {
+      await getSUIEmpresasList().then((response) => {
+        // console.log(response)
+        this.optionsEmpresa = JSON.parse(JSON.stringify(response))
+      })
+    },
     async getList() {
       await getIComercialList().then(response => {
         console.log(response)
@@ -424,13 +436,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.text-header {
 		color: black;
-	}
-
-	.div-cont {
-		padding: 1em;
 	}
 
 	.margin-card {
@@ -451,6 +459,12 @@ export default {
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
+    .div-cont {
+      padding-top: 1.5em;
+      padding-left: 3em;
+      padding-right: 3em;
+    }
+
 		.text-header {
 			font-size: x-large;
 		}
@@ -460,7 +474,7 @@ export default {
 		}
 
 		.text-page {
-			font-size: large;
+			font-size: medium;
 		}
 
 		.cont-col-right {
@@ -486,10 +500,18 @@ export default {
 		.input-select {
 			width: 13em;
 		}
+
+    .select-style {
+      width: 13em;
+    }
 	}
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
+    .div-cont {
+      padding: 1em;
+    }
+
 		.text-header {
 			font-size: small;
 		}
@@ -529,5 +551,15 @@ export default {
 		.btn-plain {
 			width: 21%;
 		}
+
+    .select-style {
+      width: 100%;
+    }
+
+    .select-popper {
+      li {
+        font-size: 0.52em;
+      }
+    }
 	}
 </style>

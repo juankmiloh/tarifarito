@@ -122,7 +122,7 @@ import {
   getIDane,
   putIDane,
   postIDane
-} from '@/api/gestor/iDane'
+} from '@/api/tarifarito/gestor/iDane'
 
 export default {
   name: 'ViewIndicesDane',
@@ -272,10 +272,6 @@ export default {
 		color: black;
 	}
 
-	.div-cont {
-		padding: 1em;
-	}
-
 	.margin-card {
 		margin-top: 1em;
 	}
@@ -286,6 +282,12 @@ export default {
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
+    .div-cont {
+      padding-top: 1.5em;
+      padding-left: 3em;
+      padding-right: 3em;
+    }
+
 		.text-header {
 			font-size: x-large;
 		}
@@ -295,7 +297,7 @@ export default {
 		}
 
 		.text-page {
-			font-size: large;
+			font-size: medium;
 		}
 
 		.cont-col-right {
@@ -317,6 +319,10 @@ export default {
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
+    .div-cont {
+      padding: 1em;
+    }
+
 		.text-header {
 			font-size: small;
 		}

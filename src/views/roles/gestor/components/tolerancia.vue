@@ -101,7 +101,7 @@ import {
   getNTolerancia,
   postNTolerancia,
   putNTolerancia
-} from '@/api/gestor/nTolerancia'
+} from '@/api/tarifarito/gestor/nTolerancia'
 
 export default {
   name: 'ViewTolerancia',
@@ -230,13 +230,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	.text-header {
 		color: black;
-	}
-
-	.div-cont {
-		padding: 1em;
 	}
 
 	.margin-card {
@@ -247,8 +243,18 @@ export default {
 		text-align: center;
 	}
 
+  .el-card__header {
+    background: #F2F6FC;
+  }
+
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
+    .div-cont {
+      padding-top: 1.5em;
+      padding-left: 3em;
+      padding-right: 3em;
+    }
+
 		.text-header {
 			font-size: x-large;
 		}
@@ -258,7 +264,7 @@ export default {
 		}
 
 		.text-page {
-			font-size: large;
+			font-size: medium;
 		}
 
 		.cont-col-right {
@@ -284,6 +290,10 @@ export default {
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
+    .div-cont {
+      padding: 1em;
+    }
+
 		.text-header {
 			font-size: small;
 		}

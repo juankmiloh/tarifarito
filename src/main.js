@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+/* eslint-disable */
 import Vue from 'vue'
 
 import Cookies from 'js-cookie'
@@ -33,17 +35,17 @@ import * as filters from './filters' // global filters
  */
 import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'development') {
-  mockXHR()
+    mockXHR()
 }
 
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
-  i18n: (key, value) => i18n.t(key, value)
+    size: Cookies.get('size') || 'medium', // set element-ui default size
+    i18n: (key, value) => i18n.t(key, value)
 })
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
+    Vue.filter(key, filters[key])
 })
 
 i18n.locale = 'es'
@@ -53,9 +55,9 @@ Vue.config.productionTip = false
 // Vue.component('v-icon', Icon)
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    i18n,
+    render: h => h(App)
 })
