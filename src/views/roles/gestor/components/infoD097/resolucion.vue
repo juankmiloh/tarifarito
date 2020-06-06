@@ -140,7 +140,7 @@ import {
 import { getSUIEmpresasList } from '@/api/tarifarito/sui-empresas'
 
 export default {
-  name: 'ViewD097Resolucion',
+  name: 'ViewD097Res',
   components: { BackToTop },
   data() {
     // this.getList()

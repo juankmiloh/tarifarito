@@ -4,21 +4,21 @@ import request from '../../../utils/request';
 
 export function getIComercialList() {
     return request({
-        url: 'i_comercial',
+        url: 'g_icomercial',
         method: 'get'
     });
 }
 
 export function getIComercial(query) {
     return request({
-        url: `i_comercial/${query}`,
+        url: `g_icomercial/${query}`,
         method: 'get'
     });
 }
 
 export function postIComercial(model) {
     return request({
-        url: `i_comercial`,
+        url: `g_icomercial`,
         method: 'post',
         params: { 'params': model }
     });
@@ -26,7 +26,7 @@ export function postIComercial(model) {
 
 export function putIComercial(anio, empresa, model) {
     return request({
-        url: `i_comercial/${anio}`,
+        url: `g_icomercial/${anio}`,
         method: 'put',
         params: { 'params': model, 'empresa': empresa }
     });
@@ -34,7 +34,7 @@ export function putIComercial(anio, empresa, model) {
 
 export function deleteIComercial(query) {
     return request({
-        url: `i_comercial/${query}`,
+        url: `g_icomercial/${query}`,
         method: 'delete'
     });
 }

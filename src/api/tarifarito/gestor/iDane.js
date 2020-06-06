@@ -4,21 +4,21 @@ import request from '../../../utils/request';
 
 export function getIDaneList() {
     return request({
-        url: 'i_dane',
+        url: 'g_idane',
         method: 'get'
     });
 }
 
 export function getIDane(query) {
     return request({
-        url: `i_dane/${query}`,
+        url: `g_idane/${query}`,
         method: 'get'
     });
 }
 
 export function postIDane(model) {
     return request({
-        url: `i_dane`,
+        url: `g_idane`,
         method: 'post',
         params: { 'params': model }
     });
@@ -26,7 +26,7 @@ export function postIDane(model) {
 
 export function putIDane(anio, mes, model) {
     return request({
-        url: `i_dane/${anio}`,
+        url: `g_idane/${anio}`,
         method: 'put',
         params: { 'params': model, 'mes': mes }
     });
@@ -34,7 +34,7 @@ export function putIDane(anio, mes, model) {
 
 export function deleteIDane(query) {
     return request({
-        url: `i_dane/${query}`,
+        url: `g_idane/${query}`,
         method: 'delete'
     });
 }
