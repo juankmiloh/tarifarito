@@ -26,27 +26,19 @@
       </div>
       <el-row :gutter="10">
         <el-col :sm="24" :md="12" class="cont-col-right">
-          <!-- <el-date-picker
-            v-model="value1"
-            type="monthrange"
-            :clearable="false"
-            :unlink-panels="true"
-            align="left"
-            range-separator="-"
-            :start-placeholder="$t('datePicker.startDate')"
-            :end-placeholder="$t('datePicker.endDate')"
-            popper-class="select-popper"
-            @change="verifyVariable($event)"
-          /> -->
           <el-date-picker
-            v-model="value2"
+            v-model="value0"
             type="month"
-            placeholder="Pick a month"
+            :placeholder="$t('datePicker.startDate')"
+            style="width: 10em;"
+            @change="verifyVariable($event)"
           /> -
           <el-date-picker
-            v-model="value2"
+            v-model="value1"
             type="month"
-            placeholder="Pick a month"
+            :placeholder="$t('datePicker.endDate')"
+            style="width: 10em;"
+            @change="verifyVariable($event)"
           />
         </el-col>
         <el-col :sm="24" :md="12">
@@ -68,6 +60,40 @@
           </el-select>
         </el-col>
       </el-row>
+      <!-- <el-row :gutter="10">
+        <el-col :sm="24" :md="12" class="cont-col-right">
+          <el-date-picker
+            v-model="value1"
+            type="daterange"
+            :clearable="false"
+            :unlink-panels="true"
+            align="left"
+            range-separator="-"
+            :start-placeholder="$t('datePicker.startDate')"
+            :end-placeholder="$t('datePicker.endDate')"
+            popper-class="select-popper"
+            @change="verifyVariable($event)"
+          />
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-select
+            v-model="value2"
+            filterable
+            :disabled="disableSelect"
+            placeholder="Empresa"
+            class="select-style"
+            popper-class="select-popper"
+            @change="verifyVariable($event)"
+          >
+            <el-option
+              v-for="item in optionsEmpresa"
+              :key="item.cod_empresa"
+              :label="item.nombre"
+              :value="item.cod_empresa"
+            />
+          </el-select>
+        </el-col>
+      </el-row> -->
     </el-card>
 
     <el-card class="box-card margin-card">
@@ -171,6 +197,7 @@ export default {
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
       optionsAno: CONSTANTS.optionsAno,
       optionsEmpresa: [],
+      value0: '',
       value1: '',
       value2: '',
       date: new Date(),
