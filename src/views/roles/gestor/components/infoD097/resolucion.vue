@@ -47,7 +47,7 @@
             <el-option
               v-for="item in optionsEmpresa"
               :key="item.cod_empresa"
-              :label="item.nombre"
+              :label="`${item.cod_empresa} - ${item.nombre}`"
               :value="item.cod_empresa"
             />
           </el-select>
@@ -240,6 +240,7 @@ export default {
       const anio = this.value1
       const empresa = `e_${this.value2}`
       const model = {
+        usuario: this.name,
         fecha_modif: this.date,
         cdi: this.values[0],
         cdm: this.values[1],
@@ -267,6 +268,7 @@ export default {
             empresas: {
               [empresa]: [
                 {
+                  usuario: this.name,
                   fecha_modif: this.date,
                   cdi: this.values[0],
                   cdm: this.values[1],
@@ -287,6 +289,7 @@ export default {
           })
         } else {
           const model = {
+            usuario: this.name,
             fecha_modif: this.date,
             cdi: this.values[0],
             cdm: this.values[1],
@@ -431,7 +434,7 @@ export default {
 
 		.select-popper {
 			li {
-				font-size: 0.52em;
+				font-size: 0.45em;
 			}
 		}
 	}

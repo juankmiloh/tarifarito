@@ -170,6 +170,7 @@ export default {
       const anio = this.value1
       const mes = this.optionsMes[this.value2 - 1].key
       const model = {
+        usuario: this.name,
         fecha_modif: this.date,
         n_tolerancia: this.variable
       }
@@ -194,6 +195,7 @@ export default {
             meses: {
               [mes]: [
                 {
+                  usuario: this.name,
                   fecha_modif: this.date,
                   n_tolerancia: this.variable
                 }
@@ -211,6 +213,7 @@ export default {
           })
         } else {
           const model = {
+            usuario: this.name,
             fecha_modif: this.date,
             n_tolerancia: this.variable
           }

@@ -9,9 +9,9 @@ export function getD097ErrorList() {
     });
 }
 
-export function getD097Error(query) {
+export function getD097Error(f_inicial, f_final) {
     return request({
-        url: `g_error/${query}`,
+        url: `g_error/${f_inicial}/${f_final}`,
         method: 'get'
     });
 }
@@ -24,9 +24,9 @@ export function postD097Error(model) {
     });
 }
 
-export function putD097Error(anio, empresa, model) {
+export function putD097Error(f_inicial, f_final, empresa, model) {
     return request({
-        url: `g_error/${anio}`,
+        url: `g_error/${f_inicial}/${f_final}`,
         method: 'put',
         params: { 'params': model, 'empresa': empresa }
     });

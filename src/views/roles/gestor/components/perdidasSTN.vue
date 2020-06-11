@@ -45,7 +45,7 @@
             <el-option
               v-for="item in optionsMercado"
               :key="item.id_mercado"
-              :label="item.id_mercado"
+              :label="`${item.id_mercado} - ${item.nom_mercado}`"
               :value="item.id_mercado"
             />
           </el-select>
@@ -241,6 +241,7 @@ export default {
       const anio = this.value1
       const mercado = `m_${this.value2}`
       const model = {
+        usuario: this.name,
         fecha_modif: this.date,
         pr1_2: this.values[0],
         pr1: this.values[1],
@@ -269,6 +270,7 @@ export default {
             mercados: {
               [mercado]: [
                 {
+                  usuario: this.name,
                   fecha_modif: this.date,
                   pr1_2: this.values[0],
                   pr1: this.values[1],
@@ -290,6 +292,7 @@ export default {
           })
         } else {
           const model = {
+            usuario: this.name,
             fecha_modif: this.date,
             pr1_2: this.values[0],
             pr1: this.values[1],
@@ -431,12 +434,6 @@ export default {
 
 		.select-style {
 			width: 100%;
-		}
-
-		.select-popper {
-			li {
-				font-size: 0.52em;
-			}
 		}
 	}
 </style>

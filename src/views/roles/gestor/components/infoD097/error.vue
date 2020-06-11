@@ -24,24 +24,28 @@
           <span><b>{{ $t('error.info') }} D097 | Error</b></span>
         </span>
       </div>
-      <el-row :gutter="10">
-        <el-col :sm="24" :md="12" class="cont-col-right">
+      <el-row class="div-picker">
+        <el-col :sm="24" :md="8" style="text-align: right;">
           <el-date-picker
-            v-model="value0"
+            v-model="task.start_at"
             type="month"
             :placeholder="$t('datePicker.startDate')"
-            style="width: 10em;"
-            @change="verifyVariable($event)"
-          /> -
-          <el-date-picker
-            v-model="value1"
-            type="month"
-            :placeholder="$t('datePicker.endDate')"
-            style="width: 10em;"
+            class="date"
             @change="verifyVariable($event)"
           />
         </el-col>
-        <el-col :sm="24" :md="12">
+        <el-col :sm="24" :md="8" style="text-align: center;">
+          <el-date-picker
+            v-model="task.end_at"
+            type="month"
+            :disabled="disableEndDate"
+            :placeholder="$t('datePicker.endDate')"
+            :picker-options="dueDatePickerOptions"
+            class="date"
+            @change="verifyVariable($event)"
+          />
+        </el-col>
+        <el-col :sm="24" :md="8" style="text-align: left;">
           <el-select
             v-model="value2"
             filterable
@@ -54,7 +58,7 @@
             <el-option
               v-for="item in optionsEmpresa"
               :key="item.cod_empresa"
-              :label="item.nombre"
+              :label="`${item.cod_empresa} - ${item.nombre}`"
               :value="item.cod_empresa"
             />
           </el-select>
@@ -63,8 +67,8 @@
       <!-- <el-row :gutter="10">
         <el-col :sm="24" :md="12" class="cont-col-right">
           <el-date-picker
-            v-model="value1"
-            type="daterange"
+            v-model="end_at"
+            type="monthrange"
             :clearable="false"
             :unlink-panels="true"
             align="left"
@@ -167,6 +171,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import BackToTop from '@/components/BackToTop'
 import { Message } from 'element-ui'
@@ -191,18 +196,24 @@ export default {
       disableLoad: true,
       disableModify: true,
       disableVariable: true,
+      disableEndDate: true,
       disableSelect: true,
       loadingLoad: false,
       loadingModify: false,
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
       optionsAno: CONSTANTS.optionsAno,
       optionsEmpresa: [],
-      value0: '',
-      value1: '',
       value2: '',
       date: new Date(),
       values: [],
-      model: {}
+      model: {},
+      task: {
+        start_at: '',
+        end_at: ''
+      },
+      dueDatePickerOptions: {
+        disabledDate: this.disabledDueDate
+      }
     }
   },
   computed: {
@@ -214,6 +225,9 @@ export default {
     })
   },
   methods: {
+    disabledDueDate(time) {
+      return time.getTime() < this.task.start_at
+    },
     async getEmpresasList() {
       await getSUIEmpresasList().then(response => {
         // console.log(response)
@@ -227,10 +241,25 @@ export default {
     },
     async verifyVariable(evt) {
       console.log(evt)
-      if (this.value1) {
-        this.disableSelect = false
+      if (this.task.start_at) {
+        this.disableEndDate = false
+      } else {
+        this.disableEndDate = true
       }
-      await getD097Error(this.value1).then(response => {
+      if (this.task.start_at && this.task.end_at) {
+        this.disableSelect = false
+        this.queryVariable(evt)
+      } else {
+        this.disableSelect = true
+        this.disableVariable = true
+        this.disableLoad = true
+        this.disableModify = true
+      }
+    },
+    async queryVariable(evt) {
+      const f_inicial = moment(this.task.start_at).utc().format('YYYY-MM')
+      const f_final = moment(this.task.end_at).utc().format('YYYY-MM')
+      await getD097Error(f_inicial, f_final).then(response => {
         if (response.length > 0 && this.value2 !== '') {
           const empresa = `e_${this.value2}`
           console.log('Empresa: ', empresa)
@@ -279,16 +308,18 @@ export default {
     },
     async modifyVariable() {
       this.loadingModify = true
-      const anio = this.value1
+      const f_inicial = moment(this.task.start_at).utc().format('YYYY-MM')
+      const f_final = moment(this.task.end_at).utc().format('YYYY-MM')
       const empresa = `e_${this.value2}`
       const model = {
+        usuario: this.name,
         fecha_modif: this.date,
         cdi: this.values[0],
         cdm: this.values[1],
         cd2: this.values[2],
         cd3: this.values[3]
       }
-      await putD097Error(anio, empresa, model).then(response => {
+      await putD097Error(f_inicial, f_final, empresa, model).then(response => {
         this.disableModify = true
         Message({
           message: 'Registros actualizados con éxito!',
@@ -300,15 +331,18 @@ export default {
     },
     async saveVariable() {
       this.loadingLoad = true
-      const anio = parseInt(this.value1)
+      const f_inicial = moment(this.task.start_at).utc().format('YYYY-MM')
+      const f_final = moment(this.task.end_at).utc().format('YYYY-MM')
       const empresa = `e_${this.value2}`
-      await getD097Error(this.value1).then(async response => {
+      await getD097Error(f_inicial, f_final).then(async response => {
         if (response.length === 0) {
           const model = {
-            anio: anio,
+            f_inicial: f_inicial,
+            f_final: f_final,
             empresas: {
               [empresa]: [
                 {
+                  usuario: this.name,
                   fecha_modif: this.date,
                   cdi: this.values[0],
                   cdm: this.values[1],
@@ -329,13 +363,14 @@ export default {
           })
         } else {
           const model = {
+            usuario: this.name,
             fecha_modif: this.date,
             cdi: this.values[0],
             cdm: this.values[1],
             cd2: this.values[2],
             cd3: this.values[3]
           }
-          await putD097Error(anio, empresa, model).then(response => {
+          await putD097Error(f_inicial, f_final, empresa, model).then(response => {
             Message({
               message: 'Registros guardados con éxito!',
               type: 'success',
@@ -420,6 +455,10 @@ export default {
 			width: 13em;
 		}
 
+    .div-picker .date {
+      width: 15em;
+    }
+
 		.picker-popper {
 			.el-date-picker__header{
 				// custom header style here
@@ -478,9 +517,14 @@ export default {
 			width: 100%;
 		}
 
+    .div-picker .date {
+      width: 100%;
+      padding-bottom: 1em;
+    }
+
 		.select-popper {
 			li {
-				font-size: 0.52em;
+				font-size: 0.45em;
 			}
 		}
 	}
