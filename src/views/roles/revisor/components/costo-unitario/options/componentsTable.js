@@ -168,6 +168,6 @@ const componentsTable = [{
         component_c: [{ value: "c", cpte_publicado: 550, cpte_calculado: 500, cpte_diferencia: 50 }],
         component_cu: [{ value: "cu", cpte_publicado: 500, cpte_calculado: 500, cpte_diferencia: 0 }]
     },
-]
+];
 
 export default componentsTable;

@@ -216,7 +216,7 @@
                   >
                     <el-table-column prop="id_mercado" label="ID Mercado" width="180" sortable />
                     <el-table-column prop="mercado" label="Nombre Mercado" width="240" sortable />
-                    <el-table-column prop="nt_prop" label="NT - PRO" width="150" sortable />
+                    <el-table-column prop="nt_prop" label="NT - PROP" width="150" sortable />
                     <el-table-column label="G">
                       <template slot-scope="scope">
                         <el-popover placement="top-start" width="230" trigger="hover">
@@ -232,7 +232,7 @@
                             </div>
                           </div>
                           <el-button
-                            v-if="scope.row.component_g[0].cpte_diferencia === 0"
+                            v-if="scope.row.component_g[0].cpte_publicado - scope.row.component_g[0].cpte_calculado >= 0 && scope.row.component_g[0].cpte_publicado - scope.row.component_g[0].cpte_calculado <= 0.5 "
                             slot="reference"
                             type="success"
                             icon="el-icon-check"
