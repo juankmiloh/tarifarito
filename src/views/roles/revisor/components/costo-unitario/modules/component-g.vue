@@ -66,26 +66,28 @@
                           <span v-for="valorInput in value.inputs" :key="valorInput.key">
                             <span v-if="valorInput.start === true && valorInput.diferencia === false">
                               <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                                <vue-numeric
+                                <input
                                   v-if="values[valorInput.key]"
                                   v-model="values[valorInput.key].values"
-                                  :precision="3"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
                                   style="width: 95%; height: 2em; margin-bottom: 0.5em;"
                                   :disabled="true"
                                   @input="diferencia(valorInput.key)"
-                                />
+                                >
                               </el-col>
                             </span>
                             <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
                               <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                                <vue-numeric
+                                <input
                                   v-if="values[valorInput.key]"
                                   v-model="values[valorInput.key].values"
-                                  :precision="3"
+                                  :type="valorInput.type"
+                                  :placeholder="valorInput.placeholder"
                                   :disabled="valorInput.disabled"
                                   style="width: 95%; height: 2em; margin-bottom: 0.5em;"
                                   @input="diferencia(valorInput.key); formula()"
-                                />
+                                >
                               </el-col>
                             </span>
                             <span v-else>
@@ -122,7 +124,7 @@
       </el-col>
       <el-col :span="15" style="border: 0px solid yellow;">
         <span>Componente calculado revisión $/kWh</span>
-        <el-input v-model="valuePruebas" style="width: 30%; margin-left: 1%;" />
+        <el-input v-model="valuePruebas" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
       </el-col>
       <el-col :span="9" style="text-align: right; border: 0px solid;">
         <el-button type="primary" @click="calcular">Calcular</el-button>
@@ -148,13 +150,9 @@ import componentesGeneracion from './../options/componentsG'
 import {
   getCpteGValues
 } from '@/api/tarifarito/revisor/componentG'
-import VueNumeric from 'vue-numeric'
 
 export default {
   name: 'ViewG',
-  components: {
-    VueNumeric
-  },
   props: {
     message: {
       type: Object,
@@ -270,12 +268,11 @@ export default {
     },
     formula() {
       this.valuePruebas = null
-      console.log('CAMPO16 --> ', parseFloat(this.values['c16_2'].values))
-      console.log('MODEL --> ', this.values)
+      // console.log('CAMPO16 --> ', parseFloat(this.values['c16_2'].values))
       const campo16 = parseFloat(this.values['c12_2'].values) + parseFloat(this.values['c13_2'].values) + parseFloat(this.values['c14_2'].values) + parseFloat(this.values['c15_2'].values)
       const campo17 = Math.min(1, (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values)) / campo16)
       const campo22 = (parseFloat(this.values['c4_2'].values) + parseFloat(this.values['c6_2'].values)) / (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values))
-      // const campo18 = 1 - campo17
+      const campo18 = 1 - campo17
       const campo23 = parseFloat(this.values['c8_2'].values) / parseFloat(this.values['c7_2'].values)
       const campo21 = parseFloat(this.values['c19_2'].values) + parseFloat(this.values['c20_2'].values)
       const campo11 = parseFloat(this.values['c9_2'].values) + parseFloat(this.values['c10_2'].values)
@@ -283,8 +280,20 @@ export default {
       const campo30 = (1 - campo17 - campo21) * campo23
       const campo28 = campo29 + campo30 + parseFloat(this.values['c24_2'].values) + parseFloat(this.values['c26_2'].values)
 
-      console.log('campo28 --> ', campo28)
+      this.values['c16_2'].values = campo16
+      this.values['c17_2'].values = campo17
+      this.values['c22_2'].values = campo22
+      this.values['c18_2'].values = campo18
+      this.values['c23_2'].values = campo23
+      this.values['c21_2'].values = campo21
+      this.values['c11_2'].values = campo11
+      this.values['c29_2'].values = campo29
+      this.values['c30_2'].values = campo30
+      this.values['c28_2'].values = campo28
+
+      // console.log('campo28 --> ', campo28)
       this.valuePruebas = campo28.toFixed(3)
+      console.log('MODEL --> ', this.values)
     },
     reportar() {
       this.valoresDiferencia = false

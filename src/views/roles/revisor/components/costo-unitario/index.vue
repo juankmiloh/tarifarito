@@ -247,6 +247,7 @@
                     >
                       <template slot-scope="scope">
                         <div v-for="item in scope.row.componentes" :key="item">
+                          <!-- <div v-for="item in scope.row.componentes"> -->
                           <span v-for="componente in item[column.prop]" :key="componente.value">
                             <el-popover placement="top-start" width="230" trigger="hover">
                               <div style="color: black;">
