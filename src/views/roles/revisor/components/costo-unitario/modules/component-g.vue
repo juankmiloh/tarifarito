@@ -27,7 +27,7 @@
           </el-row>
         </div>
         <br>
-        <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"> <!-- valor pantalla super -->
+        <div v-if="loadIputs" style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"> <!-- valor pantalla super -->
           <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
           <el-row>
             <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
@@ -40,10 +40,10 @@
                     <span>UNIDAD</span>
                   </el-col>
                   <el-col style="border: 0px solid red;" :span="3">
-                    <span>VALORES</span>
+                    <span>TARIFARITO</span>
                   </el-col>
                   <el-col style="border: 0px solid red;" :span="3">
-                    <span>VALORES</span>
+                    <span>REVISIÓN</span>
                   </el-col>
                   <el-col style="border: 0px solid red;" :span="3">
                     <span>DIFERENCIA</span>
@@ -66,25 +66,26 @@
                           <span v-for="valorInput in value.inputs" :key="valorInput.key">
                             <span v-if="valorInput.start === true && valorInput.diferencia === false">
                               <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                                <input
+                                <vue-numeric
+                                  v-if="values[valorInput.key]"
                                   v-model="values[valorInput.key].values"
-                                  :type="valorInput.type"
-                                  :placeholder="valorInput.placeholder"
+                                  :precision="3"
                                   style="width: 95%; height: 2em; margin-bottom: 0.5em;"
                                   :disabled="true"
                                   @input="diferencia(valorInput.key)"
-                                >
+                                />
                               </el-col>
                             </span>
                             <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
                               <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                                <input
+                                <vue-numeric
+                                  v-if="values[valorInput.key]"
                                   v-model="values[valorInput.key].values"
-                                  :type="valorInput.type"
-                                  :placeholder="valorInput.placeholder"
+                                  :precision="3"
+                                  :disabled="valorInput.disabled"
                                   style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                  @input="diferencia(valorInput.key)"
-                                >
+                                  @input="diferencia(valorInput.key); formula()"
+                                />
                               </el-col>
                             </span>
                             <span v-else>
@@ -112,8 +113,16 @@
     </el-row>
     <el-row style="padding-top: 1%;">
       <el-col :span="15" style="border: 0px solid yellow;">
+        <span>Componente TARIFARITO (El que esta bien) $/kWh</span>
+        <el-input v-model="cpteCalculado" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
+      </el-col>
+      <el-col :span="15" style="border: 0px solid yellow;">
         <span>Componente publicado $/kWh</span>
-        <el-input v-model="input" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
+        <el-input v-model="cptePublicado" placeholder="" style="width: 30%; margin-left: 1%;" />
+      </el-col>
+      <el-col :span="15" style="border: 0px solid yellow;">
+        <span>Componente calculado revisión $/kWh</span>
+        <el-input v-model="valuePruebas" style="width: 30%; margin-left: 1%;" />
       </el-col>
       <el-col :span="9" style="text-align: right; border: 0px solid;">
         <el-button type="primary" @click="calcular">Calcular</el-button>
@@ -136,9 +145,24 @@
 import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
 import componentesGeneracion from './../options/componentsG'
+import {
+  getCpteGValues
+} from '@/api/tarifarito/revisor/componentG'
+import VueNumeric from 'vue-numeric'
 
 export default {
   name: 'ViewG',
+  components: {
+    VueNumeric
+  },
+  props: {
+    message: {
+      type: Object,
+      default: function() {
+        return { message: null }
+      }
+    }
+  },
   data() {
     return {
       logo: logTarifarito,
@@ -146,8 +170,29 @@ export default {
       valoresDiferencia: false,
       components: componentesGeneracion,
       input: 0,
+      input1: 0,
+      cptePublicado: 0,
+      cpteCalculado: 0,
+      valuePruebas: 0,
       values: [],
-      actualiza: false
+      actualiza: false,
+      dataCpteG: [],
+      keysValues: [],
+      loadIputs: Boolean,
+      modelValues: {
+        campo16: [
+          1,
+          2,
+          3,
+          4,
+          5,
+          1,
+          2,
+          3,
+          4,
+          5
+        ]
+      }
     }
   },
   computed: {
@@ -157,32 +202,54 @@ export default {
     ])
   },
   created() {
-    const valores = []
-    let diferencia = 0
-    this.components.forEach(item => {
-      item.data.forEach(input => {
-        input.inputs.forEach(campo => {
-          if (campo.diferencia === false) {
-            valores.push(campo.value)
-            this.values[campo.key] = {
-              placeholder: campo.placeholder,
-              show: campo.show,
-              values: campo.value
-            }
-          } else {
-            diferencia = valores[0] - valores[1]
-            this.values[campo.key] = {
-              placeholder: campo.placeholder,
-              show: campo.show,
-              values: diferencia
-            }
-          }
-        })
-      })
-    })
+    this.initData()
   },
   methods: {
-    diferencia: function(key) {
+    async initData() {
+      // Data enviada del padre
+      const dataParentG = JSON.parse(JSON.stringify(this.message))
+      // Se traen valores de variables
+      console.log('dataParentG --> ', dataParentG)
+      this.cptePublicado = parseFloat(dataParentG.componentes[0].component_g[0].cpte_publicado).toFixed(3)
+      this.cpteCalculado = parseFloat(dataParentG.componentes[0].component_g[0].cpte_calculado).toFixed(3)
+      console.log(this.cptePublicado)
+      await getCpteGValues(dataParentG).then((response) => {
+        this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+        // console.log('respons: ', this.modelValues)
+        this.initInputs()
+        this.loadIputs = true
+        this.formula()
+      })
+    },
+    initInputs() {
+      const valores = []
+      let diferencia = 0
+      this.keysValues = Object.keys(this.modelValues)
+      // console.log('LLAVE: ', this.keysValues)
+      this.components.forEach((item, index) => {
+        item.data.forEach((input, idx) => {
+          input.inputs.forEach(campo => {
+            if (campo.diferencia === false) {
+              valores.push(campo.value)
+              this.values[campo.key] = {
+                placeholder: campo.placeholder,
+                show: campo.show,
+                values: this.modelValues[this.keysValues[index]][idx]
+              }
+            } else {
+              diferencia = valores[0] - valores[1]
+              this.values[campo.key] = {
+                placeholder: campo.placeholder,
+                show: campo.show,
+                values: diferencia
+              }
+            }
+          })
+        })
+      })
+      // console.log('VALUES ->> ', this.values)
+    },
+    diferencia(key) {
       this.actualiza = false // sirve para renderizar el nuevo valor, no quitar
       const splitKey = key.split('_')
       const idKey = splitKey[0]
@@ -192,14 +259,32 @@ export default {
       const valor1 = this.values[KeyOne].values
       const valor2 = this.values[KeyTwo].values
       this.values[KeyThree].values = valor1 - valor2
-      console.log('Values: ', this.values)
+      // console.log('Values: ', this.values)
       this.actualiza = true
     },
-    calcular: function() {
+    calcular() {
       this.valoresDiferencia = true
     },
     verificar() {
       this.valoresDiferencia = false
+    },
+    formula() {
+      this.valuePruebas = null
+      console.log('CAMPO16 --> ', parseFloat(this.values['c16_2'].values))
+      console.log('MODEL --> ', this.values)
+      const campo16 = parseFloat(this.values['c12_2'].values) + parseFloat(this.values['c13_2'].values) + parseFloat(this.values['c14_2'].values) + parseFloat(this.values['c15_2'].values)
+      const campo17 = Math.min(1, (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values)) / campo16)
+      const campo22 = (parseFloat(this.values['c4_2'].values) + parseFloat(this.values['c6_2'].values)) / (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values))
+      // const campo18 = 1 - campo17
+      const campo23 = parseFloat(this.values['c8_2'].values) / parseFloat(this.values['c7_2'].values)
+      const campo21 = parseFloat(this.values['c19_2'].values) + parseFloat(this.values['c20_2'].values)
+      const campo11 = parseFloat(this.values['c9_2'].values) + parseFloat(this.values['c10_2'].values)
+      const campo29 = campo17 * ((parseFloat(this.values['c25_2'].values) * campo22) + (1 - parseFloat(this.values['c25_2'].values)) * campo11)
+      const campo30 = (1 - campo17 - campo21) * campo23
+      const campo28 = campo29 + campo30 + parseFloat(this.values['c24_2'].values) + parseFloat(this.values['c26_2'].values)
+
+      console.log('campo28 --> ', campo28)
+      this.valuePruebas = campo28.toFixed(3)
     },
     reportar() {
       this.valoresDiferencia = false

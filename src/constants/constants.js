@@ -1,33 +1,34 @@
 /* jshint esversion: 6 */
 /* eslint-disable */
 export const CONSTANTS = {
-    optionsAno: [{
-            value: '2007'
-        },
-        {
-            value: '2008'
-        },
-        {
-            value: '2009'
-        },
-        {
-            value: '2010'
-        },
-        {
-            value: '2011'
-        },
-        {
-            value: '2012'
-        },
-        {
-            value: '2013'
-        },
-        {
-            value: '2014'
-        },
-        {
-            value: '2015'
-        },
+    optionsAno: [
+        // {
+        //     value: '2007'
+        // },
+        // {
+        //     value: '2008'
+        // },
+        // {
+        //     value: '2009'
+        // },
+        // {
+        //     value: '2010'
+        // },
+        // {
+        //     value: '2011'
+        // },
+        // {
+        //     value: '2012'
+        // },
+        // {
+        //     value: '2013'
+        // },
+        // {
+        //     value: '2014'
+        // },
+        // {
+        //     value: '2015'
+        // },
         {
             value: '2016'
         },

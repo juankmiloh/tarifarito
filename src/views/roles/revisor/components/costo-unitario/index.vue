@@ -25,7 +25,12 @@
         </div>
         <div style="margin-bottom:145px;">
           <el-col :span="24" style="border: 0px solid red; text-align: center;">
-            <el-select v-model="value_ano" placeholder="Año" class="select-style" @change="verifyCU($event)">
+            <el-select
+              v-model="value_ano"
+              placeholder="Año"
+              class="select-style"
+              @change="verifyCU($event)"
+            >
               <el-option
                 v-for="item in optionsAno"
                 :key="item.value"
@@ -35,7 +40,12 @@
             </el-select>
             <br>
             <br>
-            <el-select v-model="value_mes" placeholder="Mes" class="select-style" @change="verifyCU($event)">
+            <el-select
+              v-model="value_mes"
+              placeholder="Mes"
+              class="select-style"
+              @change="verifyCU($event)"
+            >
               <el-option
                 v-for="item in optionsMes"
                 :key="item.value"
@@ -51,6 +61,8 @@
               placeholder="Empresa"
               class="select-style"
               popper-class="select-popper"
+              :loading="loadingEmp"
+              loading-text="Cargando..."
               @change="verifyCU($event)"
             >
               <el-option
@@ -78,8 +90,9 @@
         :visible.sync="dialogFormVisible"
         fullscreen
         append-to-body
+        destroy-on-close
       >
-        <!-- Se carga la vista de los diferentes componentes -->
+        <!-- Se carga la vista de los valores del componente seleccionado -->
         <el-dialog
           :title="modulo"
           :before-close="handleClose"
@@ -88,7 +101,7 @@
           append-to-body
         >
           <!-- <component :is="currentView" v-on:inputChange="handleChange" @clicked="onClickChild"/> -->
-          <component :is="currentView" @clicked="onClickChild" />
+          <component :is="currentView" :message="componentSelect" @clicked="onClickChild" />
         </el-dialog>
 
         <el-dialog
@@ -212,257 +225,69 @@
                     :default-sort="{prop: 'id_mercado', order: 'ascending'}"
                     :data="tableData.filter(data => !search || data.mercado.toLowerCase().includes(search.toLowerCase()))"
                     height="53vh"
-                    style="width: 100%; height: 100%;"
+                    :border="true"
+                    style="width: 100%"
+                    @selection-change="handleSelectionChange"
                   >
-                    <el-table-column prop="id_mercado" label="ID Mercado" width="180" sortable />
-                    <el-table-column prop="mercado" label="Nombre Mercado" width="240" sortable />
-                    <el-table-column prop="nt_prop" label="NT - PROP" width="150" sortable />
-                    <el-table-column label="G">
+                    <el-table-column type="selection" align="center" />
+                    <el-table-column
+                      prop="id_mercado"
+                      label="ID Mercado"
+                      align="center"
+                      sortable
+                    />
+                    <el-table-column prop="mercado" label="Mercado" align="center" sortable />
+                    <el-table-column prop="nt_prop" label="NT - PROP" align="center" sortable />
+                    <el-table-column
+                      v-for="column in colComponentes"
+                      :key="column.label"
+                      :label="column.label"
+                      :prop="column.prop"
+                      align="center"
+                    >
                       <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_g" :key="item.value" style="padding-top: 3%;">
-                              <center><label>Componente Publicado</label></center>
-                              <center>${{ item.cpte_publicado }}</center>
-                              <center><label>Componente Calculado</label></center>
-                              <center>${{ item.cpte_calculado }}</center>
-                              <center><label>Diferencia</label></center>
-                              <center>${{ item.cpte_diferencia }}</center>
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_g[0].cpte_publicado - scope.row.component_g[0].cpte_calculado >= 0 && scope.row.component_g[0].cpte_publicado - scope.row.component_g[0].cpte_calculado <= 0.5 "
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_g[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_g[0].value)"
-                          />
-                        </el-popover>
+                        <div v-for="item in scope.row.componentes" :key="item">
+                          <span v-for="componente in item[column.prop]" :key="componente.value">
+                            <el-popover placement="top-start" width="230" trigger="hover">
+                              <div style="color: black;">
+                                <div class="text_popover">Tarifarito Informa</div>
+                                <center>
+                                  <label>Componente Publicado</label>
+                                </center>
+                                <center>${{ componente.cpte_publicado.toFixed(3) }}</center>
+                                <center>
+                                  <label>Componente Calculado</label>
+                                </center>
+                                <center>${{ componente.cpte_calculado.toFixed(3) }}</center>
+                                <center>
+                                  <label>Diferencia</label>
+                                </center>
+                                <center>${{ componente.cpte_diferencia.toFixed(3) }}</center>
+                              </div>
+                              <el-button
+                                v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
+                                  && componente.cpte_publicado - componente.cpte_calculado <= 0.5)
+                                  || (componente.cpte_publicado - componente.cpte_calculado < 0
+                                  && componente.cpte_publicado - componente.cpte_calculado >= -0.5)"
+                                slot="reference"
+                                type="success"
+                                icon="el-icon-check"
+                                circle
+                                @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                              />
+                              <el-button
+                                v-else
+                                slot="reference"
+                                type="danger"
+                                icon="el-icon-close"
+                                circle
+                                @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                              />
+                            </el-popover>
+                          </span>
+                        </div>
                       </template>
                     </el-table-column>
-                    <!-- <el-table-column label="T">
-                      <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_t" :key="item.value" style="padding-top: 3%;">
-                              <label>Componente Publicado:</label>
-                              ${{ item.cpte_publicado }}
-                              <br>
-                              <label>Componente Calculado:</label>
-                              ${{ item.cpte_calculado }}
-                              <br>
-                              <label>Diferencia:</label>
-                              ${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_t[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_t[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_t[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-                    </el-table-column>
-                    <el-table-column label="P">
-                      <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_p" :key="item.value" style="padding-top: 3%;">
-                              <label>Componente Publicado:</label>
-                              ${{ item.cpte_publicado }}
-                              <br>
-                              <label>Componente Calculado:</label>
-                              ${{ item.cpte_calculado }}
-                              <br>
-                              <label>Diferencia:</label>
-                              ${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_p[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_p[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_p[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-                    </el-table-column>
-                    <el-table-column label="Dtun">
-                      <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div
-                              v-for="item in scope.row.component_dtun"
-                              :key="item.value"
-                              style="padding-top: 3%;"
-                            >
-                              <label>Componente Publicado:</label>
-                              ${{ item.cpte_publicado }}
-                              <br>
-                              <label>Componente Calculado:</label>
-                              ${{ item.cpte_calculado }}
-                              <br>
-                              <label>Diferencia:</label>
-                              ${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_dtun[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_dtun[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_dtun[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-                    </el-table-column>
-                    <el-table-column label="R">
-                      <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_r" :key="item.value" style="padding-top: 3%;">
-                              <label>Componente Publicado:</label>
-                              ${{ item.cpte_publicado }}
-                              <br>
-                              <label>Componente Calculado:</label>
-                              ${{ item.cpte_calculado }}
-                              <br>
-                              <label>Diferencia:</label>
-                              ${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_r[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_r[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_r[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-                    </el-table-column>
-                    <el-table-column label="C">
-                      <template slot-scope="scope">
-                        <el-popover placement="top-start" width="230" trigger="hover">
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_c" :key="item.value" style="padding-top: 3%;">
-                              <label>Componente Publicado:</label>
-                              ${{ item.cpte_publicado }}
-                              <br>
-                              <label>Componente Calculado:</label>
-                              ${{ item.cpte_calculado }}
-                              <br>
-                              <label>Diferencia:</label>
-                              ${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_c[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_c[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_c[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-                    </el-table-column> -->
-                    <!-- <el-table-column label="Cu">
-                      <template slot-scope="scope">
-                        <el-popover
-                          placement="top-start"
-                          width="230"
-                          trigger="hover"
-                        >
-                          <div style="color: black;">
-                            <div class="text_popover">Tarifarito Informa</div>
-                            <div v-for="item in scope.row.component_cu" :key="item.value" style="padding-top: 3%;">
-                              <label>Componente Publicado: </label>${{ item.cpte_publicado }}<br>
-                              <label>Componente Calculado: </label>${{ item.cpte_calculado }}<br>
-                              <label>Diferencia: </label>${{ item.cpte_diferencia }}
-                            </div>
-                          </div>
-                          <el-button
-                            v-if="scope.row.component_cu[0].cpte_diferencia === 0"
-                            slot="reference"
-                            type="success"
-                            icon="el-icon-check"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_cu[0].value)"
-                          />
-                          <el-button
-                            v-else
-                            slot="reference"
-                            type="danger"
-                            icon="el-icon-close"
-                            circle
-                            @click="handleClickComponent(scope.$index, scope.row, scope.row.component_cu[0].value)"
-                          />
-                        </el-popover>
-                      </template>
-										</el-table-column>-->
                   </el-table>
                 </el-col>
               </el-row>
@@ -502,6 +327,7 @@ import viewDtun from './modules/component-dtun.vue'
 import viewR from './modules/component-r.vue'
 import viewC from './modules/component-c.vue'
 import viewCu from './modules/component-cu.vue'
+import componentsTable from './options/componentsTable'
 
 import { CONSTANTS } from '../../../../../constants/constants'
 import {
@@ -531,19 +357,48 @@ export default {
       modulo: null,
       currentView: null,
       logo: logTarifarito,
-      tableData: [],
+      tableData: componentsTable,
+      multipleSelection: [],
       loading: false,
       search: '',
       dialogFormVisible: false,
       innerVisible: false,
       optionsAno: CONSTANTS.optionsAno,
       optionsMes: CONSTANTS.optionsMes,
+      loadingEmp: true,
       optionsEmpresa: [],
       value_ano: '',
       value_mes: '',
       value_empresa: '',
       dialogComponentP: false,
-      radioCreg: ''
+      radioCreg: '',
+      componentSelect: {},
+      colComponentes: [
+        {
+          label: 'G',
+          prop: 'component_g'
+        },
+        {
+          label: 'T',
+          prop: 'component_t'
+        },
+        {
+          label: 'P',
+          prop: 'component_p'
+        },
+        {
+          label: 'Dtun',
+          prop: 'component_dtun'
+        },
+        {
+          label: 'R',
+          prop: 'component_r'
+        },
+        {
+          label: 'C',
+          prop: 'component_c'
+        }
+      ]
     }
   },
   computed: {
@@ -553,21 +408,24 @@ export default {
     async getEmpresasList() {
       await getSUIEmpresasList().then(response => {
         // console.log(response)
+        this.loadingEmp = false
         this.optionsEmpresa = JSON.parse(JSON.stringify(response))
       })
     },
     async getListCU() {
-      await getCUnitarioList(2020, 2).then(
-        response => {
-          console.log(response)
-        }
-      )
+      await getCUnitarioList(2020, 2).then(response => {
+        // console.log(response)
+      })
     },
     async verifyCU() {
       if (this.value_ano && this.value_mes && this.value_empresa) {
         this.loading = true
         this.tableData = []
-        await getCUnitarioEmpresa(this.value_ano, this.value_mes, this.value_empresa).then((response) => {
+        await getCUnitarioEmpresa(
+          this.value_ano,
+          this.value_mes,
+          this.value_empresa
+        ).then(response => {
           // console.log(response)
           this.tableData = response
         })
@@ -575,7 +433,7 @@ export default {
       this.loading = false
     },
     onClickChild(value) {
-      console.log(value) // someValue
+      console.log('onClickChild: ', value) // someValue
       this.innerVisible = value
     },
     handleChange(event) {
@@ -583,8 +441,11 @@ export default {
       this.valor = value
     },
     handleClickComponent(index, row, component) {
-      console.log(index, row, component)
-      console.log('componente seleccionado -> ' + component)
+      // console.log(index, row, component)
+      // console.log('componente seleccionado -> ' + component)
+      row.ano = this.value_ano
+      row.mes = this.value_mes
+      this.componentSelect = row
       if (component === 'g') {
         this.modulo =
 						this.getTextSelectEmpresa(this.value_empresa) +
@@ -684,19 +545,16 @@ export default {
         }
       }
       return ''
+    },
+    handleSelectionChange(val) {
+      // console.log(val)
+      this.multipleSelection = val
     }
   }
 }
 </script>
 
 <style lang="scss">
-	// .el-dialog__wrapper{
-	//   display: flex;
-	//   flex-direction: column;
-	//   min-height: 100vh;
-	//   // background-color: #F2F6FC;
-	// }
-
 	.el-dialog {
 		background-color: #f2f6fc;
 	}
