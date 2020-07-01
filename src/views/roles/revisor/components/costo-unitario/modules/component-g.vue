@@ -248,6 +248,7 @@ export default {
       // console.log('VALUES ->> ', this.values)
     },
     diferencia(key) {
+      // hacer que esta funcion se ejecute cuando se modifique un valor de un input , ejecutar en la funcion formula , acondicionarla con un foreach
       this.actualiza = false // sirve para renderizar el nuevo valor, no quitar
       const splitKey = key.split('_')
       const idKey = splitKey[0]

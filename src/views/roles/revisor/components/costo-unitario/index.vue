@@ -62,7 +62,7 @@
               class="select-style"
               popper-class="select-popper"
               :loading="loadingEmp"
-              loading-text="Cargando..."
+              :loading-text="loadingText"
               @change="verifyCU($event)"
             >
               <el-option
@@ -99,6 +99,7 @@
           :visible.sync="innerVisible"
           fullscreen
           append-to-body
+          destroy-on-close
         >
           <!-- <component :is="currentView" v-on:inputChange="handleChange" @clicked="onClickChild"/> -->
           <component :is="currentView" :message="componentSelect" @clicked="onClickChild" />
@@ -263,7 +264,8 @@
                                 <center>
                                   <label>Diferencia</label>
                                 </center>
-                                <center>${{ componente.cpte_diferencia.toFixed(3) }}</center>
+                                <center v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) == 0">$0</center>
+                                <center v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) != 0">${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) }}</center>
                               </div>
                               <el-button
                                 v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
@@ -367,6 +369,7 @@ export default {
       optionsAno: CONSTANTS.optionsAno,
       optionsMes: CONSTANTS.optionsMes,
       loadingEmp: true,
+      loadingText: 'Cargando...',
       optionsEmpresa: [],
       value_ano: '',
       value_mes: '',
@@ -407,10 +410,12 @@ export default {
   },
   methods: {
     async getEmpresasList() {
-      await getSUIEmpresasList().then(response => {
-        // console.log(response)
+      await getSUIEmpresasList().then((result) => {
         this.loadingEmp = false
-        this.optionsEmpresa = JSON.parse(JSON.stringify(response))
+        this.optionsEmpresa = JSON.parse(JSON.stringify(result))
+      // eslint-disable-next-line handle-callback-err
+      }).catch((err) => {
+        this.loadingText = 'Error, recargue la página'
       })
     },
     async getListCU() {
