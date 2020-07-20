@@ -46,62 +46,62 @@ export const CONSTANTS = {
         }
     ],
     optionsMes: [{
-            value: '1',
+            value: 1,
             key: 'enero',
             label: 'Enero'
         },
         {
-            value: '2',
+            value: 2,
             key: 'febrero',
             label: 'Febrero'
         },
         {
-            value: '3',
+            value: 3,
             key: 'marzo',
             label: 'Marzo'
         },
         {
-            value: '4',
+            value: 4,
             key: 'abril',
             label: 'Abril'
         },
         {
-            value: '5',
+            value: 5,
             key: 'mayo',
             label: 'Mayo'
         },
         {
-            value: '6',
+            value: 6,
             key: 'junio',
             label: 'Junio'
         },
         {
-            value: '7',
+            value: 7,
             key: 'julio',
             label: 'Julio'
         },
         {
-            value: '8',
+            value: 8,
             key: 'agosto',
             label: 'Agosto'
         },
         {
-            value: '9',
+            value: 9,
             key: 'septiembre',
             label: 'Septiembre'
         },
         {
-            value: '10',
+            value: 10,
             key: 'octubre',
             label: 'Octubre'
         },
         {
-            value: '11',
+            value: 11,
             key: 'noviembre',
             label: 'Noviembre'
         },
         {
-            value: '12',
+            value: 12,
             key: 'diciembre',
             label: 'Diciembre'
         }
@@ -140,5 +140,30 @@ export const CONSTANTS = {
         'border-radius': '4px',
         'line-height': '45px',
         background: '#e7eaf1'
-    }
+    },
+    columnComponents: [{
+            label: 'G',
+            prop: 'component_g'
+        },
+        {
+            label: 'T',
+            prop: 'component_t'
+        },
+        {
+            label: 'P',
+            prop: 'component_p'
+        },
+        {
+            label: 'Dtun',
+            prop: 'component_dtun'
+        },
+        {
+            label: 'R',
+            prop: 'component_r'
+        },
+        {
+            label: 'C',
+            prop: 'component_c'
+        }
+    ]
 };

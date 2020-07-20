@@ -8,3 +8,11 @@ export function getCpteGValues(data) {
         method: 'get'
     });
 }
+
+export function postMDBCpteG(model) {
+    return request({
+        url: `r_componentg`,
+        method: 'post',
+        params: { 'params': model }
+    });
+}

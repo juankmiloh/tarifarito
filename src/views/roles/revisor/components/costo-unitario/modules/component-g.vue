@@ -1,160 +1,215 @@
 <template>
-  <div class="components-container" style="border: 0px solid red; margin: 0;">
-    <el-row>
-      <el-col :span="24">
-        <div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;">
-          <el-row>
-            <el-col :span="2" style="border: 0px solid; color: black;">
-              <div style="text-align: center;">
-                <img v-if="logo" :src="logo" width="100" height="auto">
-              </div>
+  <div>
+    <el-card class="box-card margin-card" style="padding-top: 1em; border: 2px solid #C0C4CC; display: none;">
+      <el-row class="cont-row">
+        <el-col :md="2" class="hidden-sm-and-down">
+          <div style="text-align: center; padding-right: 100%;">
+            <img v-if="logo" :src="logo" width="100" height="auto">
+          </div>
+        </el-col>
+        <el-col :sm="24" :md="22">
+          <aside class="size-aside-md">
+            <span class="text-header">
+              <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
+            </span>
+          </aside>
+          <aside class="size-aside-md">
+            <span class="text-user">
+              <b>{{ name }}</b>
+            </span>
+          </aside>
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <el-card v-if="loadIputs" class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
+      <el-card class="box-card card-cpte-1" :class="valoresDiferencia ? 'enlarge' : 'shrink'">
+        <el-card
+          style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em; border: 0px solid red; width: 100%;"
+        >
+          <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+            <el-col style="border: 0px solid red; text-align: left;" :span="13">
+              <span>CONCEPTO</span>
+              <span style="color: white;">{{ actualiza }}</span>
+              <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
             </el-col>
-            <el-col :span="22" style="border: 0px solid; padding-left: 2%;">
-              <el-row>
-                <el-col :span="24" style="border: 0px solid red; text-align: center;">
-                  <aside>
-                    <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
-                  </aside>
-                </el-col>
-                <el-col :span="24" style="border: 0px solid red; text-align: center;">
-                  <aside>
-                    <span style="font-size: 120%;"><b>{{ name }}</b></span>
-                    <!-- <input type="text" v-on:input="(event) => this.$emit('inputChange', event)"> -->
-                  </aside>
-                </el-col>
-              </el-row>
+            <el-col style="border: 0px solid red;" :span="2">
+              <span>UNIDAD</span>
             </el-col>
-          </el-row>
-        </div>
-        <br>
-        <div v-if="loadIputs" style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 43em; background-color: white; border-radius: 5px;"> <!-- valor pantalla super -->
-          <!-- <div style="border: 2px solid #C0C4CC; color: black; overflow-y:scroll; height: 20em; background-color: white; border-radius: 5px;"> -->
-          <el-row>
-            <el-col :span="24" style="border: 0px solid; color: black; padding: 1%;">
-              <el-card class="box-card" style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
-                <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                  <el-col style="border: 0px solid red; text-align: left;" :span="13">
-                    <span>CONCEPTO</span> <span style="color: white;">{{ actualiza }}</span> <!-- No borrar el span, este componente permite renderizar la diferencia de valores -->
-                  </el-col>
-                  <el-col style="border: 0px solid red;" :span="2">
-                    <span>UNIDAD</span>
-                  </el-col>
-                  <el-col style="border: 0px solid red;" :span="3">
-                    <span>TARIFARITO</span>
-                  </el-col>
-                  <el-col style="border: 0px solid red;" :span="3">
-                    <span>REVISIÓN</span>
-                  </el-col>
-                  <el-col style="border: 0px solid red;" :span="3">
-                    <span>DIFERENCIA</span>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="24">
-                    <el-collapse accordion>
-                      <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
-                        <template slot="title">
-                          {{ item.title }}<i class="header-icon el-icon-information" />
-                        </template>
-                        <el-row v-for="value in item.data" :key="value.campo">
-                          <el-col :span="13" style="padding-left: 2%; border: 0px solid blue;">
-                            <span>{{ value.concepto }}</span>
-                          </el-col>
-                          <el-col style="border: 0px solid blue; text-align: center;" :span="2">
-                            <span>{{ value.unidad }}</span>
-                          </el-col>
-                          <span v-for="valorInput in value.inputs" :key="valorInput.key">
-                            <span v-if="valorInput.start === true && valorInput.diferencia === false">
-                              <el-col v-if="valorInputDefault === valorInput.show" style="border: 0px solid yellow; text-align: center;" :span="3">
-                                <input
-                                  v-if="values[valorInput.key]"
-                                  v-model="values[valorInput.key].values"
-                                  :type="valorInput.type"
-                                  :placeholder="valorInput.placeholder"
-                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                  :disabled="true"
-                                  @input="diferencia(valorInput.key)"
-                                >
-                              </el-col>
-                            </span>
-                            <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
-                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid blue;" :span="3">
-                                <input
-                                  v-if="values[valorInput.key]"
-                                  v-model="values[valorInput.key].values"
-                                  :type="valorInput.type"
-                                  :placeholder="valorInput.placeholder"
-                                  :disabled="valorInput.disabled"
-                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                  @input="diferencia(valorInput.key); formula()"
-                                >
-                              </el-col>
-                            </span>
-                            <span v-else>
-                              <el-col v-if="valoresDiferencia === valorInput.show" style="border: 0px solid red;" :span="3">
-                                <input
-                                  v-model="values[valorInput.key].values"
-                                  :type="valorInput.type"
-                                  :placeholder="valorInput.placeholder"
-                                  :disabled="true"
-                                  style="width: 95%; height: 2em; margin-bottom: 0.5em;"
-                                >
-                              </el-col>
-                            </span>
-                          </span>
-                        </el-row>
-                      </el-collapse-item>
-                    </el-collapse>
-                  </el-col>
-                </el-row>
-              </el-card>
+            <el-col style="border: 0px solid red;" :span="valoresDiferencia ? 3 : 9">
+              <span>TARIFARITO</span>
+            </el-col>
+            <el-col v-if="valoresDiferencia" :span="valoresDiferencia ? 3 : 0">
+              <span>REVISIÓN</span>
+            </el-col>
+            <el-col v-if="valoresDiferencia" :span="valoresDiferencia ? 3 : 0">
+              <span>DIFERENCIA</span>
             </el-col>
           </el-row>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row style="padding-top: 1%;">
-      <el-col :span="15" style="border: 0px solid yellow;">
-        <span>Componente TARIFARITO (El que esta bien) $/kWh</span>
-        <el-input v-model="cpteCalculado" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
-      </el-col>
-      <el-col :span="15" style="border: 0px solid yellow;">
-        <span>Componente publicado $/kWh</span>
-        <el-input v-model="cptePublicado" placeholder="" style="width: 30%; margin-left: 1%;" />
-      </el-col>
-      <el-col :span="15" style="border: 0px solid yellow;">
-        <span>Componente calculado revisión $/kWh</span>
-        <el-input v-model="valuePruebas" type="number" placeholder="" style="width: 30%; margin-left: 1%;" />
-      </el-col>
-      <el-col :span="9" style="text-align: right; border: 0px solid;">
-        <el-button type="primary" @click="calcular">Calcular</el-button>
-        <el-button v-if="!valoresDiferencia" type="primary" @click="verificar">Verificado</el-button>
-        <el-button v-if="valoresDiferencia" type="primary" @click="reportar">Reportar</el-button>
-      </el-col>
-    </el-row>
-    <el-row style="padding-top: 0%;">
-      <el-col :span="24" style="border: 0px solid yellow;">
-        <span>Fórmula componente</span>
-        <el-tooltip class="item" effect="dark" content="Fórmula" placement="top-start">
-          <i class="el-icon-info" style="color: #304156;" />
-        </el-tooltip>
-      </el-col>
-    </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-collapse accordion>
+                <el-collapse-item v-for="item in components" :key="item.title" :name="item.name">
+                  <template slot="title">
+                    {{ item.title }}
+                    <i class="header-icon el-icon-information" />
+                  </template>
+                  <el-row v-for="value in item.data" :key="value.campo">
+                    <el-col
+                      :span="valoresDiferencia ? 13 : 11"
+                      style="padding-left: 2%; border: 0px solid blue;"
+                    >
+                      <span>{{ value.concepto }}</span>
+                    </el-col>
+                    <el-col
+                      style="border: 0px solid blue; text-align: center;"
+                      :span="valoresDiferencia ? 2 : 6"
+                    >
+                      <span>{{ value.unidad }}</span>
+                    </el-col>
+                    <span v-for="valorInput in value.inputs" :key="valorInput.key">
+                      <span v-if="valorInput.start === true && valorInput.diferencia === false">
+                        <el-col
+                          v-if="valorInputDefault === valorInput.show"
+                          style="border: 0px solid yellow; text-align: center;"
+                          :span="valoresDiferencia ? 3 : 6"
+                        >
+                          <input
+                            v-if="values[valorInput.key]"
+                            v-model="values[valorInput.key].values"
+                            :type="valorInput.type"
+                            :placeholder="valorInput.placeholder"
+                            style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                            :disabled="true"
+                          >
+                        </el-col>
+                      </span>
+                      <span v-else-if="valorInput.start === false && valorInput.diferencia === false">
+                        <el-col
+                          v-if="valoresDiferencia === valorInput.show"
+                          style="border: 0px solid red;"
+                          :span="valoresDiferencia ? 3 : 1"
+                        >
+                          <input
+                            v-if="values[valorInput.key]"
+                            v-model="values[valorInput.key].values"
+                            :type="valorInput.type"
+                            :placeholder="valorInput.placeholder"
+                            :disabled="valorInput.disabled"
+                            style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                            :style="{'display': valoresDiferencia ? 'block' : 'none'}"
+                            @input="formula()"
+                          >
+                        </el-col>
+                      </span>
+                      <span v-else>
+                        <el-col
+                          v-if="valoresDiferencia === valorInput.show"
+                          style="border: 0px solid red;"
+                          :span="valoresDiferencia ? 3 : 0"
+                        >
+                          <input
+                            v-model="values[valorInput.key].values"
+                            :type="valorInput.type"
+                            :placeholder="valorInput.placeholder"
+                            :disabled="true"
+                            style="width: 95%; height: 2em; margin-bottom: 0.5em;"
+                            :style="{'display': valoresDiferencia ? 'block' : 'none'}"
+                          >
+                        </el-col>
+                      </span>
+                    </span>
+                  </el-row>
+                </el-collapse-item>
+              </el-collapse>
+            </el-col>
+          </el-row>
+        </el-card>
+      </el-card>
+    </el-card>
+
+    <div class="footer">
+      <el-row style="padding-left: 2.5em;">
+        <el-col :span="8" style="border: 0px solid yellow;">
+          <span>
+            <b>Componente TARIFARITO $/kWh</b>
+          </span>
+          <el-input v-model="cpteCalculado" type="number" style="width: 39%;" readonly />
+        </el-col>
+        <el-col :span="8" style="border: 0px solid yellow;">
+          <span>
+            <b>Componente publicado $/kWh</b>
+          </span>
+          <el-input v-model="cptePublicado" type="number" style="width: 39%;" readonly />
+        </el-col>
+        <el-col :span="8" style="border: 0px solid yellow;">
+          <span>
+            <b>Componente calculado revisión $/kWh</b>
+          </span>
+          <el-input v-model="valuePruebas" type="text" style="width: 39%;" readonly />
+        </el-col>
+      </el-row>
+      <el-row style="padding-left: 2.5em;">
+        <el-col :span="24" style="border: 0px solid yellow;">
+          <span>Fórmula componente</span>
+          <el-tooltip class="item" effect="dark" content="Fórmula" placement="top-start">
+            <i class="el-icon-info" style="color: #304156;" />
+          </el-tooltip>
+        </el-col>
+      </el-row>
+
+      <el-row :gutter="10" style="padding-right: 0em;">
+        <el-col :sm="24" :md="21" class="cont-btn" style="text-align: right;">
+          <el-button type="primary" class="btnVerify" @click="valoresDiferencia = !valoresDiferencia">Calcular</el-button>
+        </el-col>
+        <el-col :sm="24" :md="3">
+          <el-button v-if="!valoresDiferencia" class="btn" type="success" @click="verificar">Verificado</el-button>
+          <el-button v-if="valoresDiferencia" class="btn" type="danger" @click="reportar">Reportar</el-button>
+        </el-col>
+      </el-row>
+    </div>
+
+    <!-- dialog mensaje revisión del componente -->
+    <el-dialog
+      title="Tarifarito reporta"
+      :visible.sync="dialogFormVisible"
+      width="30em"
+      top="10em"
+      append-to-body
+      destroy-on-close
+      custom-class="dialog-class"
+    >
+      <el-card class="cont-row" style="margin-top: 1.2em;">
+        <el-row>
+          <!-- <el-col :sm="24" :md="24" style="text-align: left;">
+            <label>Registrar novedad</label>
+					</el-col>-->
+          <el-col :sm="24" :md="24" class="input-padding">
+            <el-input v-model="novedad" type="textarea" autosize placeholder="Registrar novedad" />
+          </el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :sm="24" :md="24">
+            <el-button type="success" icon="el-icon-check" class="btn" @click="registrarNovedad">Registrar</el-button>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { Message } from 'element-ui'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
 import componentesGeneracion from './../options/componentsG'
-import {
-  getCpteGValues
-} from '@/api/tarifarito/revisor/componentG'
+import { getCpteGValues, postMDBCpteG } from '@/api/tarifarito/revisor/componentG'
 
 export default {
   name: 'ViewG',
   props: {
-    message: {
+    messagecomponent: {
       type: Object,
       default: function() {
         return { message: null }
@@ -167,6 +222,7 @@ export default {
       valorInputDefault: true,
       valoresDiferencia: false,
       components: componentesGeneracion,
+      dataParentG: null,
       input: 0,
       input1: 0,
       cptePublicado: 0,
@@ -177,27 +233,17 @@ export default {
       dataCpteG: [],
       keysValues: [],
       loadIputs: Boolean,
+      dialogFormVisible: false,
+      date: new Date(),
+      novedad: '',
+      modelMDBCpteG: {},
       modelValues: {
-        campo16: [
-          1,
-          2,
-          3,
-          4,
-          5,
-          1,
-          2,
-          3,
-          4,
-          5
-        ]
+        campo16: [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
       }
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+    ...mapGetters(['name', 'roles'])
   },
   created() {
     this.initData()
@@ -205,22 +251,24 @@ export default {
   methods: {
     async initData() {
       // Data enviada del padre
-      const dataParentG = JSON.parse(JSON.stringify(this.message))
+      this.dataParentG = JSON.parse(JSON.stringify(this.messagecomponent))
       // Se traen valores de variables
-      console.log('dataParentG --> ', dataParentG)
-      this.cptePublicado = parseFloat(dataParentG.componentes[0].component_g[0].cpte_publicado).toFixed(3)
-      this.cpteCalculado = parseFloat(dataParentG.componentes[0].component_g[0].cpte_calculado).toFixed(3)
-      console.log(this.cptePublicado)
-      await getCpteGValues(dataParentG).then((response) => {
+      console.log('dataParentG --> ', this.dataParentG)
+      this.cptePublicado = parseFloat(
+        this.dataParentG.componentes[0].component_g[0].cpte_publicado
+      ).toFixed(3)
+      this.cpteCalculado = parseFloat(
+        this.dataParentG.componentes[0].component_g[0].cpte_calculado
+      ).toFixed(3)
+      await getCpteGValues(this.dataParentG).then(response => {
         this.modelValues = JSON.parse(JSON.stringify(response[0].values))
         // console.log('respons: ', this.modelValues)
         this.initInputs()
         this.loadIputs = true
-        this.formula()
       })
     },
     initInputs() {
-      const valores = []
+      let valores = []
       let diferencia = 0
       this.keysValues = Object.keys(this.modelValues)
       // console.log('LLAVE: ', this.keysValues)
@@ -228,11 +276,14 @@ export default {
         item.data.forEach((input, idx) => {
           input.inputs.forEach(campo => {
             if (campo.diferencia === false) {
-              valores.push(campo.value)
+              // console.log('CAMPO -> ', campo)
+              // si se quiere mayor precision colocar .toFixed(12) identificando cuales numeros tienen decimales largos
+              const valor = this.modelValues[this.keysValues[index]][idx]
+              valores.push(valor)
               this.values[campo.key] = {
                 placeholder: campo.placeholder,
                 show: campo.show,
-                values: this.modelValues[this.keysValues[index]][idx]
+                values: valor
               }
             } else {
               diferencia = valores[0] - valores[1]
@@ -241,45 +292,81 @@ export default {
                 show: campo.show,
                 values: diferencia
               }
+              valores = []
             }
           })
         })
       })
+      this.formula()
       // console.log('VALUES ->> ', this.values)
     },
-    diferencia(key) {
-      // hacer que esta funcion se ejecute cuando se modifique un valor de un input , ejecutar en la funcion formula , acondicionarla con un foreach
-      this.actualiza = false // sirve para renderizar el nuevo valor, no quitar
-      const splitKey = key.split('_')
-      const idKey = splitKey[0]
-      const KeyOne = idKey + '_' + 1
-      const KeyTwo = idKey + '_' + 2
-      const KeyThree = idKey + '_' + 3
-      const valor1 = this.values[KeyOne].values
-      const valor2 = this.values[KeyTwo].values
-      this.values[KeyThree].values = valor1 - valor2
-      // console.log('Values: ', this.values)
-      this.actualiza = true
-    },
-    calcular() {
-      this.valoresDiferencia = true
+    diferenciaFormula() {
+      let valores = []
+      let diferencia = 0
+
+      this.components.forEach((item, index) => {
+        item.data.forEach((input, idx) => {
+          input.inputs.forEach(campo => {
+            if (campo.diferencia === false) {
+              // console.log('CAMPO -> ', campo)
+              valores.push(
+                parseFloat(this.values[campo.key].values).toPrecision(12)
+              )
+            } else {
+              // console.log(`${campo.key}`, valores[0], `${campo.key}`, valores[1], ' = ', valores[0] - valores[1])
+              diferencia = valores[0] - valores[1]
+              this.values[campo.key].values = diferencia
+              valores = []
+            }
+          })
+        })
+      })
+      // console.log('MODEL --> ', this.values)
     },
     verificar() {
       this.valoresDiferencia = false
+      this.$emit('clicked', false)
     },
     formula() {
-      this.valuePruebas = null
+      // console.log('FORMULA --> ', this.values)
+      this.valuePruebas = 0
       // console.log('CAMPO16 --> ', parseFloat(this.values['c16_2'].values))
-      const campo16 = parseFloat(this.values['c12_2'].values) + parseFloat(this.values['c13_2'].values) + parseFloat(this.values['c14_2'].values) + parseFloat(this.values['c15_2'].values)
-      const campo17 = Math.min(1, (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values)) / campo16)
-      const campo22 = (parseFloat(this.values['c4_2'].values) + parseFloat(this.values['c6_2'].values)) / (parseFloat(this.values['c1_2'].values) + parseFloat(this.values['c3_2'].values))
+      const campo16 =
+					parseFloat(this.values['c12_2'].values) +
+					parseFloat(this.values['c13_2'].values) +
+					parseFloat(this.values['c14_2'].values) +
+					parseFloat(this.values['c15_2'].values)
+      const campo17 = Math.min(
+        1,
+        (parseFloat(this.values['c1_2'].values) +
+						parseFloat(this.values['c3_2'].values)) /
+						campo16
+      )
+      const campo22 =
+					(parseFloat(this.values['c4_2'].values) +
+						parseFloat(this.values['c6_2'].values)) /
+					(parseFloat(this.values['c1_2'].values) +
+						parseFloat(this.values['c3_2'].values))
       const campo18 = 1 - campo17
-      const campo23 = parseFloat(this.values['c8_2'].values) / parseFloat(this.values['c7_2'].values)
-      const campo21 = parseFloat(this.values['c19_2'].values) + parseFloat(this.values['c20_2'].values)
-      const campo11 = parseFloat(this.values['c9_2'].values) + parseFloat(this.values['c10_2'].values)
-      const campo29 = campo17 * ((parseFloat(this.values['c25_2'].values) * campo22) + (1 - parseFloat(this.values['c25_2'].values)) * campo11)
+      const campo23 =
+					parseFloat(this.values['c8_2'].values) /
+					parseFloat(this.values['c7_2'].values)
+      const campo21 =
+					parseFloat(this.values['c19_2'].values) +
+					parseFloat(this.values['c20_2'].values)
+      const campo11 =
+					parseFloat(this.values['c9_2'].values) +
+					parseFloat(this.values['c10_2'].values)
+      const campo29 =
+					campo17 *
+					(parseFloat(this.values['c25_2'].values) * campo22 +
+						(1 - parseFloat(this.values['c25_2'].values)) * campo11)
       const campo30 = (1 - campo17 - campo21) * campo23
-      const campo28 = campo29 + campo30 + parseFloat(this.values['c24_2'].values) + parseFloat(this.values['c26_2'].values)
+      const campo28 =
+					campo29 +
+					campo30 +
+					parseFloat(this.values['c24_2'].values) +
+					parseFloat(this.values['c26_2'].values)
 
       this.values['c16_2'].values = campo16
       this.values['c17_2'].values = campo17
@@ -294,15 +381,100 @@ export default {
 
       // console.log('campo28 --> ', campo28)
       this.valuePruebas = campo28.toFixed(3)
-      console.log('MODEL --> ', this.values)
+      this.diferenciaFormula()
+      // console.log('MODEL --> ', this.values)
     },
     reportar() {
-      this.valoresDiferencia = false
-      this.$alert('La empresa no reporto los ajustes aplicados', 'TARIFARITO REPORTA', {
-        confirmButtonText: 'Aceptar',
-        callback: action => {
-          this.$emit('clicked', false)
+      this.dialogFormVisible = true
+      // this.$alert('La empresa no reporto los ajustes aplicados', 'TARIFARITO REPORTA', {
+      //   confirmButtonText: 'Aceptar',
+      //   callback: action => {
+      //     this.$emit('clicked', false)
+      //   }
+      // })
+    },
+    async registrarNovedad() {
+      this.modelMDBCpteG = {
+        usuario: this.name,
+        ano: this.dataParentG.ano,
+        mes: this.dataParentG.mes,
+        cod_empresa: this.dataParentG.id_empresa,
+        cod_mercado: this.dataParentG.id_mercado,
+        nt_prop: this.dataParentG.nt_prop,
+        novedad: this.novedad,
+        fecha_modif: this.date,
+        values: {
+          DCR: [
+            this.values['c16_2'].values,
+            this.values['c12_2'].values,
+            this.values['c13_2'].values,
+            this.values['c14_2'].values,
+            this.values['c15_2'].values
+          ],
+          Qc: [
+            this.values['c17_2'].values
+          ],
+          Pc: [
+            this.values['c22_2'].values,
+            this.values['c1_2'].values,
+            this.values['c2_2'].values,
+            this.values['c3_2'].values,
+            this.values['c4_2'].values,
+            this.values['c5_2'].values,
+            this.values['c6_2'].values
+          ],
+          Qb: [
+            this.values['c18_2'].values
+          ],
+          Pb: [
+            this.values['c23_2'].values,
+            this.values['c7_2'].values,
+            this.values['c8_2'].values
+          ],
+          Qagd: [
+            this.values['c21_2'].values,
+            this.values['c19_2'].values,
+            this.values['c20_2'].values
+          ],
+          McAplicado: [
+            this.values['c11_2'].values,
+            this.values['c9_2'].values,
+            this.values['c10_2'].values
+          ],
+          FAJ: [
+            this.values['c24_2'].values
+          ],
+          ALFA: [
+            this.values['c25_2'].values
+          ],
+          GTransitorio: [
+            this.values['c26_2'].values
+          ],
+          GContratos: [
+            this.values['c29_2'].values
+          ],
+          GBolsa: [
+            this.values['c30_2'].values
+          ],
+          CFNC: [
+            this.values['c27_2'].values
+          ],
+          CGeneracion: [
+            this.values['c28_2'].values
+          ]
         }
+      }
+      this.valoresDiferencia = false
+      this.dialogFormVisible = false
+      console.log('MODEL --> ', this.modelMDBCpteG)
+      await postMDBCpteG(this.modelMDBCpteG).then(response => {
+        this.loadingLoad = false
+        this.disableLoad = true
+        Message({
+          message: 'Registros guardados con éxito!',
+          type: 'success',
+          duration: 2 * 1000
+        })
       })
     }
   }
@@ -310,7 +482,65 @@ export default {
 </script>
 
 <style lang="scss">
-  .el-collapse-item__content{
-    padding-bottom: 1.5%;
+	.el-collapse-item__content {
+		padding-bottom: 1.5%;
+	}
+
+	.card-cpte {
+		border: 2px solid #c0c4cc;
+	}
+
+	.dialog-class {
+		border-radius: 10px;
+	}
+
+	.dialog-class .el-dialog__header {
+		border-radius: 10px 10px 0px 0px;
+	}
+
+  .footer {
+    border-top: 1px solid #c0c4cc;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    // background-color: #f2f6fc;
+    background-color: #e0f2f1;
+    padding: 1em;
+    // color: white;
+    // text-align: center;
   }
+
+	// Pantallas superiores a 800px (PC)
+	@media screen and (min-width: 800px) {
+		.enlarge {
+			border: 0px solid red;
+			padding-left: 0em;
+			padding-right: 0em;
+		}
+
+		.shrink {
+			border: 0px solid blue;
+			padding-left: 5em;
+			padding-right: 5em;
+		}
+	}
+
+	// Pantallas inferiores a 800px (mobile)
+	@media screen and (max-width: 800px) {
+		.card-cpte {
+			border: 2px solid #c0c4cc;
+			padding: 0 !important;
+		}
+
+		.card-cpte .el-card__body {
+			padding: 0.3em !important;
+		}
+
+		.card-cpte-1 {
+			border: 0px solid blue;
+			padding: 0;
+			margin: 0;
+		}
+	}
 </style>

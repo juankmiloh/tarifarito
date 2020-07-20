@@ -152,7 +152,7 @@
     </el-card>
 
     <!-- dialog agregar factor de productividad -->
-    <el-dialog title="Agregar" :visible.sync="dialogFormVisible" width="20em">
+    <el-dialog title="Agregar" :visible.sync="dialogFormVisible" width="20em" top="10em" custom-class="dialog-class">
       <el-card class="cont-row" style="margin-top: 1.2em;">
         <el-row>
           <el-col :sm="24" :md="24">
@@ -459,6 +459,14 @@ export default {
 	.dialog-style {
 		border: 1px solid red;
 	}
+
+  .dialog-class {
+    border-radius: 10px;
+  }
+
+  .dialog-class .el-dialog__header {
+    border-radius: 10px 10px 0px 0px;
+  }
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
