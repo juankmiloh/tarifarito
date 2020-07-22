@@ -1,27 +1,5 @@
 <template>
   <div>
-    <el-card class="box-card margin-card" style="padding-top: 1em; border: 2px solid #C0C4CC; display: none;">
-      <el-row class="cont-row">
-        <el-col :md="2" class="hidden-sm-and-down">
-          <div style="text-align: center; padding-right: 100%;">
-            <img v-if="logo" :src="logo" width="100" height="auto">
-          </div>
-        </el-col>
-        <el-col :sm="24" :md="22">
-          <aside class="size-aside-md">
-            <span class="text-header">
-              <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
-            </span>
-          </aside>
-          <aside class="size-aside-md">
-            <span class="text-user">
-              <b>{{ name }}</b>
-            </span>
-          </aside>
-        </el-col>
-      </el-row>
-    </el-card>
-
     <el-card v-if="loadIputs" class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
       <el-card class="box-card card-cpte-1" :class="valoresDiferencia ? 'enlarge' : 'shrink'">
         <el-card
@@ -181,17 +159,17 @@
     >
       <el-card class="cont-row" style="margin-top: 1.2em;">
         <el-row>
-          <!-- <el-col :sm="24" :md="24" style="text-align: left;">
+          <el-col :sm="24" :md="24" style="text-align: left;">
             <label>Registrar novedad</label>
-					</el-col>-->
+          </el-col>
           <el-col :sm="24" :md="24" class="input-padding">
-            <el-input v-model="novedad" type="textarea" autosize placeholder="Registrar novedad" />
+            <el-input v-model="novedad" type="textarea" autosize placeholder="Ingresar novedad aquí" />
           </el-col>
         </el-row>
         <el-divider />
         <el-row>
           <el-col :sm="24" :md="24">
-            <el-button type="success" icon="el-icon-check" class="btn" @click="registrarNovedad">Registrar</el-button>
+            <el-button type="success" icon="el-icon-check" class="btn" @click="registrarNovedad">Reportar</el-button>
           </el-col>
         </el-row>
       </el-card>
@@ -235,7 +213,7 @@ export default {
       loadIputs: Boolean,
       dialogFormVisible: false,
       date: new Date(),
-      novedad: '',
+      novedad: null,
       modelMDBCpteG: {},
       modelValues: {
         campo16: [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
@@ -386,96 +364,98 @@ export default {
     },
     reportar() {
       this.dialogFormVisible = true
-      // this.$alert('La empresa no reporto los ajustes aplicados', 'TARIFARITO REPORTA', {
-      //   confirmButtonText: 'Aceptar',
-      //   callback: action => {
-      //     this.$emit('clicked', false)
-      //   }
-      // })
     },
     async registrarNovedad() {
-      this.modelMDBCpteG = {
-        usuario: this.name,
-        ano: this.dataParentG.ano,
-        mes: this.dataParentG.mes,
-        cod_empresa: this.dataParentG.id_empresa,
-        cod_mercado: this.dataParentG.id_mercado,
-        nt_prop: this.dataParentG.nt_prop,
-        novedad: this.novedad,
-        fecha_modif: this.date,
-        values: {
-          DCR: [
-            this.values['c16_2'].values,
-            this.values['c12_2'].values,
-            this.values['c13_2'].values,
-            this.values['c14_2'].values,
-            this.values['c15_2'].values
-          ],
-          Qc: [
-            this.values['c17_2'].values
-          ],
-          Pc: [
-            this.values['c22_2'].values,
-            this.values['c1_2'].values,
-            this.values['c2_2'].values,
-            this.values['c3_2'].values,
-            this.values['c4_2'].values,
-            this.values['c5_2'].values,
-            this.values['c6_2'].values
-          ],
-          Qb: [
-            this.values['c18_2'].values
-          ],
-          Pb: [
-            this.values['c23_2'].values,
-            this.values['c7_2'].values,
-            this.values['c8_2'].values
-          ],
-          Qagd: [
-            this.values['c21_2'].values,
-            this.values['c19_2'].values,
-            this.values['c20_2'].values
-          ],
-          McAplicado: [
-            this.values['c11_2'].values,
-            this.values['c9_2'].values,
-            this.values['c10_2'].values
-          ],
-          FAJ: [
-            this.values['c24_2'].values
-          ],
-          ALFA: [
-            this.values['c25_2'].values
-          ],
-          GTransitorio: [
-            this.values['c26_2'].values
-          ],
-          GContratos: [
-            this.values['c29_2'].values
-          ],
-          GBolsa: [
-            this.values['c30_2'].values
-          ],
-          CFNC: [
-            this.values['c27_2'].values
-          ],
-          CGeneracion: [
-            this.values['c28_2'].values
-          ]
+      if (this.novedad) {
+        this.modelMDBCpteG = {
+          usuario: this.name,
+          ano: this.dataParentG.ano,
+          mes: this.dataParentG.mes,
+          cod_empresa: this.dataParentG.id_empresa,
+          cod_mercado: this.dataParentG.id_mercado,
+          nt_prop: this.dataParentG.nt_prop,
+          novedad: this.novedad,
+          fecha_modif: this.date,
+          values: {
+            DCR: [
+              this.values['c16_2'].values,
+              this.values['c12_2'].values,
+              this.values['c13_2'].values,
+              this.values['c14_2'].values,
+              this.values['c15_2'].values
+            ],
+            Qc: [
+              this.values['c17_2'].values
+            ],
+            Pc: [
+              this.values['c22_2'].values,
+              this.values['c1_2'].values,
+              this.values['c2_2'].values,
+              this.values['c3_2'].values,
+              this.values['c4_2'].values,
+              this.values['c5_2'].values,
+              this.values['c6_2'].values
+            ],
+            Qb: [
+              this.values['c18_2'].values
+            ],
+            Pb: [
+              this.values['c23_2'].values,
+              this.values['c7_2'].values,
+              this.values['c8_2'].values
+            ],
+            Qagd: [
+              this.values['c21_2'].values,
+              this.values['c19_2'].values,
+              this.values['c20_2'].values
+            ],
+            McAplicado: [
+              this.values['c11_2'].values,
+              this.values['c9_2'].values,
+              this.values['c10_2'].values
+            ],
+            FAJ: [
+              this.values['c24_2'].values
+            ],
+            ALFA: [
+              this.values['c25_2'].values
+            ],
+            GTransitorio: [
+              this.values['c26_2'].values
+            ],
+            GContratos: [
+              this.values['c29_2'].values
+            ],
+            GBolsa: [
+              this.values['c30_2'].values
+            ],
+            CFNC: [
+              this.values['c27_2'].values
+            ],
+            CGeneracion: [
+              this.values['c28_2'].values
+            ]
+          }
         }
-      }
-      this.valoresDiferencia = false
-      this.dialogFormVisible = false
-      console.log('MODEL --> ', this.modelMDBCpteG)
-      await postMDBCpteG(this.modelMDBCpteG).then(response => {
-        this.loadingLoad = false
-        this.disableLoad = true
+        this.valoresDiferencia = false
+        this.dialogFormVisible = false
+        console.log('MODEL --> ', this.modelMDBCpteG)
+        await postMDBCpteG(this.modelMDBCpteG).then(response => {
+          this.loadingLoad = false
+          this.disableLoad = true
+          Message({
+            message: 'Registros guardados con éxito!',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        })
+      } else {
         Message({
-          message: 'Registros guardados con éxito!',
-          type: 'success',
+          message: 'Por favor primero ingresa la novedad',
+          type: 'error',
           duration: 2 * 1000
         })
-      })
+      }
     }
   }
 }

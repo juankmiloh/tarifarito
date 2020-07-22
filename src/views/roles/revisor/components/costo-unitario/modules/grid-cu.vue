@@ -1,28 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card margin-card" style="padding-top: 1em; border: 2px solid #C0C4CC; display: none;">
-      <el-row class="cont-row">
-        <el-col :md="2" class="hidden-sm-and-down">
-          <div style="text-align: center; padding-right: 100%;">
-            <img v-if="logo" :src="logo" width="100" height="auto">
-          </div>
-        </el-col>
-        <el-col :sm="24" :md="22">
-          <aside class="size-aside-md">
-            <span class="text-header">
-              <b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b>
-            </span>
-          </aside>
-          <aside class="size-aside-md">
-            <span class="text-user">
-              <b>{{ name }}</b>
-            </span>
-          </aside>
-        </el-col>
-      </el-row>
-    </el-card>
-
-    <el-card class="box-card margin-card" style="border: 2px solid #C0C4CC;">
+    <el-card class="box-card margin-card" style="border: 2px solid #C0C4CC; height: 78vh;">
       <div slot="header" class="clearfix">
         <el-row>
           <el-col :span="18">
@@ -48,7 +26,8 @@
         :default-sort="{prop: 'id_mercado', order: 'ascending'}"
         :data="tableData.filter(data => !search || data.mercado.toLowerCase().includes(search.toLowerCase()))"
         :border="true"
-        style="width: 100%"
+        style="width: 100%;"
+        height="60vh"
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" align="center" />
@@ -64,26 +43,26 @@
         >
           <template slot-scope="scope">
             <div v-for="componente in scope.row.componentes[0][column.prop]" :key="componente.value">
-              <el-popover placement="top-start" width="230" trigger="hover">
+              <el-popover placement="top-start" width="284" trigger="hover">
                 <div style="color: black;">
-                  <div class="text_popover">Tarifarito Informa</div>
-                  <center>
-                    <label>Componente Publicado</label>
-                  </center>
-                  <center>${{ componente.cpte_publicado.toFixed(3) }}</center>
-                  <center>
-                    <label>Componente Calculado</label>
-                  </center>
-                  <center>${{ componente.cpte_calculado.toFixed(3) }}</center>
-                  <center>
-                    <label>Diferencia</label>
-                  </center>
-                  <center
-                    v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) == 0"
-                  >$0</center>
-                  <center
-                    v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) != 0"
-                  >${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(3) }}</center>
+                  <div class="text_popover">Tarifarito informa</div>
+                  <div style="padding-top: 1em;">
+                    <label>{{ componente.label_publicado }}</label>
+                    <span>&nbsp;${{ componente.cpte_publicado.toFixed(5) }}</span>
+                  </div>
+                  <div>
+                    <label>{{ componente.label_calculado }}</label>
+                    <span>&nbsp;${{ componente.cpte_calculado.toFixed(5) }}</span>
+                  </div>
+                  <div style="text-align: center;">
+                    <label>Diferencia:</label>
+                    <span
+                      v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) == 0"
+                    >$0</span>
+                    <span
+                      v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) != 0"
+                    >${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) }}</span>
+                  </div>
                 </div>
                 <el-button
                   v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
@@ -111,9 +90,7 @@
       </el-table>
     </el-card>
 
-    <el-divider />
-
-    <el-row :gutter="10">
+    <el-row :gutter="10" class="footer">
       <el-col :sm="24" :md="21" class="cont-btn" style="text-align: right;">
         <el-tooltip
           class="item hidden-sm-and-down"
@@ -261,15 +238,15 @@ export default {
     handleClickComponent(index, row, component) {
       row.ano = this.value_ano
       row.mes = this.value_mes
-      console.log(`Componente seleccionado -> ${index} -> ${JSON.parse(JSON.stringify(row))} -> ${component}`)
+      console.log('Componente seleccionado -> ', row)
       this.componentSelect = row // Valores que se envian a la vista del componente
       if (component === 'g') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo generación`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo generación`
         this.currentView = 'viewG'
         this.viewCpteVisible = true
       }
       if (component === 't') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo transmisión datos publicados`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo transmisión`
         this.currentView = 'viewT'
         this.viewCpteVisible = true
       }
@@ -322,7 +299,7 @@ export default {
       }
     },
     handleSelectionChange(val) {
-      // console.log(val)
+      console.log(val)
       this.multipleSelection = val
     },
     handleClose(done) {
@@ -349,14 +326,14 @@ export default {
 </script>
 
 <style lang="scss">
-  .dialog-component .el-dialog__header {
-    padding-left: 5em;
-    background-image: url('../../../../../../assets/logo_buho.png');
-    background-repeat: no-repeat;
-    background-size: 38px 42px;
-    background-position-x: 1.5em;
-    background-position-y: 0.5em;
-  }
+	.dialog-component .el-dialog__header {
+		padding-left: 5em;
+		background-image: url("../../../../../../assets/logo_buho.png");
+		background-repeat: no-repeat;
+		background-size: 38px 42px;
+		background-position-x: 1.5em;
+		background-position-y: 0.5em;
+	}
 
 	.dialog-class {
 		border-radius: 10px;
@@ -364,12 +341,12 @@ export default {
 
 	.dialog-class .el-dialog__header {
 		border-radius: 10px 10px 0px 0px;
-    padding-left: 3.7em;
-    background-image: url('../../../../../../assets/logo_buho.png');
-    background-repeat: no-repeat;
-    background-size: 30px 35px;
-    background-position-x: 1em;
-    background-position-y: 0.8em;
+		background-image: url("../../../../../../assets/logo_buho.png");
+		padding-left: 3.7em;
+		background-repeat: no-repeat;
+		background-size: 30px 35px;
+		background-position-x: 1em;
+		background-position-y: 0.8em;
 	}
 
 	.el-dialog {
@@ -406,8 +383,14 @@ export default {
 		text-align: center;
 		font-weight: bold;
 		font-size: 125%;
-		padding-bottom: 2%;
+		padding-bottom: 1%;
 		border-bottom: 1px solid;
+    background-image: url("../../../../../../assets/logo_buho.png");
+    padding-left: 1.2em;
+		background-repeat: no-repeat;
+		background-size: 30px 35px;
+		background-position-x: 1em;
+		background-position-y: 0.5em;
 	}
 
 	// Pantallas superiores a 800px (PC)
