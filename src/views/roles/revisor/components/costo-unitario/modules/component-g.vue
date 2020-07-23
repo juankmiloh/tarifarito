@@ -441,8 +441,6 @@ export default {
         this.dialogFormVisible = false
         console.log('MODEL --> ', this.modelMDBCpteG)
         await postMDBCpteG(this.modelMDBCpteG).then(response => {
-          this.loadingLoad = false
-          this.disableLoad = true
           Message({
             message: 'Registros guardados con éxito!',
             type: 'success',

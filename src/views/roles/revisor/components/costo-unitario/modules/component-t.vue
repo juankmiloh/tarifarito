@@ -1,203 +1,298 @@
 <template>
-  <div class="components-container" style="border: 0px solid red; margin: 0;">
-    <el-row>
-      <el-col :span="24">
-        <div style="border: 2px solid #C0C4CC; padding: 1%; padding-bottom: 0%; background-color: white; border-radius: 5px;">
-          <el-row>
-            <el-col :span="2" style="border: 0px solid; color: black;">
-              <div style="text-align: center;">
-                <img v-if="logo" :src="logo" width="100" height="auto">
-              </div>
-            </el-col>
-            <el-col :span="22" style="border: 0px solid; padding-left: 2%;">
-              <el-row>
-                <el-col :span="24" style="border: 0px solid red; text-align: center;">
-                  <aside>
-                    <span style="color: black; font-size: 170%;"><b>DIRECCIÓN TÉCNICA DE GESTIÓN DE ENERGÍA</b></span>
-                  </aside>
-                </el-col>
-                <el-col :span="24" style="border: 0px solid red; text-align: center;">
-                  <aside>
-                    <span style="font-size: 120%;"><b>{{ name }}</b></span>
-                    <!-- <input type="text" v-on:input="(event) => this.$emit('inputChange', event)"> -->
-                  </aside>
-                </el-col>
-              </el-row>
-            </el-col>
+  <div>
+    <el-card class="box-card margin-card" :class="showCards ? 'expandir' : 'contraer'">
+      <div v-for="item in components" :key="item.key" :name="item.key">
+        <el-card v-if="item.start === true" class="box-card margin-card">
+          <div slot="header" class="clearfix">
+            <span>
+              <b>{{ item.title }}</b>
+            </span>
+          </div>
+          <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+            <span v-for="cabecera in item.header" :key="cabecera.title">
+              <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                <span>{{ cabecera.title }}</span>
+              </el-col>
+            </span>
           </el-row>
-        </div>
-        <br>
-        <div class="containerCards">
-          <el-row>
-            <el-col :span="24" style="border: 0px solid; color: black; padding-top: 1em; padding-left: 10em; padding-right: 10em;">
-              <span v-for="item in components" :key="item.key" :name="item.key">
-                <span v-if="item.start === true">
-                  <el-card class="box-card" style="border: 2px solid #C0C4CC; padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
-                    <div class="text item">
-                      <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                        <span v-for="cabecera in item.header" :key="cabecera.title">
-                          <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
-                            <span>{{ cabecera.title }}</span>
-                          </el-col>
-                        </span>
-                      </el-row>
-                      <el-row style="border: 0px solid blue;">
-                        <span v-for="content in item.data" :key="content.campo">
-                          <el-col style="border: 0px solid;" class="contentConcept" :span="12">
-                            <span class="itemText">{{ content.concepto }}</span>
-                          </el-col>
-                          <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
-                            <span class="itemText">{{ content.unidad }}</span>
-                          </el-col>
-                          <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
-                            <input
-                              v-model="values[content.input.key].values"
-                              :type="content.input.type"
-                              :placeholder="content.input.placeholder"
-                              style="width: 75%; height: 2em; margin-bottom: 0.5em;"
-                            >
-                          </el-col>
-                        </span>
-                      </el-row>
-                    </div>
-                  </el-card>
-                </span>
-                <span v-else>
-                  <el-card v-if="showCard === item.show" class="box-card" style="border: 2px solid #C0C4CC; padding-left: 2em; padding-right: 2em; margin-bottom: 1em;">
-                    <div class="text item">
-                      <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-                        <span v-for="cabecera in item.header" :key="cabecera.title">
-                          <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
-                            <span>{{ cabecera.title }}</span>
-                          </el-col>
-                        </span>
-                      </el-row>
-                      <el-row style="border: 0px solid blue;">
-                        <span v-for="content in item.data" :key="content.campo">
-                          <el-col class="contentConcept" :span="12">
-                            <span class="itemText">{{ content.concepto }}</span>
-                          </el-col>
-                          <el-col style="text-align: center;" class="contentText" :span="4">
-                            <span class="itemText">{{ content.unidad }}</span>
-                          </el-col>
-                          <el-col style="text-align: center;" class="contentText" :span="8">
-                            <input
-                              v-model="values[content.input.key].values"
-                              :type="content.input.type"
-                              :placeholder="content.input.placeholder"
-                              style="width: 75%; height: 2em; margin-bottom: 0.5em;"
-                            >
-                          </el-col>
-                        </span>
-                      </el-row>
-                    </div>
-                  </el-card>
-                </span>
-              </span>
-            </el-col>
+          <el-row style="border: 0px solid blue;">
+            <span v-for="content in item.data" :key="content.campo">
+              <el-col style="border: 0px solid;" class="contentConcept" :span="12">
+                <span class="itemText">{{ content.concepto }}</span>
+              </el-col>
+              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
+                <span class="itemText">{{ content.unidad }}</span>
+              </el-col>
+              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
+                <input
+                  v-if="actualiza"
+                  v-model="values[content.input.key].values"
+                  :type="content.input.type"
+                  :placeholder="content.input.placeholder"
+                  :disabled="content.input.disabled"
+                  style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                >
+              </el-col>
+            </span>
           </el-row>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row style="padding-top: 1%;">
-      <el-col :span="24" style="text-align: center; border: 0px solid;">
-        <el-button type="primary" @click="calcular">Calcular</el-button>
-        <el-button v-if="!showCard" type="primary" @click="verificar">Verificado</el-button>
-        <el-button v-if="showCard" type="primary" @click="reportar">Reportar</el-button>
-      </el-col>
-    </el-row>
+        </el-card>
+        <el-card
+          v-else
+          class="box-card margin-card"
+          :style="{'margin-top': showCards ? '1em' : '10em'}"
+        >
+          <div slot="header" class="clearfix">
+            <span>
+              <b>{{ item.title }}</b>
+            </span>
+          </div>
+          <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+            <span v-for="cabecera in item.header" :key="cabecera.title">
+              <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                <span>{{ cabecera.title }}</span>
+              </el-col>
+            </span>
+          </el-row>
+          <el-row style="border: 0px solid blue;">
+            <span v-for="content in item.data" :key="content.campo">
+              <el-col class="contentConcept" :span="12">
+                <span class="itemText">{{ content.concepto }}</span>
+              </el-col>
+              <el-col style="text-align: center;" class="contentText" :span="4">
+                <span class="itemText">{{ content.unidad }}</span>
+              </el-col>
+              <el-col style="text-align: center;" class="contentText" :span="8">
+                <input
+                  v-if="actualiza"
+                  v-model="values[content.input.key].values"
+                  :type="content.input.type"
+                  :placeholder="content.input.placeholder"
+                  :disabled="content.input.disabled"
+                  style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                  @input="formula()"
+                >
+              </el-col>
+            </span>
+          </el-row>
+        </el-card>
+      </div>
+    </el-card>
+    <div class="footer">
+      <el-row :gutter="10" style="padding-right: 0em;">
+        <el-col :sm="24" :md="12" class="cont-btn">
+          <el-button type="primary" class="btnVerify" @click="showCards = !showCards">Calcular</el-button>
+        </el-col>
+        <el-col :sm="24" :md="12">
+          <el-button v-if="!showCards" class="btn" type="success" @click="verificar">Verificado</el-button>
+          <el-button v-if="showCards" class="btn" type="danger" @click="reportar">Reportar</el-button>
+        </el-col>
+      </el-row>
+    </div>
+    <!-- dialog mensaje revisión del componente -->
+    <el-dialog
+      title="Tarifarito reporta"
+      :visible.sync="dialogFormVisible"
+      width="30em"
+      top="10em"
+      append-to-body
+      destroy-on-close
+      custom-class="dialog-class"
+    >
+      <el-card class="cont-row" style="margin-top: 1.2em;">
+        <el-row>
+          <el-col :sm="24" :md="24" style="text-align: left;">
+            <label>Registrar novedad</label>
+          </el-col>
+          <el-col :sm="24" :md="24" class="input-padding">
+            <el-input v-model="novedad" type="textarea" autosize placeholder="Ingresar novedad aquí" />
+          </el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :sm="24" :md="24">
+            <el-button type="success" icon="el-icon-check" class="btn" @click="registrarNovedad">Reportar</el-button>
+          </el-col>
+        </el-row>
+      </el-card>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { Message } from 'element-ui'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
 import componentesTransmision from './../options/componentsT'
+import { getCpteTValues, postMDBCpteT } from '@/api/tarifarito/revisor/componentT'
 export default {
   name: 'ViewT',
+  props: {
+    messagecomponent: {
+      type: Object,
+      default: function() {
+        return { message: null }
+      }
+    }
+  },
   data() {
     return {
       logo: logTarifarito,
-      showCard: false,
+      showCards: false,
       components: componentesTransmision,
       values: [],
-      actualiza: false
+      actualiza: false,
+      dialogFormVisible: false,
+      dataParentT: null,
+      novedad: null,
+      cptePublicado: 0,
+      cpteCalculado: 0,
+      modelValues: null,
+      date: new Date()
     }
   },
   computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+    ...mapGetters(['name', 'roles'])
   },
   created() {
-    this.components.forEach(item => {
-      item.data.forEach(campo => {
-        // console.log('inputs transmisión: ', input)
-        this.values[campo.input.key] = {
-          placeholder: campo.input.placeholder,
-          values: campo.input.value
-        }
-      })
-    })
+    this.initData()
   },
   methods: {
-    diferencia: function(key) {
-      this.actualiza = false // sirve para renderizar el nuevo valor, no quitar
-      const splitKey = key.split('_')
-      const idKey = splitKey[0]
-      const KeyOne = idKey + '_' + 1
-      const KeyTwo = idKey + '_' + 2
-      const KeyThree = idKey + '_' + 3
-      const valor1 = this.values[KeyOne].values
-      const valor2 = this.values[KeyTwo].values
-      this.values[KeyThree].values = valor1 - valor2
-      console.log('Values: ', this.values)
+    async initData() {
+      // Data enviada del padre
+      this.dataParentT = JSON.parse(JSON.stringify(this.messagecomponent))
+      // Se traen valores de variables
+      // console.log('dataParentT --> ', this.dataParentT)
+      this.cptePublicado = parseFloat(
+        this.dataParentT.componentes[0].component_t[0].cpte_publicado
+      ).toFixed(3)
+      this.cpteCalculado = parseFloat(
+        this.dataParentT.componentes[0].component_t[0].cpte_calculado
+      ).toFixed(3)
+      await getCpteTValues(this.dataParentT).then(response => {
+        this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+        // console.log('respons: ', this.modelValues)
+        this.initInputs()
+        this.loadIputs = true
+      })
+    },
+    initInputs() {
+      this.keysValues = Object.keys(this.modelValues)
+      // console.log('LLAVE: ', this.keysValues)
+      this.components.forEach((item, index) => {
+        // console.log('ITEM: ', item)
+        // console.log('ITEM_idx: ', index)
+        item.data.forEach((campo, idx) => {
+          // console.log('CAMPO: ', campo)
+          // console.log('campo_idx: ', idx)
+          const valor = this.modelValues[this.keysValues[index]][idx]
+          this.values[campo.input.key] = {
+            placeholder: campo.input.placeholder,
+            values: valor
+          }
+        })
+      })
+      this.actualiza = true
+      // this.formula()
+      console.log('VALUES ->> ', this.values)
+    },
+    formula() {
+      this.actualiza = false
+      this.values['CPT'].values = parseFloat(this.values['TLAC'].values) + parseFloat(this.values['DTLAC'].values)
+      this.values['CPTAGENTE'].values = parseFloat(this.values['STNAGENTE'].values) - parseFloat(this.values['CPT'].values)
+      this.values['CPTLAC'].values = parseFloat(this.values['STNLAC'].values) - parseFloat(this.values['CPT'].values)
       this.actualiza = true
     },
-    calcular: function() {
-      this.showCard = true
+    async registrarNovedad() {
+      if (this.novedad) {
+        this.modelMDBCpteT = {
+          usuario: this.name,
+          ano: this.dataParentT.ano,
+          mes: this.dataParentT.mes,
+          cod_empresa: this.dataParentT.id_empresa,
+          cod_mercado: this.dataParentT.id_mercado,
+          nt_prop: this.dataParentT.nt_prop,
+          novedad: this.novedad,
+          fecha_modif: this.date,
+          values: {
+            DATAPUBLICADA: [
+              33.623,
+              33.62298
+            ],
+            CALCULOSSPD: [
+              0,
+              0,
+              0
+            ],
+            DIFERENCIA: [
+              0,
+              0
+            ]
+          }
+        }
+        this.showCards = false
+        this.dialogFormVisible = false
+        console.log('MODEL --> ', this.modelMDBCpteT)
+        await postMDBCpteT(this.modelMDBCpteT).then(response => {
+          Message({
+            message: 'Registros guardados con éxito!',
+            type: 'success',
+            duration: 2 * 1000
+          })
+        })
+      } else {
+        Message({
+          message: 'Por favor primero ingresa la novedad',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
     },
     verificar() {
-      this.showCard = false
+      this.showCards = false
+      this.$emit('clicked', false)
     },
     reportar() {
-      this.showCard = false
-      this.$alert('La empresa publico el cargo máximo y no el cargo mínimo', 'TARIFARITO REPORTA', {
-        confirmButtonText: 'Aceptar',
-        callback: action => {
-          this.$emit('clicked', false)
-        }
-      })
+      this.dialogFormVisible = true
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .el-collapse-item__content{
-    padding-bottom: 1.5%;
-  }
-  .containerCards{
-    border: 2px solid #C0C4CC;
-    color: black;
-    background-color: white;
-    border-radius: 5px;
-  }
-  .contentConcept{
-    border: 0px solid red;
-    line-height: 2em;
-    text-align: left;
-    padding-left: 10%;
-  }
-  .contentText{
-    border: 0px solid red;
-    line-height: 3em;
-    text-align: center;
-  }
-  .itemText{
-    display:inline-block;
-    vertical-align:middle;
-    line-height:normal;
-  }
+	.el-collapse-item__content {
+		padding-bottom: 1.5%;
+	}
+	.containerCards {
+		border: 2px solid #c0c4cc;
+		color: black;
+		background-color: white;
+		border-radius: 5px;
+	}
+	.contentConcept {
+		border: 0px solid red;
+		line-height: 2em;
+		text-align: left;
+		padding-left: 10%;
+	}
+	.contentText {
+		border: 0px solid red;
+		line-height: 3em;
+		text-align: center;
+	}
+	.itemText {
+		display: inline-block;
+		vertical-align: middle;
+		line-height: normal;
+	}
+
+	// :style="{'overflow-y': showCards ? 'none' : ''}" :style="{'height': showCards ? '41em' : '19em'}"
+	.expandir {
+		height: 41em;
+		overflow-y: scroll;
+	}
+
+	.contraer {
+		height: 19em;
+		overflow-y: none;
+	}
 </style>

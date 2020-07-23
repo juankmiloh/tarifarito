@@ -43,26 +43,24 @@
         >
           <template slot-scope="scope">
             <div v-for="componente in scope.row.componentes[0][column.prop]" :key="componente.value">
-              <el-popover placement="top-start" width="284" trigger="hover">
-                <div style="color: black;">
-                  <div class="text_popover">Tarifarito informa</div>
-                  <div style="padding-top: 1em;">
-                    <label>{{ componente.label_publicado }}</label>
-                    <span>&nbsp;${{ componente.cpte_publicado.toFixed(5) }}</span>
-                  </div>
-                  <div>
-                    <label>{{ componente.label_calculado }}</label>
-                    <span>&nbsp;${{ componente.cpte_calculado.toFixed(5) }}</span>
-                  </div>
-                  <div style="text-align: center;">
-                    <label>Diferencia:</label>
-                    <span
-                      v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) == 0"
-                    >$0</span>
-                    <span
-                      v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) != 0"
-                    >${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) }}</span>
-                  </div>
+              <el-popover placement="top-start" width="290" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
+                <div class="text_popover">Tarifarito informa</div>
+                <div style="padding-top: 1em;">
+                  <label>{{ componente.label_publicado }}</label>
+                  <span>&nbsp;${{ componente.cpte_publicado.toFixed(5) }}</span>
+                </div>
+                <div>
+                  <label>{{ componente.label_calculado }}</label>
+                  <span>&nbsp;${{ componente.cpte_calculado.toFixed(5) }}</span>
+                </div>
+                <div style="text-align: center;">
+                  <label>Diferencia:</label>
+                  <span
+                    v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) == 0"
+                  >$0</span>
+                  <span
+                    v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) != 0"
+                  >${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) }}</span>
                 </div>
                 <el-button
                   v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
@@ -378,6 +376,16 @@ export default {
 	.cell {
 		color: black;
 	}
+
+  .popover-cpte {
+    color: black;
+    background-color: #e3f2fd;
+    border: 2px solid #4a148c;
+  }
+
+  .popover-cpte[x-placement^=top] .popper__arrow:after {
+    border-top-color:#4a148c;
+  }
 
 	.text_popover {
 		text-align: center;
