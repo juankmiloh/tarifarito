@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <el-card v-if="loadIputs" class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
+  <div v-loading="loading">
+    <el-card class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
       <el-card class="box-card card-cpte-1" :class="valoresDiferencia ? 'enlarge' : 'shrink'">
         <el-card
+          v-if="!loading"
           style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em; border: 0px solid red; width: 100%;"
         >
           <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
@@ -110,19 +111,19 @@
       <el-row style="padding-left: 2.5em;">
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>Componente TARIFARITO {{ ntprop }} $/kWh</b>
+            <b>TARIFARITO {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="cpteCalculado" type="number" style="width: 39%;" readonly />
         </el-col>
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>Componente publicado {{ ntprop }} $/kWh</b>
+            <b>Publicado {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="cptePublicado" type="number" style="width: 39%;" readonly />
         </el-col>
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>Componente calculado revisión {{ ntprop }} $/kWh</b>
+            <b>Calculado revisión {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="valuePruebas" type="text" style="width: 39%;" readonly />
         </el-col>
@@ -215,9 +216,8 @@ export default {
       actualiza: false,
       dataCpteG: [],
       keysValues: [],
-      loadIputs: Boolean,
+      loading: true,
       dialogFormVisible: false,
-      date: new Date(),
       novedad: null,
       modelMDBCpteG: {},
       modelValues: {
@@ -261,7 +261,7 @@ export default {
         this.modelValues = JSON.parse(JSON.stringify(response[0].values))
         console.log('respons: ', this.modelValues)
         this.initInputs()
-        this.loadIputs = true
+        this.loading = false
       })
     },
     initInputs() {
@@ -442,9 +442,11 @@ export default {
           mes: this.dataParentP.mes,
           cod_empresa: this.dataParentP.id_empresa,
           cod_mercado: this.dataParentP.id_mercado,
+          componente: this.cpte,
           nt_prop: this.dataParentP.nt_prop,
           novedad: this.novedad,
-          fecha_modif: this.date,
+          fecha_modif: new Date(),
+          estado: 'En gestión',
           values: {
             'CPTEG': [
               this.values['c1_2'].values

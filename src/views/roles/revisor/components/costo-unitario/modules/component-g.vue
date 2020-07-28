@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <el-card v-if="loadIputs" class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
+  <div v-loading="loading">
+    <el-card class="box-card card-cpte" style="height: 72vh; overflow-y:scroll;">
       <el-card class="box-card card-cpte-1" :class="valoresDiferencia ? 'enlarge' : 'shrink'">
         <el-card
+          v-if="!loading"
           style="padding-left: 2em; padding-right: 2em; margin-bottom: 1em; border: 0px solid red; width: 100%;"
         >
           <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
@@ -212,9 +213,9 @@ export default {
       keysValues: [],
       loadIputs: Boolean,
       dialogFormVisible: false,
-      date: new Date(),
       novedad: null,
       modelMDBCpteG: {},
+      loading: true,
       modelValues: {
         campo16: [1, 2, 3, 4, 5, 1, 2, 3, 4, 5]
       }
@@ -242,7 +243,8 @@ export default {
         this.modelValues = JSON.parse(JSON.stringify(response[0].values))
         // console.log('respons: ', this.modelValues)
         this.initInputs()
-        this.loadIputs = true
+        this.loadInputs = true
+        this.loading = false
       })
     },
     initInputs() {
@@ -373,9 +375,11 @@ export default {
           mes: this.dataParentG.mes,
           cod_empresa: this.dataParentG.id_empresa,
           cod_mercado: this.dataParentG.id_mercado,
+          componente: 'G',
           nt_prop: this.dataParentG.nt_prop,
           novedad: this.novedad,
-          fecha_modif: this.date,
+          fecha_modif: new Date(),
+          estado: 'En gestión',
           values: {
             DCR: [
               this.values['c16_2'].values,

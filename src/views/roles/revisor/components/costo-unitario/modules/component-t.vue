@@ -1,21 +1,21 @@
 <template>
   <div>
     <el-card class="box-card margin-card" :class="showCards ? 'expandir' : 'contraer'">
-      <div v-for="item in components" :key="item.key" :name="item.key">
-        <el-card v-if="item.start === true" class="box-card margin-card">
+      <div v-for="item in components" :key="item.key" v-loading="loading" :name="item.key">
+        <el-card v-if="item.start" class="box-card margin-card">
           <div slot="header" class="clearfix">
             <span>
               <b>{{ item.title }}</b>
             </span>
           </div>
-          <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+          <el-row v-if="!loading" style="font-weight: bold; padding-bottom: 1%; text-align: center;">
             <span v-for="cabecera in item.header" :key="cabecera.title">
               <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
                 <span>{{ cabecera.title }}</span>
               </el-col>
             </span>
           </el-row>
-          <el-row style="border: 0px solid blue;">
+          <el-row v-if="!loading" style="border: 0px solid blue;">
             <span v-for="content in item.data" :key="content.campo">
               <el-col style="border: 0px solid;" class="contentConcept" :span="12">
                 <span class="itemText">{{ content.concepto }}</span>
@@ -147,7 +147,7 @@ export default {
       cptePublicado: 0,
       cpteCalculado: 0,
       modelValues: null,
-      date: new Date()
+      loading: true
     }
   },
   computed: {
@@ -172,7 +172,7 @@ export default {
         this.modelValues = JSON.parse(JSON.stringify(response[0].values))
         // console.log('respons: ', this.modelValues)
         this.initInputs()
-        this.loadIputs = true
+        this.loading = false
       })
     },
     initInputs() {
@@ -210,9 +210,11 @@ export default {
           mes: this.dataParentT.mes,
           cod_empresa: this.dataParentT.id_empresa,
           cod_mercado: this.dataParentT.id_mercado,
+          componente: 'T',
           nt_prop: this.dataParentT.nt_prop,
           novedad: this.novedad,
-          fecha_modif: this.date,
+          fecha_modif: new Date(),
+          estado: 'En gestión',
           values: {
             DATAPUBLICADA: [
               33.623,
@@ -238,6 +240,7 @@ export default {
             type: 'success',
             duration: 2 * 1000
           })
+          this.novedad = ''
         })
       } else {
         Message({
@@ -287,7 +290,7 @@ export default {
 
 	// :style="{'overflow-y': showCards ? 'none' : ''}" :style="{'height': showCards ? '41em' : '19em'}"
 	.expandir {
-		height: 41em;
+		height: 38em;
 		overflow-y: scroll;
 	}
 
