@@ -13,7 +13,7 @@
               {{ getMes(msgviewparent.mes) }}
             </div>
             <div style="padding-top: 0.5em;">
-              <b>TOLERANCIA:</b> 0.5
+              <b>TOLERANCIA:</b> {{ tolerancia }}
             </div>
           </el-col>
           <el-col :span="6" style="padding-top: 2em;">
@@ -43,7 +43,7 @@
         >
           <template slot-scope="scope">
             <div v-for="componente in scope.row.componentes[0][column.prop]" :key="componente.value">
-              <el-popover placement="top-start" width="290" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
+              <el-popover placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
                 <div class="text_popover">Tarifarito informa</div>
                 <div style="padding-top: 1em;">
                   <label>{{ componente.label_publicado }}</label>
@@ -64,9 +64,9 @@
                 </div>
                 <el-button
                   v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
-                    && componente.cpte_publicado - componente.cpte_calculado <= 0.5)
+                    && componente.cpte_publicado - componente.cpte_calculado <= tolerancia)
                     || (componente.cpte_publicado - componente.cpte_calculado < 0
-                    && componente.cpte_publicado - componente.cpte_calculado >= -0.5)"
+                    && componente.cpte_publicado - componente.cpte_calculado >= -tolerancia)"
                   slot="reference"
                   type="success"
                   icon="el-icon-check"
@@ -118,47 +118,6 @@
     >
       <component :is="currentView" :messagecomponent="componentSelect" @clicked="onClickChild" />
     </el-dialog>
-
-    <!-- Se carga modal de seleccion de componente 'P' -->
-    <el-dialog
-      title="Seleccione metodología"
-      :visible.sync="dialogComponentP"
-      append-to-body
-      width="20em"
-      top="10em"
-      destroy-on-close
-      custom-class="dialog-class"
-    >
-      <div style="text-align: center; padding-top: 1.5em;">
-        <el-row style="padding-top: 1%;">
-          <el-col :span="24">
-            <el-row>
-              <el-col style="padding-bottom: 1em;" :span="24">
-                <el-radio
-                  v-model="radioCreg"
-                  style="background-color: white; color: black;"
-                  label="1"
-                  border
-                >Resolución CREG 097</el-radio>
-              </el-col>
-              <el-col :span="24">
-                <el-radio
-                  v-model="radioCreg"
-                  style="background-color: white; color: black;"
-                  label="2"
-                  border
-                >Resolución CREG 015</el-radio>
-              </el-col>
-            </el-row>
-          </el-col>
-        </el-row>
-        <el-row style="margin-top: 2.3em; padding-top: 1.5em; border-top: 1px solid #e0e0e0;">
-          <el-col :span="24" style="border: 0px solid;">
-            <el-button type="primary" @click="handleSelectComponentP">Seleccionar</el-button>
-          </el-col>
-        </el-row>
-      </div>
-    </el-dialog>
   </div>
 </template>
 
@@ -168,13 +127,13 @@ import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
 import viewG from './component-g.vue'
 import viewT from './component-t.vue'
-import ViewP015 from './component-p-015'
-import ViewP097 from './component-p-097'
+import ViewP from './component-p'
 import viewDtun from './component-dtun.vue'
 import viewR from './component-r.vue'
 import viewC from './component-c.vue'
 import viewCu from './component-cu.vue'
 import componentsTable from '../options/componentsTable'
+import { getNToleranciaMes } from '@/api/tarifarito/gestor/nTolerancia'
 
 import { CONSTANTS } from '../../../../../../constants/constants'
 
@@ -183,8 +142,7 @@ export default {
   components: {
     viewG,
     viewT,
-    ViewP015,
-    ViewP097,
+    ViewP,
     viewDtun,
     viewR,
     viewC,
@@ -216,7 +174,8 @@ export default {
       dialogComponentP: false,
       radioCreg: '',
       componentSelect: {},
-      colComponentes: CONSTANTS.columnComponents
+      colComponentes: CONSTANTS.columnComponents,
+      tolerancia: 0.5
     }
   },
   computed: {
@@ -226,12 +185,15 @@ export default {
     this.initView()
   },
   methods: {
-    initView() {
+    async initView() {
       console.log('DATAPARENT -> ', this.msgviewparent)
       this.tableData = this.msgviewparent.data
       this.nombre_empresa = this.msgviewparent.empresa
       this.value_ano = this.msgviewparent.ano
       this.value_mes = this.msgviewparent.mes
+      await getNToleranciaMes(this.value_ano, this.value_mes).then((response) => {
+        this.tolerancia = response[0].n_tolerancia
+      })
     },
     handleClickComponent(index, row, component) {
       row.ano = this.value_ano
@@ -244,44 +206,42 @@ export default {
         this.viewCpteVisible = true
       }
       if (component === 't') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo transmisión`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo transmisión`
         this.currentView = 'viewT'
         this.viewCpteVisible = true
       }
-      if (component === 'p') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Componente pérdidas`
-        this.dialogComponentP = true
+      if (component === 'p015' || component === 'p097') {
+        this.handleSelectComponentP(component, row.mercado, row.nt_prop)
       }
       if (component === 'dtun') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Componente DTUN`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Componente DTUN`
         this.currentView = 'viewDtun'
         this.viewCpteVisible = true
       }
       if (component === 'r') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo restricciones`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo restricciones`
         this.currentView = 'viewR'
         this.viewCpteVisible = true
       }
       if (component === 'c') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo comercialización`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo comercialización`
         this.currentView = 'viewC'
         this.viewCpteVisible = true
       }
       if (component === 'cu') {
-        this.modulo = `${this.nombre_empresa} |	${row.mercado} | Módulo CU`
+        this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo CU`
         this.currentView = 'viewCu'
         this.viewCpteVisible = true
       }
     },
-    handleSelectComponentP() {
-      this.dialogComponentP = false
-      if (this.radioCreg === '1') {
-        this.modulo = `${this.nombre_empresa} | Módulo pérdidas CREG 097`
-        this.currentView = 'ViewP097'
+    handleSelectComponentP(cpte, mercado, nt_prop) {
+      if (cpte === 'p015') {
+        this.modulo = `${this.nombre_empresa} |	${mercado} | NTPROP ${nt_prop} | Módulo pérdidas CREG 015`
+        this.currentView = 'ViewP'
         this.viewCpteVisible = true
-      } else if (this.radioCreg === '2') {
-        this.modulo = `${this.nombre_empresa} | Módulo pérdidas CREG 015`
-        this.currentView = 'ViewP015'
+      } else if (cpte === 'p097') {
+        this.modulo = `${this.nombre_empresa} |	${mercado} | NTPROP ${nt_prop} | Módulo pérdidas CREG 097`
+        this.currentView = 'ViewP'
         this.viewCpteVisible = true
       }
     },

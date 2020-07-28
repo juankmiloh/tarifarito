@@ -1,393 +1,365 @@
-const componentesPerdidas097 = [
-  {
-    title: 'Componente de Generación',
-    campo: '1',
-    name: '1',
-    data: [
-      {
+/* jshint esversion: 6 */
+/* eslint-disable */
+const componentePerdidas = [{
+        title: 'Componente de Generación',
         campo: '1',
-        concepto: 'Componente de Generación',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdg_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdg_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdg_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Componente de Transmisión',
-    campo: '14',
-    name: '2',
-    data: [
-      {
+        name: '1',
+        data: [{
+            campo: '1',
+            concepto: 'Componente de Generación',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c1_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                { key: 'c1_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                { key: 'c1_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Componente de Transmisión',
         campo: '14',
-        concepto: 'Componente de Transmisión',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdt_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdt_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdt_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'IPRSTN',
-    campo: '9',
-    name: '3',
-    data: [
-      {
+        name: '2',
+        data: [{
+            campo: '14',
+            concepto: 'Componente de Transmisión',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c14_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                { key: 'c14_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                { key: 'c14_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'IPRSTN',
         campo: '9',
-        concepto: 'IPRSTN',
-        unidad: '%',
-        inputs: [
-          { key: 'iprstn_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'iprstn_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'iprstn_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Demanda Comercial',
-    campo: '8',
-    name: '4',
-    data: [
-      {
+        name: '3',
+        data: [{
+            campo: '9',
+            concepto: 'IPRSTN',
+            unidad: '%',
+            inputs: [
+                { key: 'c9_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c9_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c9_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Demanda Comercial',
         campo: '8',
-        concepto: 'Demanda Comercial',
-        unidad: '%',
-        inputs: [
-          { key: 'dc_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'dc_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'dc_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+        name: '4',
+        data: [{
+                campo: '8',
+                concepto: 'Demanda Comercial',
+                unidad: '%',
+                inputs: [
+                    { key: 'c8_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c8_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c8_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+                ]
+            },
+            {
+                campo: '2',
+                concepto: 'Demanda Real Regulada',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            },
+            {
+                campo: '3',
+                concepto: 'Pérdidas Real de la Demanda Regulada',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c3_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c3_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c3_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            },
+            {
+                campo: '4',
+                concepto: 'Demanda Real No Regulada',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c4_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c4_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c4_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            },
+            {
+                campo: '5',
+                concepto: 'Pérdida Real de la Demanda No Regulada',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c5_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c5_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c5_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            },
+            {
+                campo: '6',
+                concepto: 'Ajuste Demanda Real',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c6_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c6_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c6_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            },
+            {
+                campo: '7',
+                concepto: 'Ajuste Pérdida Real',
+                unidad: 'kWh',
+                inputs: [
+                    { key: 'c7_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c7_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c7_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            }
         ]
-      },
-      {
-        campo: '2',
-        concepto: 'Demanda Real Regulada',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'drr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'drr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'drr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      },
-      {
-        campo: '3',
-        concepto: 'Pérdidas Real de la Demanda Regulada',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'prdldr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdldr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdldr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      },
-      {
-        campo: '4',
-        concepto: 'Demanda Real No Regulada',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'drnr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'drnr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'drnr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      },
-      {
-        campo: '5',
-        concepto: 'Pérdida Real de la Demanda No Regulada',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'prdldnr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdldnr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdldnr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      },
-      {
-        campo: '6',
-        concepto: 'Ajuste Demanda Real',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'adr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'adr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'adr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      },
-      {
-        campo: '7',
-        concepto: 'Ajuste Pérdida Real',
-        unidad: 'kWh',
-        inputs: [
-          { key: 'apr_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'apr_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'apr_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Generación NT1',
-    campo: '16',
-    name: '5',
-    data: [
-      {
+    },
+    {
+        title: 'Pérdidas Reconocidas de Generación NT1',
         campo: '16',
-        concepto: 'Pérdidas Reconocidas de Generación NT1',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdgnt1_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt1_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt1_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Transmisión NT1',
-    campo: '20',
-    name: '6',
-    data: [
-      {
+        name: '5',
+        data: [{
+            campo: '16',
+            concepto: 'Pérdidas Reconocidas de Generación NT1',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c16_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c16_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c16_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Pérdidas Reconocidas de Transmisión NT1',
         campo: '20',
-        concepto: 'Pérdidas Reconocidas de Transmisión NT1',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdtnt1_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt1_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt1_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+        name: '6',
+        data: [{
+                campo: '20',
+                concepto: 'Pérdidas Reconocidas de Transmisión NT1',
+                unidad: '$/kWh',
+                inputs: [
+                    { key: 'c20_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c20_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c20_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+                ]
+            },
+            {
+                campo: '10',
+                concepto: 'IPR1',
+                unidad: '%',
+                inputs: [
+                    { key: 'c10_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c10_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c10_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            }
         ]
-      },
-      {
-        campo: '10',
-        concepto: 'IPR1',
-        unidad: '%',
-        inputs: [
-          { key: 'ipr1_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'ipr1_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'ipr1_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Generación NT2',
-    campo: '17',
-    name: '7',
-    data: [
-      {
+    },
+    {
+        title: 'Pérdidas Reconocidas de Generación NT2',
         campo: '17',
-        concepto: 'Pérdidas Reconocidas de Generación NT2',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdgnt2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Transmisión NT2',
-    campo: '21',
-    name: '8',
-    data: [
-      {
+        name: '7',
+        data: [{
+            campo: '17',
+            concepto: 'Pérdidas Reconocidas de Generación NT2',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c17_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c17_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c17_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Pérdidas Reconocidas de Transmisión NT2',
         campo: '21',
-        concepto: 'Pérdidas Reconocidas de Transmisión NT2',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdtnt2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+        name: '8',
+        data: [{
+                campo: '21',
+                concepto: 'Pérdidas Reconocidas de Transmisión NT2',
+                unidad: '$/kWh',
+                inputs: [
+                    { key: 'c21_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c21_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c21_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+                ]
+            },
+            {
+                campo: '11',
+                concepto: 'IPR2',
+                unidad: '%',
+                inputs: [
+                    { key: 'c11_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c11_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c11_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            }
         ]
-      },
-      {
-        campo: '11',
-        concepto: 'IPR2',
-        unidad: '%',
-        inputs: [
-          { key: 'ipr2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'ipr2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'ipr2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Generación NT3',
-    campo: '18',
-    name: '9',
-    data: [
-      {
+    },
+    {
+        title: 'Pérdidas Reconocidas de Generación NT3',
         campo: '18',
-        concepto: 'Pérdidas Reconocidas de Generación NT3',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdgnt3_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt3_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt3_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Transmisión NT3',
-    campo: '22',
-    name: '10',
-    data: [
-      {
+        name: '9',
+        data: [{
+            campo: '18',
+            concepto: 'Pérdidas Reconocidas de Generación NT3',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c18_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c18_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c18_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Pérdidas Reconocidas de Transmisión NT3',
         campo: '22',
-        concepto: 'Pérdidas Reconocidas de Transmisión NT3',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdtnt3_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt3_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt3_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+        name: '10',
+        data: [{
+                campo: '22',
+                concepto: 'Pérdidas Reconocidas de Transmisión NT3',
+                unidad: '$/kWh',
+                inputs: [
+                    { key: 'c22_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c22_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c22_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+                ]
+            },
+            {
+                campo: '23',
+                concepto: 'IPR3',
+                unidad: '%',
+                inputs: [
+                    { key: 'c12_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c12_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c12_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            }
         ]
-      },
-      {
-        campo: '23',
-        concepto: 'IPR3',
-        unidad: '%',
-        inputs: [
-          { key: 'ipr3_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'ipr3_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'ipr3_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Generación NT4',
-    campo: '19',
-    name: '11',
-    data: [
-      {
+    },
+    {
+        title: 'Pérdidas Reconocidas de Generación NT4',
         campo: '19',
-        concepto: 'Pérdidas Reconocidas de Generación NT4',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdgnt4_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt4_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdgnt4_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Pérdidas Reconocidas de Transmisión NT4',
-    campo: '23',
-    name: '12',
-    data: [
-      {
+        name: '11',
+        data: [{
+            campo: '19',
+            concepto: 'Pérdidas Reconocidas de Generación NT4',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c19_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c19_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c19_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Pérdidas Reconocidas de Transmisión NT4',
         campo: '23',
-        concepto: 'Pérdidas Reconocidas de Transmisión NT4',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'prdtnt4_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt4_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'prdtnt4_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+        name: '12',
+        data: [{
+                campo: '23',
+                concepto: 'Pérdidas Reconocidas de Transmisión NT4',
+                unidad: '$/kWh',
+                inputs: [
+                    { key: 'c23_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c23_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                    { key: 'c23_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+                ]
+            },
+            {
+                campo: '13',
+                concepto: 'IPR4',
+                unidad: '$/kWh',
+                inputs: [
+                    { key: 'c13_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                    { key: 'c13_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                    { key: 'c13_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+                ]
+            }
         ]
-      },
-      {
-        campo: '13',
-        concepto: 'IPR4',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'ipr4_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'ipr4_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'ipr4_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'CPROG',
-    campo: '15',
-    name: '13',
-    data: [
-      {
+    },
+    {
+        title: 'CPROG',
         campo: '15',
-        concepto: 'CPROG',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cprog_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cprog_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cprog_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Componente de Pérdidas NT1',
-    campo: '24',
-    name: '14',
-    data: [
-      {
+        name: '13',
+        data: [{
+            campo: '15',
+            concepto: 'CPROG',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c15_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
+                { key: 'c15_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
+                { key: 'c15_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Componente de Pérdidas NT1',
         campo: '24',
-        concepto: 'Componente de Pérdidas NT1',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdpnt1_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt1_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt1_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Componente de Pérdidas NT2',
-    campo: '25',
-    name: '15',
-    data: [
-      {
+        name: '14',
+        data: [{
+            campo: '24',
+            concepto: 'Componente de Pérdidas NT1',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c24_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c24_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c24_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Componente de Pérdidas NT2',
         campo: '25',
-        concepto: 'Componente de Pérdidas NT2',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdpnt2_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt2_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt2_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Componente de Pérdidas NT3',
-    campo: '26',
-    name: '16',
-    data: [
-      {
+        name: '15',
+        data: [{
+            campo: '25',
+            concepto: 'Componente de Pérdidas NT2',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c25_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c25_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c25_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Componente de Pérdidas NT3',
         campo: '26',
-        concepto: 'Componente de Pérdidas NT3',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdpnt3_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt3_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt3_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  },
-  {
-    title: 'Componente de Pérdidas NT4',
-    campo: '27',
-    name: '17',
-    data: [
-      {
+        name: '16',
+        data: [{
+            campo: '26',
+            concepto: 'Componente de Pérdidas NT3',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c26_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c26_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c26_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    },
+    {
+        title: 'Componente de Pérdidas NT4',
         campo: '27',
-        concepto: 'Componente de Pérdidas NT4',
-        unidad: '$/kWh',
-        inputs: [
-          { key: 'cdpnt4_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt4_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, value: 87 },
-          { key: 'cdpnt4_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, value: 0 }
-        ]
-      }
-    ]
-  }
-]
+        name: '17',
+        data: [{
+            campo: '27',
+            concepto: 'Componente de Pérdidas NT4',
+            unidad: '$/kWh',
+            inputs: [
+                { key: 'c27_1', type: 'number', placeholder: 'Ingrese un valor', start: true, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c27_2', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: false, disabled: true, value: 87 },
+                { key: 'c27_3', type: 'number', placeholder: 'Ingrese un valor', start: false, show: true, diferencia: true, disabled: true, value: 0 }
+            ]
+        }]
+    }
+];
 
-export default componentesPerdidas097
+export default componentePerdidas;

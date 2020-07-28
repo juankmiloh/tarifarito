@@ -143,7 +143,8 @@ export default {
           this.optionsEmpresa = JSON.parse(JSON.stringify(result))
           // CONDICIONES INICIALES - PRUEBA
           this.value_ano = 2020
-          this.value_mes = 1
+          this.value_mes = 4
+          // this.value_empresa = 502
           this.value_empresa = 2103
           this.verifyField()
         })
@@ -160,6 +161,7 @@ export default {
         this.value_mes,
         this.value_empresa
       ).then(response => {
+        console.log('RESPONSE -> ', response)
         if (response.length > 0) {
           console.log('verifyCU -> ', response)
           this.dataVerifyCu.ano = this.value_ano
@@ -176,6 +178,14 @@ export default {
             duration: 5 * 1000
           })
         }
+      // eslint-disable-next-line handle-callback-err
+      }, (err) => {
+        Message({
+          message: 'No se pudo completar la operación.',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        this.loading = false
       })
       this.loading = false
     },

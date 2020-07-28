@@ -16,6 +16,13 @@ export function getNTolerancia(query) {
     });
 }
 
+export function getNToleranciaMes(ano, mes) {
+    return request({
+        url: `g_ntolerancia/${ano}/${mes}`,
+        method: 'get'
+    });
+}
+
 export function postNTolerancia(model) {
     return request({
         url: `g_ntolerancia`,
