@@ -85,7 +85,7 @@
     <!-- Se carga vista de parrilla de componentes CU -->
 
     <el-dialog
-      :title="getEmpresa(value_empresa)"
+      :title="title_modulo"
       :before-close="handleClose"
       :visible.sync="dialogFormVisible"
       fullscreen
@@ -129,7 +129,8 @@ export default {
       optionsEmpresa: [],
       value_ano: '',
       value_mes: '',
-      value_empresa: ''
+      value_empresa: '',
+      title_modulo: ''
     }
   },
   computed: {
@@ -169,6 +170,7 @@ export default {
           this.dataVerifyCu.cod_empresa = this.value_empresa
           this.dataVerifyCu.empresa = this.getEmpresa(this.value_empresa)
           this.dataVerifyCu.data = response
+          this.title_modulo = this.getEmpresa(this.value_empresa) + ' | Consulta costo unitario'
           this.dialogFormVisible = true
           this.currentView = 'gridCu'
         } else {

@@ -104,7 +104,7 @@
     <!-- Se carga vista de parrilla de componentes CU -->
 
     <el-dialog
-      :title="getEmpresa(value_empresa)"
+      :title="title_modulo"
       :before-close="handleClose"
       :visible.sync="dialogFormVisible"
       fullscreen
@@ -150,7 +150,8 @@ export default {
       value_mes: '',
       value_empresa: '',
       value_mercado: '',
-      loadingTextMercado: 'Cargando mercados...'
+      loadingTextMercado: 'Cargando mercados...',
+      title_modulo: ''
     }
   },
   computed: {
@@ -207,6 +208,7 @@ export default {
       }
       if (this.value_ano && this.value_mes && this.value_empresa && this.value_mercado !== 'Cargando mercados...') {
         this.disableLoad = false
+        this.title_modulo = 'Histórico | Consultas CU | ' + this.getEmpresa(this.value_empresa)
       }
     },
     getEmpresa(value) {

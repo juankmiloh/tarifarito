@@ -24,13 +24,13 @@
       </div>
       <el-table
         v-if="!loading"
-        :default-sort="{prop: 'nom_mercado', order: 'ascending'}"
-        :data="tableData.filter(data => !search || data.componente.toLowerCase().includes(search.toLowerCase()))"
+        :default-sort="{prop: 'fecha_modif', order: 'descending'}"
+        :data="tableData.filter(data => !search || data.fecha_modif.toLowerCase().includes(search.toLowerCase()))"
         :border="false"
         style="width: 100%;"
         height="60vh"
       >
-        <!-- <el-table-column prop="fecha_modif" label="Modificación" align="center" sortable /> -->
+        <el-table-column prop="fecha_modif" label="Modificación" align="center" sortable />
         <el-table-column prop="nom_empresa" label="Nombre Empresa" width="300" align="center" sortable />
         <el-table-column prop="nom_mercado" label="Mercado" align="center" sortable />
         <el-table-column prop="componente" label="Componente" align="center" sortable />
@@ -56,7 +56,7 @@
     </el-card>
 
     <el-row :gutter="10" class="footer">
-      <el-col :sm="24" :md="24" style="text-align: right;">
+      <el-col :sm="24" :md="24" style="text-align: right; padding-right: 3em;">
         <el-button class="btn" type="primary" @click="closeViewGridHistorico">Regresar</el-button>
       </el-col>
     </el-row>
