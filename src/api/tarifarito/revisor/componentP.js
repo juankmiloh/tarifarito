@@ -4,9 +4,9 @@ import request from '../../../utils/request';
 
 export function getCptePValues(data, cpte) {
     let url = '';
-    if (cpte === 'p015') {
+    if (cpte === 'P015') {
         url = 'r_componentP015';
-    } else if (cpte === 'p097') {
+    } else if (cpte === 'P097') {
         url = 'r_componentP097';
     }
     return request({
@@ -17,9 +17,9 @@ export function getCptePValues(data, cpte) {
 
 export function postMDBCpteP(model, cpte) {
     let url = '';
-    if (cpte === 'p015') {
+    if (cpte === 'P015') {
         url = 'r_componentP015';
-    } else if (cpte === 'p097') {
+    } else if (cpte === 'P097') {
         url = 'r_componentP097';
     }
     return request({

@@ -119,6 +119,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
@@ -168,12 +169,19 @@ export default {
       this.cpteCalculado = parseFloat(
         this.dataParentT.componentes[0].component_t[0].cpte_calculado
       ).toFixed(3)
-      await getCpteTValues(this.dataParentT).then(response => {
-        this.modelValues = JSON.parse(JSON.stringify(response[0].values))
-        // console.log('respons: ', this.modelValues)
+      if (this.dataParentT.hasOwnProperty('estado')) {
+        this.modelValues = this.dataParentT.values
+        console.log('respons: ', this.modelValues)
         this.initInputs()
         this.loading = false
-      })
+      } else {
+        await getCpteTValues(this.dataParentT).then(response => {
+          this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+          // console.log('respons: ', this.modelValues)
+          this.initInputs()
+          this.loading = false
+        })
+      }
     },
     initInputs() {
       this.keysValues = Object.keys(this.modelValues)
@@ -206,28 +214,31 @@ export default {
       if (this.novedad) {
         this.modelMDBCpteT = {
           usuario: this.name,
-          ano: this.dataParentT.ano,
-          mes: this.dataParentT.mes,
-          cod_empresa: this.dataParentT.id_empresa,
-          cod_mercado: this.dataParentT.id_mercado,
+          ano: Number(this.dataParentT.ano),
+          mes: Number(this.dataParentT.mes),
+          cod_empresa: Number(this.dataParentT.id_empresa),
+          nom_empresa: this.dataParentT.nombre_empresa,
+          cod_mercado: Number(this.dataParentT.id_mercado),
+          nom_mercado: this.dataParentT.mercado,
           componente: 'T',
           nt_prop: this.dataParentT.nt_prop,
           novedad: this.novedad,
-          fecha_modif: new Date(),
+          fecha_modif: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
           estado: 'En gestión',
+          componentes: [{ 'component_t': [{ 'value': 'T', 'cpte_publicado': Number(this.cptePublicado), 'cpte_calculado': Number(this.cpteCalculado) }] }],
           values: {
             DATAPUBLICADA: [
-              33.623,
-              33.62298
+              Number(this.cptePublicado),
+              Number(this.cpteCalculado)
             ],
             CALCULOSSPD: [
-              0,
-              0,
-              0
+              this.values['TLAC'].values,
+              this.values['DTLAC'].values,
+              this.values['CPT'].values
             ],
             DIFERENCIA: [
-              0,
-              0
+              this.values['CPTAGENTE'].values,
+              this.values['CPTLAC'].values
             ]
           }
         }

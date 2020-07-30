@@ -157,13 +157,13 @@ export const CONSTANTS = {
             label: 'Dtun',
             prop: 'component_dtun'
         },
-        {
-            label: 'R',
-            prop: 'component_r'
-        },
-        {
-            label: 'C',
-            prop: 'component_c'
-        }
+        // {
+        //     label: 'R',
+        //     prop: 'component_r'
+        // },
+        // {
+        //     label: 'C',
+        //     prop: 'component_c'
+        // }
     ]
 };

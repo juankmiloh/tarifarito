@@ -10,7 +10,7 @@ import viewd097 from './components/distribucion/d097'
 import viewd015 from './components/distribucion/d015'
 import viewTarifas from './components/tarifas'
 import viewSensibilidad from './components/sensibilidad'
-import viewHistorico from './components/historico'
+import viewHistorico from './components/historico/index'
 import viewReportes from './components/reportes'
 
 export default {

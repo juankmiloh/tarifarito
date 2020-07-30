@@ -4,19 +4,20 @@
       <div slot="header" class="clearfix">
         <el-row>
           <el-col :span="18">
-            <div>
-              <b>AÑO:</b>
-              {{ msgviewparent.ano }}
-            </div>
-            <div style="padding-top: 0.5em;">
-              <b>MES:</b>
-              {{ getMes(msgviewparent.mes) }}
-            </div>
-            <div style="padding-top: 0.5em;">
-              <b>TOLERANCIA:</b> {{ tolerancia }}
-            </div>
+            <el-row style="padding-bottom: 0.5em;">
+              <el-col style="text-align: right;" :span="3"><b>Año:</b></el-col>
+              <el-col style="padding-left: 1em;" :span="21">{{ msgviewparent.ano }}</el-col>
+            </el-row>
+            <el-row style="padding-bottom: 0.5em;">
+              <el-col style="text-align: right;" :span="3"><b>Mes:</b></el-col>
+              <el-col style="padding-left: 1em;" :span="21">{{ getMes(msgviewparent.mes) }}</el-col>
+            </el-row>
+            <el-row style="padding-bottom: 0.5em;">
+              <el-col style="text-align: right;" :span="3"><b>Tolerancia:</b></el-col>
+              <el-col style="padding-left: 1em;" :span="21">{{ tolerancia }}</el-col>
+            </el-row>
           </el-col>
-          <el-col :span="6" style="padding-top: 2em;">
+          <el-col :span="5" style="padding-top: 2em;">
             <el-input v-model="search" size="mini" placeholder="Buscar" />
           </el-col>
         </el-row>
@@ -198,48 +199,49 @@ export default {
     handleClickComponent(index, row, component) {
       row.ano = this.value_ano
       row.mes = this.value_mes
+      row.nombre_empresa = this.nombre_empresa
       console.log('Componente seleccionado -> ', row)
       this.componentSelect = row // Valores que se envian a la vista del componente
-      if (component === 'g') {
+      if (component === 'G') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo generación`
         this.currentView = 'viewG'
         this.viewCpteVisible = true
       }
-      if (component === 't') {
+      if (component === 'T') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo transmisión`
         this.currentView = 'viewT'
         this.viewCpteVisible = true
       }
-      if (component === 'p015' || component === 'p097') {
+      if (component === 'P015' || component === 'P097') {
         this.handleSelectComponentP(component, row.mercado, row.nt_prop)
       }
-      if (component === 'dtun') {
+      if (component === 'DTUN') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Componente DTUN`
         this.currentView = 'viewDtun'
         this.viewCpteVisible = true
       }
-      if (component === 'r') {
+      if (component === 'R') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo restricciones`
         this.currentView = 'viewR'
         this.viewCpteVisible = true
       }
-      if (component === 'c') {
+      if (component === 'C') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo comercialización`
         this.currentView = 'viewC'
         this.viewCpteVisible = true
       }
-      if (component === 'cu') {
+      if (component === 'CU') {
         this.modulo = `${this.nombre_empresa} |	${row.mercado} | NTPROP ${row.nt_prop} | Módulo CU`
         this.currentView = 'viewCu'
         this.viewCpteVisible = true
       }
     },
     handleSelectComponentP(cpte, mercado, nt_prop) {
-      if (cpte === 'p015') {
+      if (cpte === 'P015') {
         this.modulo = `${this.nombre_empresa} |	${mercado} | NTPROP ${nt_prop} | Módulo pérdidas CREG 015`
         this.currentView = 'ViewP'
         this.viewCpteVisible = true
-      } else if (cpte === 'p097') {
+      } else if (cpte === 'P097') {
         this.modulo = `${this.nombre_empresa} |	${mercado} | NTPROP ${nt_prop} | Módulo pérdidas CREG 097`
         this.currentView = 'ViewP'
         this.viewCpteVisible = true
@@ -249,7 +251,6 @@ export default {
       console.log('Verificación en lote!')
     },
     getMes(value) {
-      console.log(value)
       if (value) {
         const mes = this.optionsMes.find(element => element.value === value)
           .label

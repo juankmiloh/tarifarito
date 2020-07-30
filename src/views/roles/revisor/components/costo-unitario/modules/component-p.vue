@@ -183,6 +183,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
@@ -257,12 +258,19 @@ export default {
         this.ntprop = 'NT4'
       }
       this.cpte = this.dataParentP.componentes[0].component_p[0].value
-      await getCptePValues(this.dataParentP, this.cpte).then(response => {
-        this.modelValues = JSON.parse(JSON.stringify(response[0].values))
-        console.log('respons: ', this.modelValues)
+      if (this.dataParentP.hasOwnProperty('estado')) {
+        this.modelValues = this.dataParentP.values
+        // console.log('respons: ', this.modelValues)
         this.initInputs()
         this.loading = false
-      })
+      } else {
+        await getCptePValues(this.dataParentP, this.cpte).then(response => {
+          this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+          // console.log('respons: ', this.modelValues)
+          this.initInputs()
+          this.loading = false
+        })
+      }
     },
     initInputs() {
       let valores = []
@@ -342,7 +350,7 @@ export default {
       let campo26 = 0
       let campo27 = 0
 
-      if (this.cpte === 'p015') {
+      if (this.cpte === 'P015') {
         campo8 = parseFloat(this.values['c2_2'].values) + parseFloat(this.values['c3_2'].values) + parseFloat(this.values['c4_2'].values) + parseFloat(this.values['c5_2'].values) + parseFloat(this.values['c6_2'].values) + parseFloat(this.values['c7_2'].values)
 
         campo9 = (parseFloat(this.values['c3_2'].values) + parseFloat(this.values['c5_2'].values) + parseFloat(this.values['c7_2'].values)) / parseFloat(this.values['c8_2'].values)
@@ -370,7 +378,7 @@ export default {
         campo26 = parseFloat(this.values['c18_2'].values) + parseFloat(this.values['c22_2'].values) + parseFloat(this.values['c15_2'].values)
 
         campo27 = parseFloat(this.values['c19_2'].values) + parseFloat(this.values['c23_2'].values) + parseFloat(this.values['c15_2'].values)
-      } else if (this.cpte === 'p097') {
+      } else if (this.cpte === 'P097') {
         campo8 = parseFloat(this.values['c2_2'].values) + parseFloat(this.values['c3_2'].values) + parseFloat(this.values['c4_2'].values) + parseFloat(this.values['c5_2'].values) + parseFloat(this.values['c6_2'].values) + parseFloat(this.values['c7_2'].values)
 
         campo9 = (parseFloat(this.values['c3_2'].values) + parseFloat(this.values['c5_2'].values) + parseFloat(this.values['c7_2'].values)) / parseFloat(this.values['c8_2'].values)
@@ -428,8 +436,9 @@ export default {
         this.valuePruebas = campo27.toFixed(3)
       }
 
+      console.log('MODEL antes diferencia --> ', this.values)
       this.diferenciaFormula()
-      // console.log('MODEL --> ', this.values)
+      console.log('MODEL despues diferencia --> ', this.values)
     },
     reportar() {
       this.dialogFormVisible = true
@@ -438,15 +447,18 @@ export default {
       if (this.novedad) {
         this.modelMDBCpteG = {
           usuario: this.name,
-          ano: this.dataParentP.ano,
-          mes: this.dataParentP.mes,
-          cod_empresa: this.dataParentP.id_empresa,
-          cod_mercado: this.dataParentP.id_mercado,
-          componente: this.cpte,
+          ano: Number(this.dataParentP.ano),
+          mes: Number(this.dataParentP.mes),
+          cod_empresa: Number(this.dataParentP.id_empresa),
+          nom_empresa: this.dataParentP.nombre_empresa,
+          cod_mercado: Number(this.dataParentP.id_mercado),
+          nom_mercado: this.dataParentP.mercado,
+          componente: this.cpte.toUpperCase(),
           nt_prop: this.dataParentP.nt_prop,
           novedad: this.novedad,
-          fecha_modif: new Date(),
+          fecha_modif: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
           estado: 'En gestión',
+          componentes: [{ 'component_p': [{ 'value': this.cpte, 'cpte_publicado': Number(this.cptePublicado), 'cpte_calculado': Number(this.valuePruebas) }] }],
           values: {
             'CPTEG': [
               this.values['c1_2'].values

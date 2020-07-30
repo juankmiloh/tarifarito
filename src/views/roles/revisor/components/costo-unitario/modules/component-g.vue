@@ -179,6 +179,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
@@ -239,13 +240,21 @@ export default {
       this.cpteCalculado = parseFloat(
         this.dataParentG.componentes[0].component_g[0].cpte_calculado
       ).toFixed(3)
-      await getCpteGValues(this.dataParentG).then(response => {
-        this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+      if (this.dataParentG.hasOwnProperty('estado')) {
+        this.modelValues = this.dataParentG.values
         // console.log('respons: ', this.modelValues)
         this.initInputs()
         this.loadInputs = true
         this.loading = false
-      })
+      } else {
+        await getCpteGValues(this.dataParentG).then(response => {
+          this.modelValues = JSON.parse(JSON.stringify(response[0].values))
+          // console.log('respons: ', this.modelValues)
+          this.initInputs()
+          this.loadInputs = true
+          this.loading = false
+        })
+      }
     },
     initInputs() {
       let valores = []
@@ -371,15 +380,18 @@ export default {
       if (this.novedad) {
         this.modelMDBCpteG = {
           usuario: this.name,
-          ano: this.dataParentG.ano,
-          mes: this.dataParentG.mes,
-          cod_empresa: this.dataParentG.id_empresa,
-          cod_mercado: this.dataParentG.id_mercado,
+          ano: Number(this.dataParentG.ano),
+          mes: Number(this.dataParentG.mes),
+          cod_empresa: Number(this.dataParentG.id_empresa),
+          nom_empresa: this.dataParentG.nombre_empresa,
+          cod_mercado: Number(this.dataParentG.id_mercado),
+          nom_mercado: this.dataParentG.mercado,
           componente: 'G',
           nt_prop: this.dataParentG.nt_prop,
           novedad: this.novedad,
-          fecha_modif: new Date(),
+          fecha_modif: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
           estado: 'En gestión',
+          componentes: [{ 'component_g': [{ 'value': 'G', 'cpte_publicado': Number(this.cptePublicado), 'cpte_calculado': this.values['c28_2'].values }] }],
           values: {
             DCR: [
               this.values['c16_2'].values,
