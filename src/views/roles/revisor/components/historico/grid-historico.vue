@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card class="box-card margin-card" style="border: 2px solid #C0C4CC; height: 78vh;">
+    <el-card v-loading="loading" class="box-card margin-card" style="border: 2px solid #C0C4CC; height: 78vh;">
       <div slot="header" class="clearfix">
         <el-row>
           <el-col :span="18">
@@ -23,7 +23,7 @@
         </el-row>
       </div>
       <el-table
-        v-loading="loading"
+        v-if="!loading"
         :default-sort="{prop: 'nom_mercado', order: 'ascending'}"
         :data="tableData.filter(data => !search || data.componente.toLowerCase().includes(search.toLowerCase()))"
         :border="false"
@@ -57,7 +57,7 @@
 
     <el-row :gutter="10" class="footer">
       <el-col :sm="24" :md="24" style="text-align: right;">
-        <el-button class="btn" type="primary" @click="closeViewGridCu">Regresar</el-button>
+        <el-button class="btn" type="primary" @click="closeViewGridHistorico">Regresar</el-button>
       </el-col>
     </el-row>
 
@@ -80,9 +80,11 @@
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
 import { mapGetters } from 'vuex'
+import { Message } from 'element-ui'
 import { getNToleranciaMes } from '@/api/tarifarito/gestor/nTolerancia'
 import gridComponente from './grid-componente'
 import { CONSTANTS } from '../../../../../constants/constants'
+import { getComponentes } from '@/api/tarifarito/revisor/historico/componentes_cu'
 
 export default {
   closename: 'ViewGridHistorico',
@@ -102,10 +104,11 @@ export default {
       modulo: null,
       currentView: null,
       multipleSelection: [],
-      loading: false,
+      loading: true,
       search: '',
       viewCpteVisible: false,
       optionsMes: CONSTANTS.optionsMes,
+      tableData: [],
       value_ano: '',
       value_mes: '',
       cod_empresa: '',
@@ -126,13 +129,43 @@ export default {
   methods: {
     async initView() {
       console.log('DATAPARENT -> ', this.msgviewparent)
-      this.tableData = this.msgviewparent.data
-      this.nom_empresa = this.msgviewparent.empresa
       this.nom_empresa = this.msgviewparent.empresa
       this.value_ano = this.msgviewparent.ano
       this.value_mes = this.msgviewparent.mes
+      this.value_empresa = this.msgviewparent.cod_empresa
+      this.value_mercado = this.msgviewparent.cod_mercado
       await getNToleranciaMes(this.value_ano, this.value_mes).then((response) => {
         this.tolerancia = response[0].n_tolerancia
+      })
+      this.getDataComponent()
+    },
+    async getDataComponent() {
+      await getComponentes(
+        this.value_ano,
+        this.value_mes,
+        this.value_empresa,
+        this.value_mercado
+      ).then(response => {
+        console.log('RESPONSE -> ', response)
+        if (response.length > 0) {
+          console.log('setDataComponentes -> ', response)
+          this.tableData = response
+          this.loading = false
+        } else {
+          Message({
+            message: 'No hay información para los criterios seleccionados',
+            type: 'warning',
+            duration: 5 * 1000
+          })
+        }
+      // eslint-disable-next-line handle-callback-err
+      }, (err) => {
+        Message({
+          message: 'No se pudo completar la operación.',
+          type: 'error',
+          duration: 5 * 1000
+        })
+        // this.loading = false
       })
     },
     detalleComponente(index, row) {
@@ -193,13 +226,16 @@ export default {
       this.currentView = null
       console.log('Se cerro vista de componente!')
     },
-    closeViewGridCu() {
+    closeViewGridHistorico() {
       this.$emit('clicked', false)
     },
     onClickChild(value) {
-      console.log('onClickChildComponent: ', value) // someValue
-      this.viewCpteVisible = value
+      console.log('onClickChildComponent_gridhistorico: ', value) // someValue
+      this.viewCpteVisible = false
       this.currentView = null
+      this.loading = true
+      this.tableData = []
+      this.initView()
     }
   }
 }

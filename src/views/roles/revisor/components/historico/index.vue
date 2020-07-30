@@ -95,7 +95,7 @@
             icon="el-icon-check"
             :loading="loading"
             class="btn"
-            @click.native.prevent="getDataComponentes"
+            @click.native.prevent="setDataComponentes"
           >Consultar</el-button>
         </el-col>
       </el-row>
@@ -120,12 +120,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { Message } from 'element-ui'
 import gridHistorico from './grid-historico'
 import { CONSTANTS } from '../../../../../constants/constants'
 import { getSUIEmpresasList } from '@/api/tarifarito/sui-empresas'
 import { getSUIMercados } from '@/api/tarifarito/sui-empresa-mercado'
-import { getComponentes } from '@/api/tarifarito/revisor/historico/componentes_cu'
 
 export default {
   name: 'ViewHistorico',
@@ -187,42 +185,16 @@ export default {
           this.loadingTextMercado = 'Error, recargue la página'
         })
     },
-    async getDataComponentes() {
+    async setDataComponentes() {
       this.loading = true
-      await getComponentes(
-        this.value_ano,
-        this.value_mes,
-        this.value_empresa,
-        this.value_mercado
-      ).then(response => {
-        // console.log('RESPONSE -> ', response)
-        if (response.length > 0) {
-          console.log('getDataComponentes -> ', response)
-          this.dataHistorico.ano = this.value_ano
-          this.dataHistorico.mes = this.value_mes
-          this.dataHistorico.cod_empresa = this.value_empresa
-          this.dataHistorico.cod_mercado = this.value_mercado
-          this.dataHistorico.empresa = this.getEmpresa(this.value_empresa)
-          this.dataHistorico.mercado = this.getMercado(this.value_mercado)
-          this.dataHistorico.data = response
-          this.dialogFormVisible = true
-          this.currentView = 'gridHistorico'
-        } else {
-          Message({
-            message: 'No hay información para los criterios seleccionados',
-            type: 'warning',
-            duration: 5 * 1000
-          })
-        }
-      // eslint-disable-next-line handle-callback-err
-      }, (err) => {
-        Message({
-          message: 'No se pudo completar la operación.',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        this.loading = false
-      })
+      this.dataHistorico.ano = this.value_ano
+      this.dataHistorico.mes = this.value_mes
+      this.dataHistorico.cod_empresa = this.value_empresa
+      this.dataHistorico.cod_mercado = this.value_mercado
+      this.dataHistorico.empresa = this.getEmpresa(this.value_empresa)
+      this.dataHistorico.mercado = this.getMercado(this.value_mercado)
+      this.dialogFormVisible = true
+      this.currentView = 'gridHistorico'
       this.loading = false
     },
     verifyField(empresa, option) {

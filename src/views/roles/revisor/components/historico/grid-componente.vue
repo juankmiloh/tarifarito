@@ -36,7 +36,7 @@
         :data="!loading ? tableData.filter(data => !search || data.novedad.toLowerCase().includes(search.toLowerCase())) : null"
         :border="false"
         style="width: 100%;"
-        height="60vh"
+        height="55vh"
       >
         <el-table-column prop="fecha_modif" label="Fecha" align="center" sortable />
         <el-table-column prop="usuario" label="Usuario" align="center" sortable />
@@ -59,9 +59,26 @@
       </el-table>
     </el-card>
 
-    <el-row :gutter="10" class="footer">
-      <el-col :sm="24" :md="24" style="text-align: right;">
-        <el-button class="btn" type="primary" @click="closeViewGridCu">Verificado</el-button>
+    <el-row v-if="!childDataCpte" :gutter="10" class="footer">
+      <el-col :sm="24" :md="21" class="cont-btn" style="text-align: right;">
+        <el-tooltip
+          class="item hidden-sm-and-down"
+          effect="dark"
+          content="Se cambia el estado de gestión a verificado."
+          placement="top-start"
+        >
+          <i class="el-icon-info" style="color: #304156;" />
+        </el-tooltip>
+        <el-button class="btn" type="primary" @click="verificarCpte">Verificado</el-button>
+      </el-col>
+      <el-col :sm="24" :md="3">
+        <el-button class="btn" @click="closeViewGridCpte">Regresar</el-button>
+      </el-col>
+    </el-row>
+
+    <el-row v-if="childDataCpte" :gutter="10" class="footer">
+      <el-col :sm="24" :md="24" style="text-align: center;">
+        <el-button class="btn" type="primary" @click="closeViewGridCpte">Aceptar</el-button>
       </el-col>
     </el-row>
 
@@ -74,15 +91,43 @@
       append-to-body
       destroy-on-close
       custom-class="dialog-component"
-      @close="closeViewComponent"
     >
       <component :is="currentView" :messagecomponent="componentSelect" @clicked="onClickChild" />
+    </el-dialog>
+
+    <!-- dialog mensaje revisión del componente -->
+    <el-dialog
+      title="Tarifarito reporta"
+      :visible.sync="dialogFormNovedad"
+      width="30em"
+      top="10em"
+      append-to-body
+      destroy-on-close
+      custom-class="dialog-class"
+    >
+      <el-card class="cont-row" style="margin-top: 1.2em;">
+        <el-row>
+          <el-col :sm="24" :md="24" style="text-align: left;">
+            <label>Registrar novedad</label>
+          </el-col>
+          <el-col :sm="24" :md="24" class="input-padding">
+            <el-input v-model="novedad" type="textarea" autosize placeholder="Ingresar novedad aquí" />
+          </el-col>
+        </el-row>
+        <el-divider />
+        <el-row>
+          <el-col :sm="24" :md="24">
+            <el-button type="success" icon="el-icon-check" class="btn" @click="registrarNovedad">Reportar</el-button>
+          </el-col>
+        </el-row>
+      </el-card>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import 'element-ui/lib/theme-chalk/display.css'
+import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import viewG from '../../../revisor/components/costo-unitario/modules/component-g.vue'
@@ -93,7 +138,7 @@ import viewR from '../../../revisor/components/costo-unitario/modules/component-
 import viewC from '../../../revisor/components/costo-unitario/modules/component-c.vue'
 import viewCu from '../../../revisor/components/costo-unitario/modules/component-cu.vue'
 import { getNToleranciaMes } from '@/api/tarifarito/gestor/nTolerancia'
-import { getDataComponente } from '@/api/tarifarito/revisor/historico/componentes_cu'
+import { getDataComponente, postCpte } from '@/api/tarifarito/revisor/historico/componentes_cu'
 import { CONSTANTS } from '../../../../../constants/constants'
 
 export default {
@@ -131,9 +176,12 @@ export default {
       nombre_empresa: '',
       dialogComponentP: false,
       radioCreg: '',
-      componentSelect: {},
+      componentSelect: null,
       colComponentes: CONSTANTS.columnComponents,
-      tolerancia: 0.5
+      tolerancia: 0.5,
+      childDataCpte: false,
+      dialogFormNovedad: false,
+      novedad: null
     }
   },
   computed: {
@@ -145,27 +193,19 @@ export default {
   methods: {
     async initView() {
       console.log('DATAPARENT GRID COMPONENT -> ', this.messagehistory)
-      this.nombre_empresa = this.messagehistory.nom_empresa
-      this.value_ano = this.messagehistory.ano
-      this.value_mes = this.messagehistory.mes
-      this.value_empresa = this.messagehistory.cod_empresa
-      this.value_mercado = this.messagehistory.cod_mercado
-      this.nom_mercado = this.messagehistory.nom_mercado
-      this.cpte = this.messagehistory.componente
-      this.ntprop = this.messagehistory.nt_prop
-      await getNToleranciaMes(this.value_ano, this.value_mes).then((response) => {
+      await getNToleranciaMes(this.messagehistory.ano, this.messagehistory.mes).then((response) => {
         this.tolerancia = response[0].n_tolerancia
       })
       this.getHistoryCpte()
     },
     async getHistoryCpte() {
       await getDataComponente(
-        this.value_ano,
-        this.value_mes,
-        this.value_empresa,
-        this.value_mercado,
-        this.cpte,
-        this.ntprop
+        this.messagehistory.ano,
+        this.messagehistory.mes,
+        this.messagehistory.cod_empresa,
+        this.messagehistory.cod_mercado,
+        this.messagehistory.componente,
+        this.messagehistory.nt_prop
       ).then(response => {
         // console.log('RESPONSE -> ', response)
         if (response.length > 0) {
@@ -190,8 +230,8 @@ export default {
       })
     },
     handleClickComponent(index, row) {
-      row.ano = this.value_ano
-      row.mes = this.value_mes
+      row.ano = this.messagehistory.ano
+      row.mes = this.messagehistory.mes
       console.log('Componente seleccionado -> ', row)
       // Valores que se envian a la vista del componente
       this.componentSelect = {
@@ -272,18 +312,62 @@ export default {
         })
         .catch(_ => {})
     },
-    closeViewComponent() {
+    closeViewGridCpte() {
       this.currentView = null
-      console.log('Se cerro vista de componente!')
-    },
-    closeViewGridCu() {
       this.$emit('clicked', false)
+      console.log('Se cerro vista detalle componente!')
+    },
+    verificarCpte() {
+      this.dialogFormNovedad = true
+    },
+    async registrarNovedad() {
+      if (this.novedad) {
+        this.modelCpte = {
+          usuario: this.messagehistory.usuario,
+          ano: Number(this.messagehistory.ano),
+          mes: Number(this.messagehistory.mes),
+          cod_empresa: Number(this.messagehistory.cod_empresa),
+          nom_empresa: this.messagehistory.nom_empresa,
+          cod_mercado: Number(this.messagehistory.cod_mercado),
+          nom_mercado: this.messagehistory.nom_mercado,
+          componente: this.messagehistory.componente,
+          nt_prop: this.messagehistory.nt_prop,
+          novedad: this.novedad,
+          fecha_modif: moment(new Date()).format('DD/MM/YYYY HH:mm:ss'),
+          estado: 'Verificado',
+          componentes: this.messagehistory.componentes,
+          values: this.messagehistory.values
+        }
+        this.dialogFormNovedad = false
+        // console.log('MODELO ENVIADO -> ', this.modelCpte)
+        await postCpte(this.modelCpte).then(response => {
+          // console.log('RESPONSE MODELO ENVIADO -> ', response)
+          Message({
+            message: 'Registros guardados con éxito!',
+            type: 'success',
+            duration: 2 * 1000
+          })
+          if (response) {
+            this.$emit('clicked', false)
+          }
+        })
+      } else {
+        Message({
+          message: 'Por favor primero ingresa la novedad',
+          type: 'error',
+          duration: 2 * 1000
+        })
+      }
     },
     onClickChild(value) {
       console.log('onClickChildComponent: ', value) // someValue
       this.viewCpteVisible = value
       this.currentView = null
-      this.initView()
+      // Si se hacen cambios en cpte
+      if (this.componentSelect) {
+        this.initView()
+        this.childDataCpte = true
+      }
     }
   }
 }

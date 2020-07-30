@@ -15,3 +15,11 @@ export function getDataComponente(anio, mes, empresa, mercado, cpte, ntprop) {
         method: 'get'
     });
 }
+
+export function postCpte(model) {
+    return request({
+        url: 'r_componentesMDB',
+        method: 'post',
+        params: { 'params': model }
+    });
+}

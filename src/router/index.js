@@ -364,7 +364,7 @@ export const asyncRoutes = [{
             component: () =>
                 import ('@/views/roles'),
             name: 'verificaciones',
-            meta: { title: 'Histórico Verificaciones', icon: 'tree-table', noCache: true, roles: ['revisor'] }
+            meta: { title: 'Histórico Verificaciones', icon: 'tree-table', noCache: true, roles: ['admin', 'revisor', 'aprobador'] }
         }]
     },
     {
@@ -375,7 +375,7 @@ export const asyncRoutes = [{
             component: () =>
                 import ('@/views/roles'),
             name: 'reportes',
-            meta: { title: 'Reportes', icon: 'form', noCache: true, roles: ['revisor'] }
+            meta: { title: 'Reportes', icon: 'form', noCache: true, roles: ['revisor', 'aprobador'] }
         }]
     },
 
