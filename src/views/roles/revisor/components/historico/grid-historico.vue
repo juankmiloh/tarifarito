@@ -36,7 +36,14 @@
         <el-table-column prop="componente" label="Componente" align="center" sortable />
         <el-table-column prop="nt_prop" label="NT - PROP" align="center" sortable />
         <el-table-column prop="usuario" label="Usuario" align="center" sortable />
-        <el-table-column prop="estado" label="Estado" align="center" sortable />
+        <el-table-column prop="estado" label="Estado" align="center" sortable>
+          <template slot-scope="scope">
+            <div>
+              <span v-if="scope.row.estado === 'En gestión'" style="color: #ff9800;">En gestión&nbsp;<i class="el-icon-loading" /></span>
+              <span v-if="scope.row.estado === 'Verificado'" style="color: #00c853;">Verificado&nbsp;<i class="el-icon-circle-check" /></span>
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           label="Detalle"
           align="center"

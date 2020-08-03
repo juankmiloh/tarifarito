@@ -59,12 +59,12 @@
       </el-table>
     </el-card>
 
-    <el-row v-if="!childDataCpte" :gutter="10" class="footer">
+    <el-row v-if="verificar" :gutter="10" class="footer">
       <el-col :sm="24" :md="21" class="cont-btn" style="text-align: right;">
         <el-tooltip
           class="item hidden-sm-and-down"
           effect="dark"
-          content="Se cambia el estado de gestión a verificado."
+          content="Se cambia el estado a verificado"
           placement="top-start"
         >
           <i class="el-icon-info" style="color: #304156;" />
@@ -76,7 +76,7 @@
       </el-col>
     </el-row>
 
-    <el-row v-if="childDataCpte" :gutter="10" class="footer">
+    <el-row v-if="!verificar" :gutter="10" class="footer">
       <el-col :sm="24" :md="24" style="text-align: center;">
         <el-button class="btn" type="primary" @click="closeViewGridCpte">Aceptar</el-button>
       </el-col>
@@ -179,7 +179,7 @@ export default {
       componentSelect: null,
       colComponentes: CONSTANTS.columnComponents,
       tolerancia: 0.5,
-      childDataCpte: false,
+      verificar: false,
       dialogFormNovedad: false,
       novedad: null
     }
@@ -192,6 +192,10 @@ export default {
   },
   methods: {
     async initView() {
+      console.log('ROL -> ', this.roles)
+      if (this.roles[0] === 'aprobador') {
+        this.verificar = true
+      }
       console.log('DATAPARENT GRID COMPONENT -> ', this.messagehistory)
       await getNToleranciaMes(this.messagehistory.ano, this.messagehistory.mes).then((response) => {
         this.tolerancia = response[0].n_tolerancia
@@ -323,7 +327,7 @@ export default {
     async registrarNovedad() {
       if (this.novedad) {
         this.modelCpte = {
-          usuario: this.messagehistory.usuario,
+          usuario: this.name,
           ano: Number(this.messagehistory.ano),
           mes: Number(this.messagehistory.mes),
           cod_empresa: Number(this.messagehistory.cod_empresa),
@@ -366,7 +370,7 @@ export default {
       // Si se hacen cambios en cpte
       if (this.componentSelect) {
         this.initView()
-        this.childDataCpte = true
+        // this.verificar = true
       }
     }
   }

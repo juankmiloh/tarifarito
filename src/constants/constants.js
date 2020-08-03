@@ -154,7 +154,7 @@ export const CONSTANTS = {
             prop: 'component_p'
         },
         {
-            label: 'Dtun',
+            label: 'D',
             prop: 'component_dtun'
         },
         // {
