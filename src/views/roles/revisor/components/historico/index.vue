@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>Histórico / Consultas / Costo unitario</b>
@@ -243,12 +243,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .dialog-component .el-dialog__header {
-    padding-left: 5em;
-    background-image: url('../../../../../assets/logo_buho.png');
-    background-repeat: no-repeat;
-    background-size: 38px 42px;
-    background-position-x: 1.5em;
-    background-position-y: 0.5em;
+  .card-header .el-card__header {
+    background: #F2F6FC;
   }
 </style>

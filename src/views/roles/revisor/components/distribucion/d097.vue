@@ -12,7 +12,7 @@
         </aside>
       </el-col>
 
-      <el-card class="box-card">
+      <el-card class="box-card card-header">
         <div slot="header" class="clearfix">
           <span><b>COMPONENTE D | CREG 097</b></span>
         </div>
@@ -151,5 +151,9 @@ export default {
 <style lang="scss" scoped>
   .placeholder-container div {
     margin: 10px;
+  }
+
+  .card-header .el-card__header {
+    background: #F2F6FC;
   }
 </style>

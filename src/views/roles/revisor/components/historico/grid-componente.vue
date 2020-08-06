@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import 'element-ui/lib/theme-chalk/display.css'
+// import 'element-ui/lib/theme-chalk/display.css'
 import moment from 'moment'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
@@ -410,7 +410,7 @@ export default {
 	}
 
 	.el-dialog__header {
-		background-color: #304156;
+		background-color: red;
 		padding-bottom: 1em;
 		// border-radius: 20px;
 	}

@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>INFORMACIÓN D097 | Resolución</b>
@@ -331,7 +331,11 @@ export default {
 
 	.dialog-style {
 		border: 1px solid red;
-	}
+  }
+
+  .card-header .el-card__header {
+    background: #F2F6FC;
+  }
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {

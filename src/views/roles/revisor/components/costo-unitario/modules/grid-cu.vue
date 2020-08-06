@@ -285,106 +285,106 @@ export default {
 </script>
 
 <style lang="scss">
-	.dialog-component .el-dialog__header {
-		padding-left: 5em;
-		background-image: url("../../../../../../assets/logo_buho.png");
-		background-repeat: no-repeat;
-		background-size: 38px 42px;
-		background-position-x: 1.5em;
-		background-position-y: 0.5em;
-	}
+	// .dialog-component .el-dialog__header {
+	// 	padding-left: 5em;
+	// 	background-image: url("../../../../../../assets/logo_buho.png");
+	// 	background-repeat: no-repeat;
+	// 	background-size: 38px 42px;
+	// 	background-position-x: 1.5em;
+	// 	background-position-y: 0.5em;
+	// }
 
-	.dialog-class {
-		border-radius: 10px;
-	}
+	// .dialog-class {
+	// 	border-radius: 10px;
+	// }
 
-	.dialog-class .el-dialog__header {
-		border-radius: 10px 10px 0px 0px;
-		background-image: url("../../../../../../assets/logo_buho.png");
-		padding-left: 3.7em;
-		background-repeat: no-repeat;
-		background-size: 30px 35px;
-		background-position-x: 1em;
-		background-position-y: 0.8em;
-	}
+	// .dialog-class .el-dialog__header {
+	// 	border-radius: 10px 10px 0px 0px;
+	// 	background-image: url("../../../../../../assets/logo_buho.png");
+	// 	padding-left: 3.7em;
+	// 	background-repeat: no-repeat;
+	// 	background-size: 30px 35px;
+	// 	background-position-x: 1em;
+	// 	background-position-y: 0.8em;
+	// }
 
-	.el-dialog {
-		background-color: #f2f6fc;
-	}
+	// .el-dialog {
+	// 	background-color: #f2f6fc;
+	// }
 
-	.el-dialog__headerbtn .el-dialog__close {
-		color: white;
-	}
+	// .el-dialog__headerbtn .el-dialog__close {
+	// 	color: white;
+	// }
 
-	.el-dialog__header {
-		background-color: #304156;
-		padding-bottom: 1em;
-		// border-radius: 20px;
-	}
+	// .el-dialog__header {
+	// 	background-color: #304156;
+	// 	padding-bottom: 1em;
+	// 	// border-radius: 20px;
+	// }
 
-	.el-dialog__title {
-		font-weight: bold;
-		color: white;
-		margin-left: 0.5%;
-	}
+	// .el-dialog__title {
+	// 	font-weight: bold;
+	// 	color: white;
+	// 	margin-left: 0.5%;
+	// }
 
-	.el-dialog__body {
-		padding-top: 1%;
-		padding-left: 3%;
-		padding-right: 3%;
-	}
+	// .el-dialog__body {
+	// 	padding-top: 1%;
+	// 	padding-left: 3%;
+	// 	padding-right: 3%;
+	// }
 
-	.cell {
-		color: black;
-	}
+	// .cell {
+	// 	color: black;
+	// }
 
-  .popover-cpte {
-    color: black;
-    background-color: #e3f2fd;
-    border: 2px solid #4a148c;
-  }
+  // .popover-cpte {
+  //   color: black;
+  //   background-color: #e3f2fd;
+  //   border: 2px solid #4a148c;
+  // }
 
-  .popover-cpte[x-placement^=top] .popper__arrow:after {
-    border-top-color:#4a148c;
-  }
+  // .popover-cpte[x-placement^=top] .popper__arrow:after {
+  //   border-top-color:#4a148c;
+  // }
 
-	.text_popover {
-		text-align: center;
-		font-weight: bold;
-		font-size: 125%;
-		padding-bottom: 1%;
-		border-bottom: 1px solid;
-    background-image: url("../../../../../../assets/logo_buho.png");
-    padding-left: 1.2em;
-		background-repeat: no-repeat;
-		background-size: 30px 35px;
-		background-position-x: 1em;
-		background-position-y: 0.5em;
-	}
+	// .text_popover {
+	// 	text-align: center;
+	// 	font-weight: bold;
+	// 	font-size: 125%;
+	// 	padding-bottom: 1%;
+	// 	border-bottom: 1px solid;
+  //   background-image: url("../../../../../../assets/logo_buho.png");
+  //   padding-left: 1.2em;
+	// 	background-repeat: no-repeat;
+	// 	background-size: 30px 35px;
+	// 	background-position-x: 1em;
+	// 	background-position-y: 0.5em;
+	// }
 
-	// Pantallas superiores a 800px (PC)
-	@media screen and (min-width: 800px) {
-		.size-aside-md {
-			margin-left: 1.5em;
-		}
+	// // Pantallas superiores a 800px (PC)
+	// @media screen and (min-width: 800px) {
+	// 	.size-aside-md {
+	// 		margin-left: 1.5em;
+	// 	}
 
-		.cont-btn {
-			text-align: right;
-		}
+	// 	.cont-btn {
+	// 		text-align: right;
+	// 	}
 
-		.btnVerify {
-			width: 12em;
-		}
-	}
+	// 	.btnVerify {
+	// 		width: 12em;
+	// 	}
+	// }
 
-	// Pantallas inferiores a 800px (mobile)
-	@media screen and (max-width: 800px) {
-		.cont-btn {
-			padding-bottom: 0.5em;
-		}
+	// // Pantallas inferiores a 800px (mobile)
+	// @media screen and (max-width: 800px) {
+	// 	.cont-btn {
+	// 		padding-bottom: 0.5em;
+	// 	}
 
-		.btnVerify {
-			width: 100%;
-		}
-	}
+	// 	.btnVerify {
+	// 		width: 100%;
+	// 	}
+	// }
 </style>

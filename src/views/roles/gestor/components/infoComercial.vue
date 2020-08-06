@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>INFORMACIÓN COMERCIAL</b>
@@ -466,6 +466,10 @@ export default {
 
   .dialog-class .el-dialog__header {
     border-radius: 10px 10px 0px 0px;
+  }
+
+  .card-header .el-card__header {
+    background: #F2F6FC;
   }
 
 	// Pantallas superiores a 800px (PC)

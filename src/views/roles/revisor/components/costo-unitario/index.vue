@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>Costo unitario</b>
@@ -184,8 +184,8 @@ export default {
       // eslint-disable-next-line handle-callback-err
       }, (err) => {
         Message({
-          message: 'No se pudo completar la operación.',
-          type: 'error',
+          message: 'Revise que se hayan registrado valores desde el gestor.',
+          type: 'warning',
           duration: 5 * 1000
         })
         this.loading = false
@@ -223,12 +223,7 @@ export default {
 </script>
 
 <style lang="scss">
-  .dialog-component .el-dialog__header {
-    padding-left: 5em;
-    background-image: url('../../../../../assets/logo_buho.png');
-    background-repeat: no-repeat;
-    background-size: 38px 42px;
-    background-position-x: 1.5em;
-    background-position-y: 0.5em;
+  .card-header .el-card__header {
+    background: #F2F6FC;
   }
 </style>

@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import 'element-ui/lib/theme-chalk/display.css'
+// import 'element-ui/lib/theme-chalk/display.css'
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import { getNToleranciaMes } from '@/api/tarifarito/gestor/nTolerancia'
@@ -164,6 +164,8 @@ export default {
             type: 'warning',
             duration: 5 * 1000
           })
+          this.closeViewComponent()
+          this.closeViewGridHistorico()
         }
       // eslint-disable-next-line handle-callback-err
       }, (err) => {

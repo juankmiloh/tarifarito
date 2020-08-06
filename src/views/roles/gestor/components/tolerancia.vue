@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>NIVEL DE TOLERANCIA</b>
@@ -246,7 +246,7 @@ export default {
 		text-align: center;
 	}
 
-  .el-card__header {
+  .card-header .el-card__header {
     background: #F2F6FC;
   }
 

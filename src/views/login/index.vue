@@ -68,7 +68,7 @@
       </el-form>
     </el-main>
 
-    <div class="footer">
+    <div class="footer-login">
       <span class="textoFooter">
         SDEGC | CIAD - SUPERSERVICIOS ©&nbsp;2020
       </span>
@@ -119,7 +119,6 @@ export default {
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {},
       cardStyle: {
@@ -130,7 +129,8 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
-        const query = route.query
+        // const query = route.query // Captura la ruta anterior
+        const query = { redirect: '/dashboard' }
         if (query) {
           this.redirect = query.redirect
           this.otherQuery = this.getOtherQuery(query)
@@ -186,7 +186,7 @@ export default {
             .dispatch('user/login', this.loginForm)
             .then(() => {
               this.$router.push({ path: this.redirect || '/' })
-              // this.loading = false
+              this.loading = false
             })
             .catch(() => {
               this.loading = false
@@ -230,7 +230,7 @@ export default {
     height: auto;
   }
 
-  .footer {
+  .footer-login {
 		background-color: #304156;
 		position: fixed;
 		left: 0;

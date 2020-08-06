@@ -17,7 +17,7 @@
       </el-col>
     </el-row>
 
-    <el-card class="box-card">
+    <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
           <b>ÍNDICES DANE</b>
@@ -136,7 +136,7 @@ export default {
       loadingLoad: false,
       loadingModify: false,
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
-      optionsAno: CONSTANTS.optionsAno,
+      optionsAno: CONSTANTS.optionsAnoDane,
       optionsMes: CONSTANTS.optionsMes,
       value1: '',
       value2: '',
@@ -281,7 +281,11 @@ export default {
 
 	.cont-row {
 		text-align: center;
-	}
+  }
+
+  .card-header .el-card__header {
+    background: #F2F6FC;
+  }
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {

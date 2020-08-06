@@ -111,19 +111,19 @@
       <el-row style="padding-left: 2.5em;">
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>TARIFARITO {{ ntprop }} $/kWh</b>
+            <b>Cpte. TARIFARITO {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="cpteCalculado" type="number" style="width: 39%;" readonly />
         </el-col>
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>Publicado {{ ntprop }} $/kWh</b>
+            <b>Cpte. publicado {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="cptePublicado" type="number" style="width: 39%;" readonly />
         </el-col>
         <el-col :span="8" style="border: 0px solid yellow;">
           <span>
-            <b>Calculado revisión {{ ntprop }} $/kWh</b>
+            <b>Cpte. calculado revisión {{ ntprop }} $/kWh</b>
           </span>
           <el-input v-model="valuePruebas" type="text" style="width: 39%;" readonly />
         </el-col>
@@ -385,19 +385,19 @@ export default {
 
         campo16 = (parseFloat(this.values['c1_2'].values) * (parseFloat(this.values['c10_2'].values) / 100 + parseFloat(this.values['c9_2'].values))) / (1 - (parseFloat(this.values['c10_2'].values) / 100 + parseFloat(this.values['c9_2'].values)))
 
-        campo20 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c10_2'].values)) / (1 - parseFloat(this.values['c10_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
+        campo20 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c10_2'].values) / 100) / (1 - parseFloat(this.values['c10_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
 
         campo17 = (parseFloat(this.values['c1_2'].values) * (parseFloat(this.values['c11_2'].values) / 100 + parseFloat(this.values['c9_2'].values))) / (1 - (parseFloat(this.values['c11_2'].values) / 100 + parseFloat(this.values['c9_2'].values)))
 
-        campo21 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c11_2'].values)) / (1 - parseFloat(this.values['c11_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
+        campo21 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c11_2'].values) / 100) / (1 - parseFloat(this.values['c11_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
 
         campo18 = (parseFloat(this.values['c1_2'].values) * (parseFloat(this.values['c12_2'].values) / 100 + parseFloat(this.values['c9_2'].values))) / (1 - (parseFloat(this.values['c12_2'].values) / 100 + parseFloat(this.values['c9_2'].values)))
 
-        campo22 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c12_2'].values)) / (1 - parseFloat(this.values['c12_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
+        campo22 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c12_2'].values) / 100) / (1 - parseFloat(this.values['c12_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
 
         campo19 = (parseFloat(this.values['c1_2'].values) * (parseFloat(this.values['c13_2'].values) / 100 + parseFloat(this.values['c9_2'].values))) / (1 - (parseFloat(this.values['c13_2'].values) / 100 + parseFloat(this.values['c9_2'].values)))
 
-        campo23 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c13_2'].values)) / (1 - parseFloat(this.values['c13_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
+        campo23 = (parseFloat(this.values['c14_2'].values) * parseFloat(this.values['c13_2'].values) / 100) / (1 - parseFloat(this.values['c13_2'].values) / 100) + parseFloat(this.values['c15_2'].values)
 
         campo24 = parseFloat(this.values['c16_2'].values) + parseFloat(this.values['c20_2'].values)
 
@@ -560,19 +560,6 @@ export default {
 
 	.dialog-class .el-dialog__header {
 		border-radius: 10px 10px 0px 0px;
-	}
-
-	.footer {
-		border-top: 1px solid #c0c4cc;
-		position: fixed;
-		left: 0;
-		bottom: 0;
-		width: 100%;
-		// background-color: #f2f6fc;
-		background-color: #e0f2f1;
-		padding: 1em;
-		// color: white;
-		// text-align: center;
 	}
 
 	// Pantallas superiores a 800px (PC)
