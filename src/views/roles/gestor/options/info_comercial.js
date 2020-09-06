@@ -20,7 +20,7 @@ const componentsIComercial = [{
         precision: 2,
         step: 0.01,
         min: 0,
-        max: 100
+        max: 1000000000000
     },
     {
         key: 2,
@@ -31,7 +31,7 @@ const componentsIComercial = [{
         precision: 2,
         step: 0.01,
         min: 0,
-        max: 100
+        max: 1000000000000
     },
     {
         key: 3,
@@ -42,7 +42,7 @@ const componentsIComercial = [{
         precision: 2,
         step: 0.01,
         min: 0,
-        max: 100
+        max: 1000000000000
     },
     {
         key: 4,
@@ -53,7 +53,7 @@ const componentsIComercial = [{
         precision: 2,
         step: 0.01,
         min: 0,
-        max: 100
+        max: 1000000000000
     },
     {
         key: 5,
@@ -64,7 +64,7 @@ const componentsIComercial = [{
         precision: 2,
         step: 0.01,
         min: 0,
-        max: 100
+        max: 1000000000000
     }
 ];
 

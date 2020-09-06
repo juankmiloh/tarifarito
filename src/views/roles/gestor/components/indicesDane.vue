@@ -64,7 +64,7 @@
             :precision="2"
             :step="0.01"
             :min="0"
-            :max="100"
+            :max="200"
             class="input-number"
             @change="verifyVariable('input_variable')"
           />
@@ -78,7 +78,7 @@
             :precision="2"
             :step="0.01"
             :min="0"
-            :max="100"
+            :max="200"
             class="input-number"
             @change="verifyVariable('input_variable')"
           />

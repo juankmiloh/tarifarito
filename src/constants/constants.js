@@ -168,17 +168,25 @@ export const CONSTANTS = {
             label: 'P',
             prop: 'component_p'
         },
+        // {
+        //     label: 'Dtun',
+        //     prop: 'component_dtun'
+        // },
         {
             label: 'D',
-            prop: 'component_dtun'
+            prop: 'component_d'
         },
-        // {
-        //     label: 'R',
-        //     prop: 'component_r'
-        // },
-        // {
-        //     label: 'C',
-        //     prop: 'component_c'
-        // }
+        {
+            label: 'R',
+            prop: 'component_r'
+        },
+        {
+            label: 'C',
+            prop: 'component_c'
+        },
+        {
+            label: 'CU',
+            prop: 'component_cu'
+        },
     ]
 };
