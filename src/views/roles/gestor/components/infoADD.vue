@@ -20,23 +20,13 @@
     <el-card class="box-card card-header">
       <div slot="header" class="clearfix">
         <span class="text-page">
-          <b>PÉRDIDAS REFERIDAS AL STN</b>
+          <b>INFORMACIÓN ÁREAS DE DISTRIBUCIÓN</b>
         </span>
       </div>
-      <el-row :gutter="10" style="text-align: center;">
-        <!-- <el-col :sm="24" :md="12" class="cont-col-right">
-          <el-select v-model="value1" placeholder="Año" class="select" @change="verifyVariable($event)">
-            <el-option
-              v-for="item in optionsAno"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-col> -->
-        <el-col :sm="24" :md="24">
+      <el-row :gutter="10">
+        <el-col :sm="24" :md="24" style="text-align: center;">
           <el-select
-            v-model="value2"
+            v-model="value1"
             filterable
             placeholder="Mercado"
             class="select-style"
@@ -55,31 +45,27 @@
 
     <el-card class="box-card margin-card">
       <el-row class="cont-row">
-        <el-col v-for="(item, index) in components" :key="item.id" :sm="24" :md="24">
-          <el-row :class="index != 0 ? 'cont-input' : ''">
+        <el-col :sm="24" :md="24">
+          <el-row class="cont-input">
             <el-col :sm="24" :md="24">
               <el-tooltip
-                v-if="item.tooltip !== ''"
-                class="item"
                 effect="dark"
-                :content="item.tooltip"
+                content="Corresponde al nombre del área de Distribución. 1= CENTRO. 2 = OCCIDENTE. 3 = ORIENTE. 4 = SUR."
                 placement="top"
               >
                 <i class="el-icon-info" style="color: #304156;" />
               </el-tooltip>
-              <label>{{ item.title }}</label>
+              <label>ADD</label>
             </el-col>
             <el-col :sm="24" :md="24" class="input-padding">
-              <el-input-number
-                v-model="values[index]"
-                :disabled="disableVariable"
-                :precision="item.precision"
-                :step="item.step"
-                :min="item.min"
-                :max="item.max"
-                :class="item.class"
-                @change="verifyVariable('input_variable')"
-              />
+              <el-select v-model="valueADD" :disabled="disableSelect" placeholder="ADD" class="select" @change="verifyVariable('input_variable')">
+                <el-option
+                  v-for="add in optionsADD"
+                  :key="add.value"
+                  :label="add.label"
+                  :value="add.value"
+                />
+              </el-select>
             </el-col>
           </el-row>
         </el-col>
@@ -127,47 +113,40 @@
 import { mapGetters } from 'vuex'
 import BackToTop from '@/components/BackToTop'
 import { Message } from 'element-ui'
-import { CONSTANTS } from './../../../../constants/constants'
-import d097_resolucion from './../options/perdidasSTN'
+import { CONSTANTS } from '../../../../constants/constants'
 import {
-  getPerdidasSTNList,
-  getPerdidasSTN,
-  putPerdidasSTN,
-  postPerdidasSTN
-} from '@/api/tarifarito/gestor/perdidasSTN'
+  getInfoADDList,
+  getInfoADD,
+  putInfoADD,
+  postInfoADD
+} from '@/api/tarifarito/gestor/InfoADD'
 import { getSUIMercadosList } from '@/api/tarifarito/sui-mercados'
 
 export default {
-  name: 'ViewPerdidasSTN',
+  name: 'ViewInfoADD',
   components: { BackToTop },
   data() {
-    // this.getList()
     this.getMercadosList()
     return {
-      components: d097_resolucion,
       disableLoad: true,
       disableModify: true,
       disableVariable: true,
       disableSelect: true,
       loadingLoad: false,
       loadingModify: false,
+      dialogFormVisible: false,
+      dialogVisible: false,
       myBackToTopStyle: CONSTANTS.myBackToTopStyle,
-      optionsAno: CONSTANTS.optionsAno,
       optionsMercado: [],
-      value1: 0,
-      value2: '',
+      value1: '',
       date: new Date(),
-      values: [],
+      optionsADD: CONSTANTS.optionsADD,
+      valueADD: '',
       model: {}
     }
   },
   computed: {
     ...mapGetters(['name', 'roles'])
-  },
-  created() {
-    this.components.forEach((element, index) => {
-      this.values[index] = 0
-    })
   },
   methods: {
     async getMercadosList() {
@@ -176,132 +155,60 @@ export default {
         this.optionsMercado = JSON.parse(JSON.stringify(response))
       })
     },
-    async getList() {
-      await getPerdidasSTNList().then(response => {
-        console.log(response)
-      })
-    },
     async verifyVariable(evt) {
-      // console.log(evt)
-      // if (this.value1) {
-      //   this.disableSelect = false
-      // }
-      await getPerdidasSTN(this.value1).then(response => {
-        console.log(response)
-        if (response.length > 0 && this.value2 !== '') {
-          const mercado = `m_${this.value2}`
-          console.log('Mercado: ', mercado)
-          // console.log('Response: ', response[0].mercados)
-          const arrayMercados = response[0].mercados
-          if (arrayMercados.hasOwnProperty(mercado)) {
-            if (evt !== 'input_variable') {
-              console.log('La tiene: ', arrayMercados[mercado])
-              const length = arrayMercados[mercado].length - 1
-              console.log('length: ', length)
-              const objValues = arrayMercados[mercado][length]
-              console.log('element: ', objValues)
-              this.values[0] = objValues.pr1_2
-              this.values[1] = objValues.pr1
-              this.values[2] = objValues.pr2
-              this.values[3] = objValues.pr3
-              this.values[4] = objValues.pr4
-              this.disableVariable = false
-              this.disableLoad = true
-              this.disableModify = false
-            } else {
-              this.disableModify = false
-            }
-          } else {
-            if (evt !== 'input_variable') {
-              this.disableVariable = false
-              this.disableLoad = false
-              this.disableModify = true
-              this.values[0] = 0
-              this.values[1] = 0
-              this.values[2] = 0
-              this.values[3] = 0
-              this.values[4] = 0
-            }
-          }
-        } else if (response.length === 0 && this.value2 !== '') {
+      const mercado = this.value1
+      await getInfoADD(mercado).then(response => {
+        this.disableSelect = false
+        if (response) {
           if (evt !== 'input_variable') {
-            this.disableVariable = false
-            this.disableLoad = false
+            // console.log('Response: ', response)
+            this.valueADD = response[0].add
+            this.disableLoad = true
+            this.disableModify = false
+          } else {
+            this.disableModify = false
+          }
+        } else {
+          if (evt !== 'input_variable') {
+            this.valueADD = ''
+            this.disableLoad = true
             this.disableModify = true
-            this.values[0] = 0
-            this.values[1] = 0
-            this.values[2] = 0
-            this.values[3] = 0
-            this.values[4] = 0
+          } else {
+            this.disableLoad = false
           }
         }
       })
     },
     async modifyVariable() {
       this.loadingModify = true
-      const anio = this.value1
-      const mercado = `m_${this.value2}`
+      const mercado = this.value1
       const model = {
         usuario: this.name,
         fecha_modif: this.date,
-        pr1_2: this.values[0],
-        pr1: this.values[1],
-        pr2: this.values[2],
-        pr3: this.values[3],
-        pr4: this.values[4]
+        add: this.valueADD
       }
-      await putPerdidasSTN(anio, mercado, model).then(response => {
-        this.disableModify = true
+      await putInfoADD(mercado, model).then(response => {
         Message({
           message: 'Registros actualizados con éxito!',
           type: 'success',
           duration: 2 * 1000
         })
+        this.disableModify = true
         this.loadingModify = false
       })
     },
     async saveVariable() {
       this.loadingLoad = true
-      const anio = parseInt(this.value1)
-      const mercado = `m_${this.value2}`
-      await getPerdidasSTN(this.value1).then(async response => {
-        if (response.length === 0) {
-          const model = {
-            anio: anio,
-            mercados: {
-              [mercado]: [
-                {
-                  usuario: this.name,
-                  fecha_modif: this.date,
-                  pr1_2: this.values[0],
-                  pr1: this.values[1],
-                  pr2: this.values[2],
-                  pr3: this.values[3],
-                  pr4: this.values[4]
-                }
-              ]
-            }
-          }
-          await postPerdidasSTN(model).then(response => {
-            this.loadingLoad = false
-            this.disableLoad = true
-            Message({
-              message: 'Registros guardados con éxito!',
-              type: 'success',
-              duration: 2 * 1000
-            })
-          })
-        } else {
+      const mercado = this.value1
+      await getInfoADDList().then(async response => {
+        // Si ya existe el documento lo actualiza
+        if (response.length !== 0) {
           const model = {
             usuario: this.name,
             fecha_modif: this.date,
-            pr1_2: this.values[0],
-            pr1: this.values[1],
-            pr2: this.values[2],
-            pr3: this.values[3],
-            pr4: this.values[4]
+            add: this.valueADD
           }
-          await putPerdidasSTN(anio, mercado, model).then(response => {
+          await putInfoADD(mercado, model).then(response => {
             Message({
               message: 'Registros guardados con éxito!',
               type: 'success',
@@ -310,6 +217,29 @@ export default {
           })
           this.loadingLoad = false
           this.disableLoad = true
+        } else {
+          // Si no existe el documento lo crea
+          const model = {
+            key: 0,
+            mercados: {
+              [`m_${mercado}`]: [
+                {
+                  usuario: this.name,
+                  fecha_modif: this.date,
+                  add: this.valueADD
+                }
+              ]
+            }
+          }
+          await postInfoADD(model).then(response => {
+            this.loadingLoad = false
+            this.disableLoad = true
+            Message({
+              message: 'Registros guardados con éxito!',
+              type: 'success',
+              duration: 2 * 1000
+            })
+          })
         }
       })
     }
@@ -336,6 +266,14 @@ export default {
 
 	.dialog-style {
 		border: 1px solid red;
+	}
+
+  .dialog-class {
+    border-radius: 10px;
+  }
+
+  .dialog-class .el-dialog__header {
+    border-radius: 10px 10px 0px 0px;
   }
 
   .card-header .el-card__header {
@@ -344,11 +282,11 @@ export default {
 
 	// Pantallas superiores a 800px (PC)
 	@media screen and (min-width: 800px) {
-		.div-cont {
-			padding-top: 1.5em;
-			padding-left: 3em;
-			padding-right: 3em;
-		}
+    .div-cont {
+      padding-top: 1.5em;
+      padding-left: 3em;
+      padding-right: 3em;
+    }
 
 		.text-header {
 			font-size: x-large;
@@ -380,22 +318,23 @@ export default {
 
 		.cont-input {
 			padding-top: 1.5em;
+			padding-bottom: 1.5em;
 		}
 
 		.input-select {
 			width: 13em;
 		}
 
-		.select-style {
-			width: 17em;
-		}
+    .select-style {
+      width: 13em;
+    }
 	}
 
 	// Pantallas inferiores a 800px (mobile)
 	@media screen and (max-width: 800px) {
-		.div-cont {
-			padding: 1em;
-		}
+    .div-cont {
+      padding: 1em;
+    }
 
 		.text-header {
 			font-size: small;
@@ -437,8 +376,14 @@ export default {
 			width: 21%;
 		}
 
-		.select-style {
-			width: 100%;
-		}
+    .select-style {
+      width: 100%;
+    }
+
+    .select-popper {
+      li {
+        font-size: 0.45em;
+      }
+    }
 	}
 </style>

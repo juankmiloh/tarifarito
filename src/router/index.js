@@ -246,7 +246,6 @@ export const asyncRoutes = [{
             meta: { title: 'Información Comercial', icon: 'clipboard', noCache: false, roles: ['gestor'] }
         }]
     },
-
     {
         path: '/D097',
         component: Layout,
@@ -277,7 +276,6 @@ export const asyncRoutes = [{
             ]
         }]
     },
-
     {
         path: '/perdidas',
         component: Layout,
@@ -289,7 +287,17 @@ export const asyncRoutes = [{
             meta: { title: 'Pérdidas STN', icon: 'example', noCache: true, roles: ['gestor'] }
         }]
     },
-
+    {
+        path: '/infoADD',
+        component: Layout,
+        children: [{
+            path: 'info-ADD',
+            component: () =>
+                import ('@/views/roles'),
+            name: 'info-ADD',
+            meta: { title: 'Información ADD', icon: 'clipboard', noCache: true, roles: ['gestor'] }
+        }]
+    },
     // vistas revisor
     {
         path: '/verificacion',

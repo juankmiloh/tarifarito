@@ -11,6 +11,7 @@ import viewInfoComercial from './components/infoComercial'
 import viewResolucion from './components/infoD097/resolucion'
 import viewError from './components/infoD097/error'
 import viewPerdidas from './components/perdidasSTN'
+import viewInfoADD from './components/infoADD'
 import {
   getNToleranciaList
 } from '@/api/tarifarito/gestor/nTolerancia'
@@ -23,7 +24,8 @@ export default {
     viewInfoComercial,
     viewResolucion,
     viewError,
-    viewPerdidas
+    viewPerdidas,
+    viewInfoADD
   },
   data() {
     // this.getListNTolerancia()
@@ -50,6 +52,8 @@ export default {
       this.currentView = 'viewError'
     } else if (view === '/perdidas/perdidas-stn') {
       this.currentView = 'viewPerdidas'
+    } else if (view === '/infoADD/info-ADD') {
+      this.currentView = 'viewInfoADD'
     }
   },
   methods: {

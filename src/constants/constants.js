@@ -168,13 +168,13 @@ export const CONSTANTS = {
             label: 'P',
             prop: 'component_p'
         },
-        // {
-        //     label: 'Dtun',
-        //     prop: 'component_dtun'
-        // },
         {
             label: 'D',
             prop: 'component_d'
+        },
+        {
+            label: 'Dtun',
+            prop: 'component_dtun'
         },
         {
             label: 'R',
@@ -187,6 +187,27 @@ export const CONSTANTS = {
         {
             label: 'CU',
             prop: 'component_cu'
+        }
+    ],
+    optionsADD: [{
+            label: '0 - Sin ADD',
+            value: 0
         },
+        {
+            label: '1 - Centro',
+            value: 1
+        },
+        {
+            label: '2 - Occidente',
+            value: 2
+        },
+        {
+            label: '3 - Oriente',
+            value: 3
+        },
+        {
+            label: '4 - Sur',
+            value: 4
+        }
     ]
 };

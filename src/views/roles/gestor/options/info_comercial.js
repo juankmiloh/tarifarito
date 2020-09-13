@@ -1,17 +1,6 @@
 /* jshint esversion: 6 */
 /* eslint-disable */
 const componentsIComercial = [{
-        key: 0,
-        title: 'Factor de productividad',
-        tooltip: 'Factor de productividad acumulado.',
-        type: 'number',
-        class: 'input-number',
-        precision: 2,
-        step: 0.01,
-        min: 0,
-        max: 100
-    },
-    {
         key: 1,
         title: 'RCNU',
         tooltip: 'Prima de riesgo de cartera.',
