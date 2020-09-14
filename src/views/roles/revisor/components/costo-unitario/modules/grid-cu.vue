@@ -75,6 +75,15 @@
                   @click="handleClickComponent(scope.$index, scope.row, componente.value)"
                 />
                 <el-button
+                  v-else-if="(componente.cpte_publicado - componente.cpte_calculado < 0
+                    && componente.cpte_publicado - componente.cpte_calculado <= -tolerancia)"
+                  slot="reference"
+                  type="warning"
+                  icon="el-icon-check"
+                  circle
+                  @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                />
+                <el-button
                   v-else
                   slot="reference"
                   type="danger"
