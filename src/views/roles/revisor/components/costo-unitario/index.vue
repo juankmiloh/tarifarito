@@ -96,6 +96,20 @@
     >
       <component :is="currentView" :msgviewparent="dataVerifyCu" @clicked="onClickChild" />
     </el-dialog>
+
+    <!-- Se carga vista de loading -->
+
+    <el-dialog
+      :visible.sync="dialogLoadingVisible"
+      custom-class="dialog-loading"
+      center
+      :destroy-on-close="true"
+      :show-close="false"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <component :is="loadingView" />
+    </el-dialog>
   </div>
 </template>
 
@@ -103,6 +117,7 @@
 import { mapGetters } from 'vuex'
 import { Message } from 'element-ui'
 import gridCu from './modules/grid-cu'
+import PageLoading from '@/views/load-page/pageLoading'
 import { CONSTANTS } from '../../../../../constants/constants'
 import {
   getCUnitarioEmpresa
@@ -112,7 +127,8 @@ import { getSUIEmpresasList } from '@/api/tarifarito/sui-empresas'
 export default {
   name: 'ViewCostoUnitario',
   components: {
-    gridCu
+    gridCu,
+    PageLoading
   },
   data() {
     this.getEmpresasList()
@@ -120,8 +136,10 @@ export default {
       disableLoad: true,
       dataVerifyCu: {},
       currentView: null,
+      loadingView: 'PageLoading',
       loading: false,
       dialogFormVisible: false,
+      dialogLoadingVisible: false,
       optionsAno: CONSTANTS.optionsAno,
       optionsMes: CONSTANTS.optionsMes,
       loadingEmp: true,
@@ -156,6 +174,7 @@ export default {
         })
     },
     async verifyCU() {
+      this.dialogLoadingVisible = true
       this.loading = true
       this.tableData = []
       await getCUnitarioEmpresa(
@@ -173,6 +192,7 @@ export default {
           this.dataVerifyCu.data = response
           this.title_modulo = this.getEmpresa(this.value_empresa) + ' | Consulta costo unitario'
           this.dialogFormVisible = true
+          this.dialogLoadingVisible = false
           this.currentView = 'gridCu'
         } else {
           Message({
@@ -189,8 +209,10 @@ export default {
           duration: 5 * 1000
         })
         this.loading = false
+        this.dialogLoadingVisible = false
       })
       this.loading = false
+      this.dialogLoadingVisible = false
     },
     verifyField(evt) {
       if (this.value_ano && this.value_mes && this.value_empresa) {
@@ -226,4 +248,17 @@ export default {
   .card-header .el-card__header {
     background: #F2F6FC;
   }
+
+  .dialog-loading {
+    border-radius: 10px;
+    background: white;
+  }
+
+  .dialog-loading .el-dialog__header {
+    display: none;
+  }
+
+  .dialog-loading .el-dialog__header {
+		background-color: white;
+	}
 </style>
