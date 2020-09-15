@@ -33,8 +33,8 @@ export default {
   methods: {
     selectImg() {
       const arrayImg = [chaman, cavernicola, highvern, preview, statistics, wykres]
-      const random = 0
-      // const random = Math.round(this.getRandomArbitrary(0, arrayImg.length - 1))
+      // const random = 0
+      const random = Math.round(this.getRandomArbitrary(0, arrayImg.length - 1))
       this.errGif = arrayImg[random]
     },
     getRandomArbitrary(min, max) {
