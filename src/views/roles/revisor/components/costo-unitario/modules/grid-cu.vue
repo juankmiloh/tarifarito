@@ -184,7 +184,7 @@ export default {
       dialogComponentP: false,
       radioCreg: '',
       componentSelect: {},
-      colComponentes: CONSTANTS.columnComponents,
+      colComponentes: '',
       tolerancia: 0.5
     }
   },
@@ -198,12 +198,21 @@ export default {
     async initView() {
       console.log('DATAPARENT -> ', this.msgviewparent)
       this.tableData = this.msgviewparent.data
+      this.createColCptes()
       this.nombre_empresa = this.msgviewparent.empresa
       this.value_ano = this.msgviewparent.ano
       this.value_mes = this.msgviewparent.mes
       await getNToleranciaMes(this.value_ano, this.value_mes).then((response) => {
         this.tolerancia = response[0].n_tolerancia
       })
+    },
+    createColCptes() {
+      const columnComponents = []
+      for (const key in this.tableData[0]['componentes'][0]) {
+        const cpte = key.split('_')[1].toUpperCase()
+        columnComponents.push({ label: cpte, prop: key })
+      }
+      this.colComponentes = columnComponents
     },
     handleClickComponent(index, row, component) {
       row.ano = this.value_ano

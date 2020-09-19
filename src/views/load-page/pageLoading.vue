@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import chaman from '@/assets/loading_images/indio.gif'
+import dhalsim from '@/assets/loading_images/indio.gif'
 import cavernicola from '@/assets/loading_images/cavernicola.gif'
 import highvern from '@/assets/loading_images/highvern.gif'
 import preview from '@/assets/loading_images/preview.gif'
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     selectImg() {
-      const arrayImg = [chaman, cavernicola, highvern, preview, statistics, wykres]
+      const arrayImg = [dhalsim, cavernicola, highvern, preview, statistics, wykres]
       // const random = 0
       const random = Math.round(this.getRandomArbitrary(0, arrayImg.length - 1))
       this.errGif = arrayImg[random]
