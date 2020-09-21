@@ -43,45 +43,98 @@
           align="center"
         >
           <template slot-scope="scope">
-            <div v-for="componente in scope.row.componentes[0][column.prop]" :key="componente.value">
+            <!-- {{ scope.row.tarifas[0][column.prop] }} -->
+            <div v-for="tarifa in scope.row.tarifas[0][column.prop]" :key="tarifa.value">
               <el-popover placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
                 <div class="text_popover">Tarifarito informa</div>
                 <div style="padding-top: 1em; text-align: center;">
-                  <label>{{ componente.label_publicado }}</label>
-                  <span>&nbsp;${{ componente.cpte_publicado.toFixed(5) }}</span>
+                  <label>{{ tarifa.label_anterior }}</label>
+                  <span>&nbsp;${{ tarifa.tarifa_mes_anterior.toFixed(5) }}</span>
+                </div>
+                <div style="padding-top: 1em; text-align: center;">
+                  <label>{{ tarifa.label_publicado }}</label>
+                  <span>&nbsp;${{ tarifa.tarifa_publicada.toFixed(5) }}</span>
                 </div>
                 <div style="text-align: center;">
-                  <label>{{ componente.label_calculado }}</label>
-                  <span>&nbsp;${{ componente.cpte_calculado.toFixed(5) }}</span>
+                  <label>{{ tarifa.label_calculado }}</label>
+                  <span>&nbsp;${{ tarifa.tarifa_calculada.toFixed(5) }}</span>
                 </div>
                 <div style="text-align: center;">
                   <label>Diferencia:</label>
                   <span
-                    v-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) == 0"
+                    v-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) == 0"
                   >$0</span>
                   <span
-                    v-else-if="parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) != 0"
-                  >${{ parseFloat(componente.cpte_publicado - componente.cpte_calculado).toFixed(5) }}</span>
+                    v-else-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) != 0"
+                  >${{ parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) }}</span>
                 </div>
                 <el-button
-                  v-if="(componente.cpte_publicado - componente.cpte_calculado >= 0
-                    && componente.cpte_publicado - componente.cpte_calculado <= tolerancia)
-                    || (componente.cpte_publicado - componente.cpte_calculado < 0
-                    && componente.cpte_publicado - componente.cpte_calculado >= -tolerancia)"
+                  v-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada >= 0
+                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= tolerancia)
+                    || (tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
+                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada >= -tolerancia)"
                   slot="reference"
                   type="success"
                   icon="el-icon-check"
                   circle
-                  @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
                 />
                 <el-button
-                  v-else-if="(componente.cpte_publicado - componente.cpte_calculado < 0
-                    && componente.cpte_publicado - componente.cpte_calculado <= -tolerancia)"
+                  v-else-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
+                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= -tolerancia)"
                   slot="reference"
                   type="warning"
                   icon="el-icon-check"
                   circle
+                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                />
+                <el-button
+                  v-else
+                  slot="reference"
+                  type="danger"
+                  icon="el-icon-close"
+                  circle
                   @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                />
+              </el-popover>
+              <el-popover v-if="tarifa.value === 'estrato1' || tarifa.value === 'estrato2' || tarifa.value === 'estrato3'" placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
+                <div class="text_popover">Tarifarito informa</div>
+                <div style="padding-top: 1em; text-align: center;">
+                  <label>{{ tarifa.lbl_porcen_publicado }}</label>
+                  <span>&nbsp;{{ tarifa.por_subsidio_publicado.toFixed(2) }}%</span>
+                </div>
+                <div style="text-align: center;">
+                  <label>{{ tarifa.lbl_porcen_calculado }}</label>
+                  <span>&nbsp;{{ tarifa.por_subsidio_calculado.toFixed(2) }}%</span>
+                </div>
+                <div style="text-align: center;">
+                  <label>Diferencia:</label>
+                  <span
+                    v-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) == 0"
+                  >0%</span>
+                  <span
+                    v-else-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) != 0"
+                  >{{ parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) }}%</span>
+                </div>
+                <el-button
+                  v-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= 0
+                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= tolerancia)
+                    || (tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
+                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= -tolerancia)"
+                  slot="reference"
+                  type="success"
+                  icon="el-icon-check"
+                  circle
+                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                />
+                <el-button
+                  v-else-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
+                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= -tolerancia)"
+                  slot="reference"
+                  type="warning"
+                  icon="el-icon-check"
+                  circle
+                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
                 />
                 <el-button
                   v-else
@@ -135,13 +188,13 @@
 import 'element-ui/lib/theme-chalk/display.css'
 import { mapGetters } from 'vuex'
 import logTarifarito from '../../../../../../assets/logo_buho.png'
-import viewG from './component-g.vue'
-import viewT from './component-t.vue'
-import ViewP from './component-p'
-import viewDtun from './component-dtun.vue'
-import viewR from './component-r.vue'
-import viewC from './component-c.vue'
-import viewCu from './component-cu.vue'
+// import viewG from './component-g.vue'
+// import viewT from './component-t.vue'
+// import ViewP from './component-p'
+// import viewDtun from './component-dtun.vue'
+// import viewR from './component-r.vue'
+// import viewC from './component-c.vue'
+// import viewCu from './component-cu.vue'
 import componentsTable from '../options/componentsTable'
 import { getNToleranciaMes } from '@/api/tarifarito/gestor/nTolerancia'
 
@@ -150,13 +203,13 @@ import { CONSTANTS } from '../../../../../../constants/constants'
 export default {
   closename: 'ViewGridCu',
   components: {
-    viewG,
-    viewT,
-    ViewP,
-    viewDtun,
-    viewR,
-    viewC,
-    viewCu
+    // viewG,
+    // viewT,
+    // ViewP,
+    // viewDtun,
+    // viewR,
+    // viewC,
+    // viewCu
   },
   props: {
     msgviewparent: {
@@ -207,10 +260,11 @@ export default {
       })
     },
     createColCptes() {
+      // console.log('this.tableData > ', this.tableData[0]['tarifas'][0])
       const columnComponents = []
-      for (const key in this.tableData[0]['componentes'][0]) {
-        const cpte = key.split('_')[1].toUpperCase()
-        columnComponents.push({ label: cpte, prop: key })
+      for (const key in this.tableData[0]['tarifas'][0]) {
+        // const cpte = key.split('_')[1].toUpperCase()
+        columnComponents.push({ label: key, prop: key })
       }
       this.colComponentes = columnComponents
     },

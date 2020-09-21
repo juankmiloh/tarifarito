@@ -317,29 +317,29 @@ export const asyncRoutes = [{
                 name: 'costo-unitario',
                 meta: { title: 'Costo Unitario', icon: 'example', noCache: true, roles: ['revisor'] }
             },
-            {
-                path: 'componentes',
-                component: () =>
-                    import ('@/views/roles'), // Parent router-view
-                name: 'componentes',
-                meta: { title: 'Componentes', icon: 'nested', roles: ['revisor'] },
-                redirect: '#',
-                children: [{
-                        path: 'd097',
-                        component: () =>
-                            import ('@/views/roles'),
-                        name: 'd097',
-                        meta: { title: 'D - CREG 097', icon: 'clipboard', roles: ['revisor'] }
-                    },
-                    {
-                        path: 'd015',
-                        component: () =>
-                            import ('@/views/roles'),
-                        name: 'd015',
-                        meta: { title: 'D - CREG 015', icon: 'clipboard', roles: ['revisor'] }
-                    }
-                ]
-            }
+            // {
+            //     path: 'componentes',
+            //     component: () =>
+            //         import ('@/views/roles'), // Parent router-view
+            //     name: 'componentes',
+            //     meta: { title: 'Componentes', icon: 'nested', roles: ['revisor'] },
+            //     redirect: '#',
+            //     children: [{
+            //             path: 'd097',
+            //             component: () =>
+            //                 import ('@/views/roles'),
+            //             name: 'd097',
+            //             meta: { title: 'D - CREG 097', icon: 'clipboard', roles: ['revisor'] }
+            //         },
+            //         {
+            //             path: 'd015',
+            //             component: () =>
+            //                 import ('@/views/roles'),
+            //             name: 'd015',
+            //             meta: { title: 'D - CREG 015', icon: 'clipboard', roles: ['revisor'] }
+            //         }
+            //     ]
+            // }
         ]
     },
     {

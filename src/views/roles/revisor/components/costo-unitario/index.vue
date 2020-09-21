@@ -71,6 +71,7 @@
       <el-row :gutter="10">
         <el-col :sm="24" :md="24" style="text-align: center;">
           <el-button
+            round
             :disabled="disableLoad"
             type="success"
             icon="el-icon-check"
