@@ -32,9 +32,9 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" align="center" />
-        <el-table-column prop="id_mercado" label="ID Mercado" width="140" align="center" sortable />
+        <el-table-column prop="id_mercado" label="ID Mercado" width="125" align="center" sortable />
         <el-table-column prop="mercado" label="Mercado" width="180" align="center" sortable />
-        <el-table-column prop="nt_prop" label="NT - PROP" width="140" align="center" sortable />
+        <el-table-column prop="nt_prop" label="NT - PROP" width="130" align="center" sortable />
         <el-table-column
           v-for="column in colComponentes"
           :key="column.label"
@@ -42,111 +42,130 @@
           :prop="column.prop"
           align="center"
         >
-          <template slot-scope="scope">
-            <!-- {{ scope.row.tarifas[0][column.prop] }} -->
-            <div v-for="tarifa in scope.row.tarifas[0][column.prop]" :key="tarifa.value">
-              <el-popover placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
-                <div class="text_popover">Tarifarito informa</div>
-                <div style="padding-top: 1em; text-align: center;">
-                  <label>{{ tarifa.label_anterior }}</label>
-                  <span>&nbsp;${{ tarifa.tarifa_mes_anterior.toFixed(5) }}</span>
-                </div>
-                <div style="padding-top: 1em; text-align: center;">
-                  <label>{{ tarifa.label_publicado }}</label>
-                  <span>&nbsp;${{ tarifa.tarifa_publicada.toFixed(5) }}</span>
-                </div>
-                <div style="text-align: center;">
-                  <label>{{ tarifa.label_calculado }}</label>
-                  <span>&nbsp;${{ tarifa.tarifa_calculada.toFixed(5) }}</span>
-                </div>
-                <div style="text-align: center;">
-                  <label>Diferencia:</label>
-                  <span
-                    v-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) == 0"
-                  >$0</span>
-                  <span
-                    v-else-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) != 0"
-                  >${{ parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) }}</span>
-                </div>
-                <el-button
-                  v-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada >= 0
-                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= tolerancia)
-                    || (tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
-                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada >= -tolerancia)"
-                  slot="reference"
-                  type="success"
-                  icon="el-icon-check"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
-                />
-                <el-button
-                  v-else-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
-                    && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= -tolerancia)"
-                  slot="reference"
-                  type="warning"
-                  icon="el-icon-check"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
-                />
-                <el-button
-                  v-else
-                  slot="reference"
-                  type="danger"
-                  icon="el-icon-close"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, componente.value)"
-                />
-              </el-popover>
-              <el-popover v-if="tarifa.value === 'estrato1' || tarifa.value === 'estrato2' || tarifa.value === 'estrato3'" placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
-                <div class="text_popover">Tarifarito informa</div>
-                <div style="padding-top: 1em; text-align: center;">
-                  <label>{{ tarifa.lbl_porcen_publicado }}</label>
-                  <span>&nbsp;{{ tarifa.por_subsidio_publicado.toFixed(2) }}%</span>
-                </div>
-                <div style="text-align: center;">
-                  <label>{{ tarifa.lbl_porcen_calculado }}</label>
-                  <span>&nbsp;{{ tarifa.por_subsidio_calculado.toFixed(2) }}%</span>
-                </div>
-                <div style="text-align: center;">
-                  <label>Diferencia:</label>
-                  <span
-                    v-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) == 0"
-                  >0%</span>
-                  <span
-                    v-else-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) != 0"
-                  >{{ parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) }}%</span>
-                </div>
-                <el-button
-                  v-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= 0
-                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= tolerancia)
-                    || (tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
-                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= -tolerancia)"
-                  slot="reference"
-                  type="success"
-                  icon="el-icon-check"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
-                />
-                <el-button
-                  v-else-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
-                    && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= -tolerancia)"
-                  slot="reference"
-                  type="warning"
-                  icon="el-icon-check"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
-                />
-                <el-button
-                  v-else
-                  slot="reference"
-                  type="danger"
-                  icon="el-icon-close"
-                  circle
-                  @click="handleClickComponent(scope.$index, scope.row, componente.value)"
-                />
-              </el-popover>
-            </div>
-          </template>
+          <el-table-column
+            prop="tarifa"
+            label="Tarifa m"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <!-- {{ scope.row }} -->
+              <!-- {{ column.prop }} -->
+              <div v-for="tarifa in scope.row.tarifas[0][column.prop]" :key="tarifa.value">
+                <el-popover placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
+                  <div class="text_popover">Tarifarito informa</div>
+                  <div style="padding-top: 1em; text-align: center;">
+                    <label>{{ tarifa.label_anterior }}</label>
+                    <span>&nbsp;${{ tarifa.tarifa_mes_anterior.toFixed(5) }}</span>
+                  </div>
+                  <div style="padding-top: 1em; text-align: center;">
+                    <label>{{ tarifa.label_publicado }}</label>
+                    <span>&nbsp;${{ tarifa.tarifa_publicada.toFixed(5) }}</span>
+                  </div>
+                  <div style="text-align: center;">
+                    <label>{{ tarifa.label_calculado }}</label>
+                    <span>&nbsp;${{ tarifa.tarifa_calculada.toFixed(5) }}</span>
+                  </div>
+                  <div style="text-align: center;">
+                    <label>Diferencia:</label>
+                    <span
+                      v-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) == 0"
+                    >$0</span>
+                    <span
+                      v-else-if="parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) != 0"
+                    >${{ parseFloat(tarifa.tarifa_publicada - tarifa.tarifa_calculada).toFixed(5) }}</span>
+                  </div>
+                  <el-button
+                    v-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada >= 0
+                      && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= tolerancia)
+                      || (tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
+                      && tarifa.tarifa_publicada - tarifa.tarifa_calculada >= -tolerancia)"
+                    slot="reference"
+                    type="success"
+                    icon="el-icon-check"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                  />
+                  <el-button
+                    v-else-if="(tarifa.tarifa_publicada - tarifa.tarifa_calculada < 0
+                      && tarifa.tarifa_publicada - tarifa.tarifa_calculada <= -tolerancia)"
+                    slot="reference"
+                    type="warning"
+                    icon="el-icon-check"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                  />
+                  <el-button
+                    v-else
+                    slot="reference"
+                    type="danger"
+                    icon="el-icon-close"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                  />
+                </el-popover>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-if="column.prop === 'Estrato 1' || column.prop === 'Estrato 2' || column.prop === 'Estrato 3'"
+            prop="subsidio"
+            label="%Sub m"
+            align="center"
+          >
+            <template slot-scope="scope">
+              <!-- {{ scope.row.tarifas[0][column.prop] }} -->
+              <div v-for="tarifa in scope.row.tarifas[0][column.prop]" :key="tarifa.value">
+                <el-popover v-if="tarifa.value === 'estrato1' || tarifa.value === 'estrato2' || tarifa.value === 'estrato3'" placement="top-start" width="315" trigger="hover" popper-class="popover-cpte" visible-arrow="false">
+                  <div class="text_popover">Tarifarito informa</div>
+                  <div style="padding-top: 1em; text-align: center;">
+                    <label>{{ tarifa.lbl_porcen_publicado }}</label>
+                    <span>&nbsp;{{ tarifa.por_subsidio_publicado.toFixed(2) }}%</span>
+                  </div>
+                  <div style="text-align: center;">
+                    <label>{{ tarifa.lbl_porcen_calculado }}</label>
+                    <span>&nbsp;{{ tarifa.por_subsidio_calculado.toFixed(2) }}%</span>
+                  </div>
+                  <div style="text-align: center;">
+                    <label>Diferencia:</label>
+                    <span
+                      v-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) == 0"
+                    >0%</span>
+                    <span
+                      v-else-if="parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) != 0"
+                    >{{ parseFloat(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado).toFixed(2) }}%</span>
+                  </div>
+                  <el-button
+                    v-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= 0
+                      && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= tolerancia)
+                      || (tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
+                      && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado >= -tolerancia)"
+                    slot="reference"
+                    type="success"
+                    icon="el-icon-check"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                  />
+                  <el-button
+                    v-else-if="(tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado < 0
+                      && tarifa.por_subsidio_publicado - tarifa.por_subsidio_calculado <= -tolerancia)"
+                    slot="reference"
+                    type="warning"
+                    icon="el-icon-check"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, tarifa.value)"
+                  />
+                  <el-button
+                    v-else
+                    slot="reference"
+                    type="danger"
+                    icon="el-icon-close"
+                    circle
+                    @click="handleClickComponent(scope.$index, scope.row, componente.value)"
+                  />
+                </el-popover>
+              </div>
+            </template>
+          </el-table-column>
         </el-table-column>
       </el-table>
     </el-card>
