@@ -1,86 +1,87 @@
 <template>
   <div>
-    <el-card class="box-card margin-card" :class="showCards ? 'expandir' : 'contraer'">
-      <div v-for="item in components" :key="item.key" v-loading="loading" :name="item.key">
-        <el-card v-if="item.start" class="box-card margin-card">
-          <div slot="header" class="clearfix">
-            <span>
-              <b>{{ item.title }}</b>
-            </span>
-          </div>
-          <el-row v-if="!loading" style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-            <span v-for="cabecera in item.header" :key="cabecera.title">
-              <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
-                <span>{{ cabecera.title }}</span>
-              </el-col>
-            </span>
-          </el-row>
-          <el-row v-if="!loading" style="border: 0px solid blue;">
-            <span v-for="content in item.data" :key="content.campo">
-              <el-col style="border: 0px solid;" class="contentConcept" :span="12">
-                <span class="itemText">{{ content.concepto }}</span>
-              </el-col>
-              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
-                <span class="itemText">{{ content.unidad }}</span>
-              </el-col>
-              <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
-                <input
-                  v-if="actualiza"
-                  v-model="values[content.input.key].values"
-                  :type="content.input.type"
-                  :placeholder="content.input.placeholder"
-                  :disabled="content.input.disabled"
-                  style="width: 75%; height: 2em; margin-bottom: 0.5em;"
-                >
-              </el-col>
-            </span>
-          </el-row>
-        </el-card>
-        <el-card
-          v-else
-          class="box-card margin-card"
-          :style="{'margin-top': showCards ? '1em' : '10em'}"
-        >
-          <div slot="header" class="clearfix">
-            <span>
-              <b>{{ item.title }}</b>
-            </span>
-          </div>
-          <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
-            <span v-for="cabecera in item.header" :key="cabecera.title">
-              <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
-                <span>{{ cabecera.title }}</span>
-              </el-col>
-            </span>
-          </el-row>
-          <el-row style="border: 0px solid blue;">
-            <span v-for="content in item.data" :key="content.campo">
-              <el-col class="contentConcept" :span="12">
-                <span class="itemText">{{ content.concepto }}</span>
-              </el-col>
-              <el-col style="text-align: center;" class="contentText" :span="4">
-                <span class="itemText">{{ content.unidad }}</span>
-              </el-col>
-              <el-col style="text-align: center;" class="contentText" :span="8">
-                <input
-                  v-if="actualiza"
-                  v-model="values[content.input.key].values"
-                  :type="content.input.type"
-                  :placeholder="content.input.placeholder"
-                  :disabled="content.input.disabled"
-                  style="width: 75%; height: 2em; margin-bottom: 0.5em;"
-                  @input="formula()"
-                >
-              </el-col>
-            </span>
-          </el-row>
-        </el-card>
+    <el-card ref="testDiv" :class="showCards ? 'expandir' : 'contraer'">
+      <div>
+        <div v-for="item in components" :key="item.key" v-loading="loading" :name="item.key">
+          <el-card v-if="item.start" class="box-card margin-card">
+            <div slot="header" class="clearfix">
+              <span>
+                <b>{{ item.title }}</b>
+              </span>
+            </div>
+            <el-row v-if="!loading" style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+              <span v-for="cabecera in item.header" :key="cabecera.title">
+                <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                  <span>{{ cabecera.title }}</span>
+                </el-col>
+              </span>
+            </el-row>
+            <el-row v-if="!loading" style="border: 0px solid blue;">
+              <span v-for="content in item.data" :key="content.campo">
+                <el-col style="border: 0px solid;" class="contentConcept" :span="12">
+                  <span class="itemText">{{ content.concepto }}</span>
+                </el-col>
+                <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="4">
+                  <span class="itemText">{{ content.unidad }}</span>
+                </el-col>
+                <el-col style="border: 0px solid; text-align: center;" class="contentText" :span="8">
+                  <input
+                    v-if="actualiza"
+                    v-model="values[content.input.key].values"
+                    :type="content.input.type"
+                    :placeholder="content.input.placeholder"
+                    :disabled="content.input.disabled"
+                    style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                  >
+                </el-col>
+              </span>
+            </el-row>
+          </el-card>
+          <el-card
+            v-else
+            class="box-card margin-card"
+          >
+            <div slot="header" class="clearfix">
+              <span>
+                <b>{{ item.title }}</b>
+              </span>
+            </div>
+            <el-row style="font-weight: bold; padding-bottom: 1%; text-align: center;">
+              <span v-for="cabecera in item.header" :key="cabecera.title">
+                <el-col style="border: 0px solid red; text-align: center;" :span="cabecera.tamano">
+                  <span>{{ cabecera.title }}</span>
+                </el-col>
+              </span>
+            </el-row>
+            <el-row style="border: 0px solid blue;">
+              <span v-for="content in item.data" :key="content.campo">
+                <el-col class="contentConcept" :span="12">
+                  <span class="itemText">{{ content.concepto }}</span>
+                </el-col>
+                <el-col style="text-align: center;" class="contentText" :span="4">
+                  <span class="itemText">{{ content.unidad }}</span>
+                </el-col>
+                <el-col style="text-align: center;" class="contentText" :span="8">
+                  <input
+                    v-if="actualiza"
+                    v-model="values[content.input.key].values"
+                    :type="content.input.type"
+                    :placeholder="content.input.placeholder"
+                    :disabled="content.input.disabled"
+                    style="width: 75%; height: 2em; margin-bottom: 0.5em;"
+                    @input="formula()"
+                  >
+                </el-col>
+              </span>
+            </el-row>
+          </el-card>
+        </div>
       </div>
     </el-card>
     <div class="footer">
       <el-row :gutter="10" style="padding-right: 0em;">
         <el-col :sm="24" :md="12" class="cont-btn">
-          <el-button type="primary" class="btnVerify" @click="showCards = !showCards">Calcular</el-button>
+          <el-button type="primary" class="btnVerify" @click="showCards = !showCards, windowTop()">Calcular</el-button>
         </el-col>
         <el-col :sm="24" :md="12">
           <el-button v-if="!showCards" class="btn" type="success" @click="verificar">Verificado</el-button>
@@ -158,6 +159,10 @@ export default {
     this.initData()
   },
   methods: {
+    windowTop() {
+      console.log('Namis')
+      this.$refs.testDiv.scrollTop = 0
+    },
     async initData() {
       // Data enviada del padre
       this.dataParentT = JSON.parse(JSON.stringify(this.messagecomponent))
@@ -273,6 +278,7 @@ export default {
 </script>
 
 <style lang="scss">
+
 	.el-collapse-item__content {
 		padding-bottom: 1.5%;
 	}
@@ -299,14 +305,13 @@ export default {
 		line-height: normal;
 	}
 
-	// :style="{'overflow-y': showCards ? 'none' : ''}" :style="{'height': showCards ? '41em' : '19em'}"
 	.expandir {
 		height: 38em;
 		overflow-y: scroll;
 	}
 
 	.contraer {
-		height: 19em;
+		height: 18em;
 		overflow-y: none;
 	}
 </style>

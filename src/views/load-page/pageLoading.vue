@@ -15,7 +15,6 @@
 <script>
 import dhalsim from '@/assets/loading_images/indio.gif'
 import cavernicola from '@/assets/loading_images/cavernicola.gif'
-import highvern from '@/assets/loading_images/highvern.gif'
 import preview from '@/assets/loading_images/preview.gif'
 import statistics from '@/assets/loading_images/statistics.gif'
 import wykres from '@/assets/loading_images/wykres.gif'
@@ -32,7 +31,7 @@ export default {
   },
   methods: {
     selectImg() {
-      const arrayImg = [dhalsim, cavernicola, highvern, preview, statistics, wykres]
+      const arrayImg = [dhalsim, cavernicola, preview, statistics, wykres]
       // const random = 0
       const random = Math.round(this.getRandomArbitrary(0, arrayImg.length - 1))
       this.errGif = arrayImg[random]
