@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+/* eslint-disable */
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
@@ -14,7 +15,7 @@ const name = defaultSettings.title || 'vue Element Admin' // page title
 // For example, Mac: sudo npm run
 // You can change the port by the following method:
 // port = 9527 npm run dev OR npm run dev --port = 9527
-const port = process.env.port || process.env.npm_config_port || 5059 // dev port local juankmilo
+const port = process.env.port || process.env.npm_config_port || 5058 // dev port local juankmilo
     // const port = process.env.port || process.env.npm_config_port || 8080 // dev port pc super
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
