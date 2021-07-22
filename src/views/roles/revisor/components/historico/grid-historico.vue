@@ -124,7 +124,7 @@ export default {
       radioCreg: '',
       componentSelect: {},
       colComponentes: CONSTANTS.columnComponents,
-      tolerancia: 0.5
+      tolerancia: null
     }
   },
   computed: {
@@ -142,7 +142,10 @@ export default {
       this.value_empresa = this.msgviewparent.cod_empresa
       this.value_mercado = this.msgviewparent.cod_mercado
       await getNToleranciaMes(this.value_ano, this.value_mes).then((response) => {
+        console.log('TOLERANCIA --> ', response)
         this.tolerancia = response[0].n_tolerancia
+      }, (err) => {
+        console.log(err)
       })
       this.getDataComponent()
     },
