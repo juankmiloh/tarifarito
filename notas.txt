@@ -45,3 +45,62 @@
 *. OPRIMIR (TECLA I) PARA INSERTAR TEXTO EN EL ARCHIVO
 *. COMANDO PARA GUARDAR CAMBIOS REALIZADOS CON EL EDITOR -> :W (ESTO LUEGO DE OPRIMIR LAS TACLAS CTRL + C PARA SALIR DE LOS CAMBIOS QUE SE HICIERON)
 PAGINA DE DOCUMENTACION -> https://docs.bluehosting.cl/tutoriales/servidores/guia-practica-de-los-editores-de-texto-nano-y-vi-en-linux.html
+
+---------------------------------------------------------------------------
+-- COMANDOS PARA CREAR UN SERVICIO EN LINUX - Levantar servidor de nodejs (ANGULAR)
+---------------------------------------------------------------------------
+1. Entrar al directorio:
+	cd /lib/systemd/system/
+
+2. Crear el script del servicio
+	sudo nano tarifarito.service
+
+3. Escribir en el script lo siguiente:
+	[Unit]
+	Description=Iniciar servidor de ANGULAR
+	After=network.target
+	StartLimitIntervalSec=0
+
+	[Service]
+	WorkingDirectory=/home/admincc/jherreraa/procesosDIEG/Frontend/
+	Type=simple
+	Restart=always
+	RestartSec=1
+	User=root
+	ExecStart=/bin/bash server.sh start
+
+	[Install]
+	WantedBy=multi-user.target
+
+4. Comando para que el servicio se inicie con el sistema
+	sudo systemctl enable tarifarito
+
+5. Comando para iniciar nuestro servicio
+	sudo systemctl start tarifarito
+
+6. Comando para detener el servicio
+	sudo systemctl stop tarifarito
+
+7. Comando para recargar servicios luego de pararlos y/o modificarlos (Opcional)
+	sudo systemctl daemon-reload
+
+8. Comando para saber si el servicio esta habilitado
+	sudo systemctl is-enabled tarifarito
+
+9. Comando para saber si el servicio esta activo
+	sudo systemctl is-active tarifarito
+
+10. Comando para reiniciar un servicio
+	sudo systemctl restart tarifarito
+
+11. Comando para saber estado del servicio (Muestra la consola de node)
+	sudo systemctl status tarifarito
+
+*. Comando para listar todos los servicios que estan corriendo
+	sudo systemctl list-unit-files --type service --all
+
+*. COMANDO PARA VER QUE APLICACIONES ESTAN CORRIENDO POR LOS PUERTOS DE LINUX
+	netstat -tanp
+
+*. COMANDO PARA MATAR UN PROCESO QUE CORRE POR UN PUERTO DETERMINADO - LINUX
+	sudo fuser -k 9527/tcp
