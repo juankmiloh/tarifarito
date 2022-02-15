@@ -62,7 +62,7 @@ PAGINA DE DOCUMENTACION -> https://docs.bluehosting.cl/tutoriales/servidores/gui
 	StartLimitIntervalSec=0
 
 	[Service]
-	WorkingDirectory=/home/admincc/jherreraa/procesosDIEG/Frontend/
+	WorkingDirectory=/home/admincc/jherreraa/tarifarito/Frontend/
 	Type=simple
 	Restart=always
 	RestartSec=1
