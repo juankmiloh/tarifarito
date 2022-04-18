@@ -57,20 +57,20 @@ PAGINA DE DOCUMENTACION -> https://docs.bluehosting.cl/tutoriales/servidores/gui
 
 3. Escribir en el script lo siguiente:
 	[Unit]
-	Description=Iniciar servidor de ANGULAR
-	After=network.target
-	StartLimitIntervalSec=0
+    Description=Iniciar servidor de Tarifarito
+    After=network.target
+    StartLimitIntervalSec=0
 
-	[Service]
-	WorkingDirectory=/home/admincc/jherreraa/tarifarito/Frontend/
-	Type=simple
-	Restart=always
-	RestartSec=1
-	User=root
-	ExecStart=/bin/bash server.sh start
+    [Service]
+    WorkingDirectory=/home/admincc/jherreraa/tarifarito/
+    Type=simple
+    Restart=always
+    RestartSec=1
+    User=root
+    ExecStart=/bin/bash server.sh start
 
-	[Install]
-	WantedBy=multi-user.target
+    [Install]
+    WantedBy=multi-user.target
 
 4. Comando para que el servicio se inicie con el sistema
 	sudo systemctl enable tarifarito
